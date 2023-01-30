@@ -1,21 +1,22 @@
-package com.example.divtech
+package com.example.news
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.divtech.models.*
-import com.example.divtech.network.AUTH_API
 import com.example.news.GlobalState
-import com.example.news.MySharedPreferences
+import com.example.news.data.ArticlesRepository
+import com.example.news.models.Article
+import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 sealed class LoadingState {
     object Default : LoadingState()
@@ -24,67 +25,31 @@ sealed class LoadingState {
 }
 
 
-class MainViewModel( val pref: MySharedPreferences,  val authApi: AUTH_API) :
-    ViewModel() {
+class MainViewModel(private val articlesRepository: ArticlesRepository) :
+    ViewModel() , KoinComponent {
+
+    val router         : Router by inject()
+    val navigatorHolder: NavigatorHolder by inject()
 
     var currentStateLiveDate =
-
         MutableLiveData<GlobalState>().apply { value = GlobalState.REGISTRATION }
 
     var loadingStateLiveDate =
         MutableLiveData<LoadingState>().apply { value = LoadingState.Default }
 
-//    var allTicketsLiveData =
-//        MutableLiveData<List<TicketRequest>>()
 
-/*    val cityList = listOf(
-        City("AAA"),
-        City("BBB"),
-        City("CCC"),
-        City("DDD"),
-    )*/
-
-    var counter = 0
-    var counterForChannel = 0
-    val data : Flow<Int> = flow {
-        while (true) {
-            emit(counter++)
-            delay(3000)
-        }
-    }
-
-    val channel = Channel<Int>()
-    val channelAsFlow = channel.receiveAsFlow()
-
+     suspend fun articlesFlow() = articlesRepository.getArticles()
 
     init {
-
-
         viewModelScope.launch(Dispatchers.IO) {
-             authApi.query()
 
-                while (true) {
-                    channel.send(counterForChannel++)
-                    delay(3000)
-                }
         }
 
 
-
     }
-
-    var phone: String? = null
-
 
     val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         loadingStateLiveDate.postValue(LoadingState.Stop(exception.toString()))
     }
-
-    private fun isUserRegistered(): Boolean {
-        return pref.getPhone()?.let {
-            true
-        } ?: false
-    }
-
 
 }
