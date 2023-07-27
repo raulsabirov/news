@@ -14,6 +14,11 @@ import com.github.terrakok.cicerone.*
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+//commit 1
+
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
