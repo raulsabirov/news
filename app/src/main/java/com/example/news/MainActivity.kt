@@ -22,6 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 //dev_2 commit 3
 
+//dev_2 commit 4
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
