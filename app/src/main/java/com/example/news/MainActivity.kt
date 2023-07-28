@@ -17,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 //commit 1
 //commit 2
 
-
+//dev_2 commit 2
 
 
 class MainActivity : AppCompatActivity() {
