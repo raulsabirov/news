@@ -12,9 +12,6 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class  {
-}
-
 class NewsDetailViewModel(private val articlesRepository: ArticlesRepository) :
     ViewModel() , KoinComponent {
 
