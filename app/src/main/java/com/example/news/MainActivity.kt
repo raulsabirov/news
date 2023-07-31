@@ -8,6 +8,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import com.example.news.MainViewModel
 import com.example.news.databinding.ActivityMainBinding
 import com.github.terrakok.cicerone.*
@@ -32,15 +33,10 @@ class MainActivity : AppCompatActivity() {
     val router : Router by inject()
     val navigatorHolder : NavigatorHolder by inject()
 
-    private val navigator: Navigator = object : AppNavigator(this, R.id.main_container) {
-        override fun applyCommands(commands: Array<out Command>) {
-            super.applyCommands(commands)
-            supportFragmentManager.executePendingTransactions()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("MainActivity onCreate")
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -48,9 +44,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
 
-        if (savedInstanceState == null) {
-            navigator.applyCommands(arrayOf<Command>(Replace(Screens.MainFragment())))
-        }
+        replaceFragmentOnTop(MainFragment())
+
         viewModel.loadingStateLiveDate.observe(this) {
 
         }
@@ -81,11 +76,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         println("MainActivity onResume")
         super.onResume()
-        navigatorHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
-        navigatorHolder.removeNavigator()
         println("MainActivity onPause")
         super.onPause()
     }
@@ -106,16 +99,19 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-/*
-    class MainViewModelFactory(val sharedPreferences: MySharedPreferences) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                return MainViewModel(sharedPreferences, API.newInstance()) as T
-            }
+    fun addFragmentOnTop(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.main_container, fragment)
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
+    }
 
-            throw IllegalArgumentException("Unknown ViewModel Class")
-        }
-    }*/
-
+    fun replaceFragmentOnTop(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_container, fragment)
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
+    }
 }
