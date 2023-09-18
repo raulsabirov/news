@@ -10,8 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.news.MainViewModel
 import com.example.news.databinding.FragmentMainBinding
+import com.example.news.presentation.MainViewModel
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -20,7 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class MainFragment : Fragment(R.layout.fragment_main) {
 
-    private val mainViewModel :  MainViewModel   by viewModel()
+    private val mainViewModel : MainViewModel by viewModel()
     private val binding  by viewBinding (FragmentMainBinding::bind )
 
     private lateinit var adapter : ArticlesAdapter

@@ -45,31 +45,6 @@ class MainViewModel(private val articlesRepository: ArticlesRepository) :
         println("CoroutineExceptionHandler got $exception")
     }
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-/*            delay(2000)
-            sharedFlow.emit(1)
-            delay(2000)
-            sharedFlow.emit(2)
-            delay(2000)
-            sharedFlow.emit(3)
-            delay(2000)
-            sharedFlow.emit(4)*/
-
-
-            coroutineScope {
-
-            }
-            withContext{
-
-            }
-
-           ("a").toInt()
-        }
-
-
-        viewModelScope.launch {Dispatchers.Main
-            delay(100000)
-        }
 
     }
 

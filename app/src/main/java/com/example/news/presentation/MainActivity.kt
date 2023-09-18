@@ -46,9 +46,7 @@ class TreeNode(var `val`: Int) {
 class Solution {
     fun isSymmetric(root: TreeNode?): Boolean {
 
-
         return equal( root, root)
-
 
     }
 
@@ -93,11 +91,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
-
 
         replaceFragmentOnTop(MainFragment())
 
+        replaceFragmentOnTop(CustomViewFragment())
        // replaceFragmentOnTop(NewsDetailFragment())
 
 

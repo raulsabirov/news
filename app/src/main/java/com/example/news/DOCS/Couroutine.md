@@ -68,7 +68,7 @@ async корутину также можно запускать в режиме 
 
 # CoroutineScope
 
-` kotlin
+``` kotlin
 	val scope = CoroutineScope(Job()).
 	interface CoroutineScope {    
 	// By convention, should contain an instance of a [job][Job] to enforce structured concurrency.
