@@ -68,12 +68,12 @@ async корутину также можно запускать в режиме 
 
 # CoroutineScope
 
-``` kotlin
+` kotlin
 	val scope = CoroutineScope(Job()).
 	interface CoroutineScope {    
 	// By convention, should contain an instance of a [job][Job] to enforce structured concurrency.
 	public val coroutineContext: CoroutineContext
-}```
+}`
 
 содержит в себе родительский job являющийся родителем для Job-ов корутин, которые мы создаем, вызывая scope.launch.
 scope.cancel(), мы отменяем Job-родитель, а это отменит все Job-ы корутин, созданных с помощью этого scope.
