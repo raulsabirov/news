@@ -1,8 +1,9 @@
-package com.example.news
+package com.example.news.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.news.GlobalState
 import com.example.news.data.ArticlesRepository
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router

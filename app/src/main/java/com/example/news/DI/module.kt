@@ -1,6 +1,6 @@
 package com.example.news.DI
 
-import com.example.news.MainViewModel
+import com.example.news.presentation.MainViewModel
 import com.example.news.data.*
 import kotlinx.coroutines.Dispatchers
 
@@ -22,5 +22,7 @@ val netWorkModule = module(createdAtStart=true){
     singleOf(::ArticlesRepositoryImpl) { bind<ArticlesRepository>()}
     viewModelOf(::MainViewModel)
 }
+
+
 
 

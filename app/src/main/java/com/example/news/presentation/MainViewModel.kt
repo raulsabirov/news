@@ -1,20 +1,19 @@
-package com.example.news
+package com.example.news.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.GlobalState
 import com.example.news.data.ArticlesRepository
-import com.example.news.models.Article
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -40,10 +39,47 @@ class MainViewModel(private val articlesRepository: ArticlesRepository) :
 
      suspend fun articlesFlow() = articlesRepository.getArticles()
 
+    val sharedFlow = MutableSharedFlow<Int>(replay = 4)
+
+    val handler = CoroutineExceptionHandler { _, exception ->
+        println("CoroutineExceptionHandler got $exception")
+    }
     init {
         viewModelScope.launch(Dispatchers.IO) {
+/*            delay(2000)
+            sharedFlow.emit(1)
+            delay(2000)
+            sharedFlow.emit(2)
+            delay(2000)
+            sharedFlow.emit(3)
+            delay(2000)
+            sharedFlow.emit(4)*/
+
+
+            coroutineScope {
+
+            }
+            withContext{
+
+            }
+
+           ("a").toInt()
+        }
+
+
+        viewModelScope.launch {Dispatchers.Main
+            delay(100000)
+        }
+
+    }
+
+
+    private suspend fun test1(){
+        viewModelScope.launch(Dispatchers.IO){
 
         }
+
+        println("123")
 
 
     }

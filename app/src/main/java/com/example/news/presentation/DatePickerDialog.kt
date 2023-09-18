@@ -1,4 +1,4 @@
-package com.example.news
+package com.example.news.presentation
 
 import android.app.DatePickerDialog
 import android.app.Dialog
