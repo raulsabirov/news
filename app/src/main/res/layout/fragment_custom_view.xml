@@ -8,9 +8,90 @@
     android:gravity="center">
 
 
-    <com.example.news.presentation.ShapeSelectorView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:displayShapeName="true"
-        app:shapeColor="#7f0000" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <com.example.news.presentation.CustomView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            app:displayShapeName="false"
+            app:shapeColor="#7f0000" />
+
+        <com.example.news.presentation.CustomView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            app:displayShapeName="false"
+            app:shapeColor="#7f0000" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <!--        <com.example.news.presentation.CustomView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            app:displayShapeName="false"
+            app:shapeColor="#1FC536" />-->
+
+            <!--        <com.example.news.presentation.CustomView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="30dp"
+                    app:displayShapeName="true"
+                    app:shapeColor="#7f0000" />-->
+
+        </LinearLayout>
+
+        <com.example.news.presentation.GoalProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:goalIndicatorHeight="16dp"
+            app:goalIndicatorThickness="4dp"
+            app:goalReachedColor="@color/green"
+            app:goalNotReachedColor="@color/dark_gray"
+            app:unfilledSectionColor="@color/gray"
+            app:barThickness="4dp"
+            app:indicatorType="square" />
+        <!--
+                <com.example.news.presentation.CustomView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:paddingStart="10dp"
+                    app:displayShapeName="true"
+                    app:shapeColor="#7f0000" />
+        -->
+
+        <!--        <ba.rubicon.widget.battery.BatteryMeterView
+                      android:id="@+id/battery_view"
+                      android:layout_width="260dp"
+                      android:layout_height="144dp"
+                      android:layout_gravity="center"
+                      android:background="@android:color/transparent"
+                      app:background_fill_color="@android:color/white"
+                      app:battery_head_color="@android:color/darker_gray"
+                      app:battery_level="0"
+                      app:charging="true"
+                      app:charging_color="@android:color/holo_orange_dark"
+                      app:normal_fill_color="@android:color/holo_green_dark"
+                      app:warning_fill_color="@android:color/darker_gray" />-->
+
+
+    </LinearLayout>
+
 </FrameLayout>

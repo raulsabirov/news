@@ -2,6 +2,7 @@ package com.example.news.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.databinding.ItemArticleListBinding
 import com.example.news.models.Article
@@ -43,6 +44,32 @@ class ArticlesAdapter() :
 
             itemBinding.tvTitle.text = article.title
             itemBinding.tvDescription.text = article.description
+        }
+    }
+
+
+    private class ArticleDiffCallback : DiffUtil.ItemCallback<Article>() {
+
+        override fun areItemsTheSame(oldItem: UiArticle, newItem: UiArticle): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: UiArticle, newItem: UiArticle): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun getChangePayload(oldItem: UiArticle, newItem: UiArticle): Any? {
+            return when {
+                oldItem.commentsCount != newItem.commentsCount -> {
+                    ArticleChangePayload.Comments(newItem.commentsCount)
+                }
+
+                oldItem.bookmarked != newItem.bookmarked -> {
+                    ArticleChangePayload.Bookmark(newItem.bookmarked)
+                }
+
+                else -> super.getChangePayload(oldItem, newItem)
+            }
         }
     }
 

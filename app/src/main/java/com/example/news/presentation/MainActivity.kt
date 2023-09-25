@@ -1,5 +1,6 @@
 package com.example.news.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             ']' to ']')
         val queue: Queue<String> = LinkedList()
 
-       // println("MainActivity" +buyChoco( listOf(98,54,6,34,66,63,52,39).toIntArray(), 62))
+        // println("MainActivity" +buyChoco( listOf(98,54,6,34,66,63,52,39).toIntArray(), 62))
 
         super.onCreate(savedInstanceState)
         println("MainActivity onCreate")
@@ -92,15 +93,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+        binding.button.setOnClickListener {
+
+            Intent(
+                this,
+                CouroutineActivity::class.java
+            ).apply {
+                startActivity(this)
+            }
+
+        }
+
+
+
+
         replaceFragmentOnTop(MainFragment())
 
+        // replaceFragmentOnTop(CustomViewFragment())
         replaceFragmentOnTop(CustomViewFragment())
-       // replaceFragmentOnTop(NewsDetailFragment())
 
 
 
 
-        synchronized(this){
+        synchronized(this) {
 
         }
 
@@ -212,7 +227,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         println("MainActivity  onSaveInstanceState")
         super.onSaveInstanceState(outState)
-
     }
 
     fun addFragmentOnTop(fragment: Fragment) {

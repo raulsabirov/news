@@ -8,8 +8,8 @@ sealed class SealedClass {
     data class Success(val one: Int) : SealedClass()
     data class Error(val one: Int) : SealedClass()
 
-  /*  companion object : KoinComponent {
-        const val  con = "companion"
-        print("SealedClass companion")
-    }*/
+
+    companion object : KoinComponent {
+        const val con = "companion"
+    }
 }

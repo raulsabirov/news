@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import kotlin.coroutines.suspendCoroutine
 
 class CouroutineActivity : AppCompatActivity() {
@@ -47,10 +48,22 @@ class CouroutineActivity : AppCompatActivity() {
             sharedFlow.emit(4)*/
 
 
-            coroutineScope {
-                ("a").toInt()
-            }
+            println("begin launch")
 
+            println(
+                coroutineScope {
+                    launch {
+                        ("a").toInt()
+                    }
+                }
+                /*            supervisorScope {
+
+                                launch {
+                                    ("a").toInt()
+                                }
+                            }*/
+
+            )
 
             println("end launch")
 
