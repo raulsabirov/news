@@ -24,30 +24,29 @@ import java.util.Stack
 object Solution2 {
 
 }
-//commit 1
-//commit 2
 
-//dev_2 commit 2
-
-
-//dev_2 commit 3
-
-//dev_2 commit 4
-
-
-
- val  s: ()-> Unit = { print("") }
+val s: () -> Unit = { print("") }
 
 class TreeNode(var `val`: Int) {
-         var left: TreeNode? = null
-         var right: TreeNode? = null
+    var left: TreeNode? = null
+    var right: TreeNode? = null
 }
 
 
-class Solution {
+interface UseCase {
+    val list: List<Int>
+}
+
+fun funUseCae(use: UseCase) {
+    use.list.map { println(it) }
+}
+
+class Solution : UseCase {
+    override val list = listOf(1, 2)
+
     fun isSymmetric(root: TreeNode?): Boolean {
 
-        return equal( root, root)
+        return equal(root, root)
 
     }
 
@@ -75,8 +74,6 @@ class MainActivity : AppCompatActivity() {
     val lock = Any()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //intersect(intArrayOf(1,2,2,1), intArrayOf(2,2,))
-
        // merge(intArrayOf(2,0),1, intArrayOf(1),1)
         val openBrackets = listOf('(', '{', '[')
         val pair = mutableMapOf(')' to '(',
@@ -93,16 +90,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        binding.button.setOnClickListener {
-
+        binding.coroutineActivityButton.setOnClickListener {
             Intent(
                 this,
                 CouroutineActivity::class.java
             ).apply {
                 startActivity(this)
             }
-
         }
+
+        binding.composeActivityButton.setOnClickListener {
+            Intent(
+                this,
+                ComposeActivity::class.java
+            ).apply {
+                startActivity(this)
+            }
+        }
+
 
 
 

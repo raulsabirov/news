@@ -14,10 +14,17 @@
 
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/coroutineActivityButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="coroutine" />
+
+        <Button
+            android:id="@+id/composeActivityButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="compose" />
+
         <FrameLayout
             android:id="@+id/main_container"
             android:layout_width="match_parent"

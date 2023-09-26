@@ -13,10 +13,12 @@ import com.example.news.R
 import com.example.news.databinding.ActivityCouroutineBinding
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.suspendCoroutine
 
 class CouroutineActivity : AppCompatActivity() {
@@ -50,27 +52,44 @@ class CouroutineActivity : AppCompatActivity() {
 
             println("begin launch")
 
-            println(
-                coroutineScope {
-                    launch {
-                        ("a").toInt()
+            println("withContext " +
+                    try {
+                        withContext(Dispatchers.IO) {
+                            launch {
+                                ("a").toInt()
+                            }
+                        }
+                    } catch (e: Exception) {
+                        println("withContext $e")
                     }
-                }
-                /*            supervisorScope {
-
-                                launch {
-                                    ("a").toInt()
-                                }
-                            }*/
-
             )
+
+            println("coroutineScope " +
+                    try {
+                        coroutineScope {
+
+                            async {
+                                ("a").toInt()
+                            }.await()
+
+                        }
+                    } catch (_: Exception) {
+                    }
+            )
+
+            /*           println(
+                           supervisorScope {
+                               launch {
+                                   ("3").toInt()
+                               }
+                           }
+
+                       )*/
 
             println("end launch")
 
 
         }
-
-
 
 
     }

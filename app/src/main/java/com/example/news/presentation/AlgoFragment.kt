@@ -13,7 +13,7 @@ import java.util.Stack
 
 class AlgoFragment : Fragment() {
 
-    val queue: Queue<String> = LinkedList("l10")
+    val queue: Queue<String> = LinkedList(listOf())
     val stack: Stack<Int> = Stack()
 
 
