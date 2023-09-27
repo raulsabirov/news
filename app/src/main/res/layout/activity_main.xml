@@ -25,12 +25,14 @@
             android:layout_height="wrap_content"
             android:text="compose" />
 
+
         <FrameLayout
             android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/ic_launcher_foreground"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

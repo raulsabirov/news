@@ -61,24 +61,28 @@ class MainActivity : AppCompatActivity() {
 
     val viewModel: MainViewModel by viewModel()
 
-    val router : Router by inject()
-    val navigatorHolder : NavigatorHolder by inject()
+    val router: Router by inject()
+    val navigatorHolder: NavigatorHolder by inject()
 
-    val stack  = Stack<Int>()
+    val stack = Stack<Int>()
 
     class ListNode(var `val`: Int) {
-            var next: ListNode? = null
+        var next: ListNode? = null
     }
 
+
+    var checkBoxCount = 0
 
     val lock = Any()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-       // merge(intArrayOf(2,0),1, intArrayOf(1),1)
+        // merge(intArrayOf(2,0),1, intArrayOf(1),1)
         val openBrackets = listOf('(', '{', '[')
-        val pair = mutableMapOf(')' to '(',
+        val pair = mutableMapOf(
+            ')' to '(',
             '}' to '{',
-            ']' to ']')
+            ']' to ']'
+        )
         val queue: Queue<String> = LinkedList()
 
         // println("MainActivity" +buyChoco( listOf(98,54,6,34,66,63,52,39).toIntArray(), 62))
@@ -107,9 +111,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(this)
             }
         }
-
-
-
 
 
         replaceFragmentOnTop(MainFragment())

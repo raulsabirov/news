@@ -53,28 +53,28 @@ class CouroutineActivity : AppCompatActivity() {
             println("begin launch")
 
             println("withContext " +
-                    try {
+             //     try {
                         withContext(Dispatchers.IO) {
-                            launch {
-                                ("a").toInt()
-                            }
+                            async {
+                                ("111111").toInt()
+                            }.await()
                         }
-                    } catch (e: Exception) {
-                        println("withContext $e")
-                    }
+                /*         } catch (e: Exception) {
+                             println("withContext $e")
+                         }*/
             )
 
             println("coroutineScope " +
-                    try {
-                        coroutineScope {
+                    //   try {
+                    coroutineScope {
 
-                            async {
-                                ("a").toInt()
-                            }.await()
+                        async {
+                            ("22222").toInt()
+                        }.await()
 
-                        }
-                    } catch (_: Exception) {
                     }
+                /*                   } catch (_: Exception) {
+                                   }*/
             )
 
             /*           println(
