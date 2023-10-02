@@ -11,6 +11,10 @@ import com.example.news.models.Article
 // diffutil payload
 //https://medium.com/@domen.lanisnik/efficiently-updating-recyclerview-items-using-payloads-1305f65f3068
 
+//https://russianblogs.com/article/15692380584/
+
+//https://ziginsider.github.io/RecyclerView/#adapter
+
 class ArticlesAdapter() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -31,7 +35,6 @@ class ArticlesAdapter() :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
             (holder as ArticleViewHolder).bind(articleList[position])
     }
 

@@ -85,6 +85,10 @@ class MainActivity : AppCompatActivity() {
         )
         val queue: Queue<String> = LinkedList()
 
+        val map = mutableMapOf<Char, Int>()
+
+        val hashSet = hashSetOf(1)
+
         // println("MainActivity" +buyChoco( listOf(98,54,6,34,66,63,52,39).toIntArray(), 62))
 
         super.onCreate(savedInstanceState)

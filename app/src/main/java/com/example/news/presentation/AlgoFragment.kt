@@ -31,6 +31,9 @@ class AlgoFragment : Fragment() {
         while (!stack.empty()) {
             System.out.println(stack.pop());
         }
+
+
+        val s = "".substring(1)
     }
 
     companion object {
