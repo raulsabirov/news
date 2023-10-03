@@ -19,6 +19,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import kotlin.coroutines.suspendCoroutine
 
 class CouroutineActivity : AppCompatActivity() {
@@ -52,13 +53,20 @@ class CouroutineActivity : AppCompatActivity() {
 
             println("begin launch")
 
+
+            try {
+                ("aaa").toInt()
+            } catch (_: Exception) {
+
+            }
+
             println("withContext " +
-             //     try {
-                        withContext(Dispatchers.IO) {
-                            async {
-                                ("111111").toInt()
-                            }.await()
-                        }
+                    //     try {
+                    withContext(Dispatchers.IO) {
+                        async {
+                            ("111111").toInt()
+                        }.await()
+                    }
                 /*         } catch (e: Exception) {
                              println("withContext $e")
                          }*/
