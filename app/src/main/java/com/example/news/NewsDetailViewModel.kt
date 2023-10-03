@@ -26,8 +26,6 @@ class NewsDetailViewModel(private val articlesRepository: ArticlesRepository) :
         MutableLiveData<LoadingState>().apply { value = LoadingState.Default }
 
 
-    suspend fun articlesFlow() = articlesRepository.getArticles()
-
     init {
         viewModelScope.launch(Dispatchers.IO) {
 

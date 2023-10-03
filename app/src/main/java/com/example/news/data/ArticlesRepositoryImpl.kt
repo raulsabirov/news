@@ -8,11 +8,9 @@ class ArticlesRepositoryImpl(
     private val networkDataSource: NetworkDataSource,
     private val localDataSource: LocalDataSource
 ) : ArticlesRepository {
-    override suspend fun getArticles(fromCache: Boolean): Flow<List<Article>> {
-        if (!fromCache)
-            localDataSource.saveArticles(networkDataSource.getArticles())
 
-        return localDataSource.getArticles()
+    override fun getArticles(page: Int): Flow<List<Article>> {
+        return networkDataSource.getArticles(page = page)
     }
 
     override suspend fun getArticleByTitle(): Article {

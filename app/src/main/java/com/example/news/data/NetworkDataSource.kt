@@ -1,8 +1,9 @@
 package com.example.news.data
 
 import com.example.news.models.Article
+import kotlinx.coroutines.flow.Flow
 
 interface NetworkDataSource{
-    suspend fun getArticles (): List<Article>
+     fun getArticles(page: Int): Flow<List<Article>>
 
 }

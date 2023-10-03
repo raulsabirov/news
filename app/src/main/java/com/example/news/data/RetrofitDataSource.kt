@@ -3,6 +3,9 @@ package com.example.news.data
 import com.example.news.BuildConfig
 import com.example.news.models.Article
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -12,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class RetrofitDataSource(
-    private val ioDispatcher : CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher
 ) : NetworkDataSource {
 
     private val networkApi = Retrofit.Builder()
@@ -64,20 +67,21 @@ class RetrofitDataSource(
         )
 
 
-/*        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             builder.addNetworkInterceptor(httpLoggingInterceptor)
-        }*/
+        }
 
 
         return builder.build()
     }
 
-    override suspend fun getArticles(): List<Article> {
-       return  withContext(ioDispatcher){
-           networkApi.query().articles
-       }
-    }
+    override fun getArticles(page: Int): Flow<List<Article>> {
+        return flow {
+            val model = networkApi.query(page = page)
 
+            model.articles
+        }
+    }
 }

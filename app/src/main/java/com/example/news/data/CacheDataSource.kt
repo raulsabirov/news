@@ -1,6 +1,7 @@
 package com.example.news.data
 
 import com.example.news.models.Article
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -10,6 +11,7 @@ class CacheDataSource : LocalDataSource {
     override suspend fun getArticles(): Flow<List<Article>>{
       return  flow {
           emit(articlesCache)
+          delay(1)
       }
     }
 

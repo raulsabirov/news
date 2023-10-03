@@ -3,6 +3,7 @@ package com.example.news.presentation
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.databinding.ItemArticleListBinding
 import com.example.news.models.Article
@@ -16,7 +17,7 @@ import com.example.news.models.Article
 //https://ziginsider.github.io/RecyclerView/#adapter
 
 class ArticlesAdapter() :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    ListAdapter<Article, RecyclerView.ViewHolder>(ArticleDiffCallback()) {
 
     val articleList: ArrayList<Article> = arrayListOf()
 
@@ -24,10 +25,10 @@ class ArticlesAdapter() :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return  ArticleViewHolder(
-                ItemArticleListBinding
-                    .inflate(LayoutInflater.from(parent.context), parent, false)
-            )
+        return ArticleViewHolder(
+            ItemArticleListBinding
+                .inflate(LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
     override fun getItemCount(): Int {
@@ -35,14 +36,32 @@ class ArticlesAdapter() :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            (holder as ArticleViewHolder).bind(articleList[position])
+        (holder as ArticleViewHolder).bind(articleList[position])
     }
+
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        when (val latestPayload = payloads.lastOrNull()) {
+            ArticleChangePayload.Title -> {
+
+            }
+
+            ArticleChangePayload.Description -> {
+
+            }
+
+            else -> onBindViewHolder(holder, position)
+        }
+    }
+
 
     fun setItems(items: List<Article>, callback: (() -> Unit)? = null) {
         this.callback = callback
         articleList.clear()
         articleList.addAll(items)
-        notifyDataSetChanged()
     }
 
     inner class ArticleViewHolder(var itemBinding: ItemArticleListBinding) :
@@ -55,34 +74,63 @@ class ArticlesAdapter() :
     }
 
 
-    /*  private class ArticleDiffCallback : DiffUtil.ItemCallback<Article>() {
+    private class ArticleDiffCallback : DiffUtil.ItemCallback<Article>() {
 
-          override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-              return oldItem.id == newItem.id
-          }
+        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
+            return oldItem.source == newItem.source
+        }
 
-          override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-              return oldItem == newItem
-          }
+        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+            return oldItem == newItem
+        }
 
-          override fun getChangePayload(oldItem: Article, newItem: Article): Any? {
-              return when {
-                  oldItem.commentsCount != newItem.commentsCount -> {
-                      ArticleChangePayload.Comments(newItem.commentsCount)
-                  }
+        override fun getChangePayload(oldItem: Article, newItem: Article): Any? {
+            return when {
+                oldItem.title != newItem.title ->
+                    ArticleChangePayload.Title
 
-                  oldItem.bookmarked != newItem.bookmarked -> {
-                      ArticleChangePayload.Bookmark(newItem.bookmarked)
-                  }
+                oldItem.description != newItem.description ->
+                    ArticleChangePayload.Description
 
-                  else -> super.getChangePayload(oldItem, newItem)
-              }
-          }
-      }*/
+                else -> super.getChangePayload(oldItem, newItem)
+            }
+        }
+    }
 
 
-    sealed class ArticleToUpdate {
+    /* fun addData(data: Pair<Boolean, MutableList<DocumentEntity>>) {
+         val margetArray = items + data.second
+         val diffCallback = DiffUtilsCallback(items, margetArray)
+         val diffResult = DiffUtil.calculateDiff(diffCallback)
+         with(data) {
+             if (first) {
+                 items.clear()
+                 */
+    /**
+     * Удялем все выбранные элементы если page == 0
+     *//*
+                selectDeselectAll()
+                items.addAll(second)
+            } else {
+                items.addAll(second)
+            }
+        }
+        diffResult.dispatchUpdatesTo(this)
 
+        */
+    /**
+     * Если поставлен чекбокс выбрать все
+     * Добавляем к выбранным все элементы пришетшие с бэка
+     *//*
+        if (isCheckedAll) {
+            selectDeselectAll(true)
+        }
+    }*/
+
+
+    enum class ArticleChangePayload {
+        Title,
+        Description
     }
 
 }

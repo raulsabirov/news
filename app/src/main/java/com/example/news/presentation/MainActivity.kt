@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ConcatAdapter
+import com.example.news.MainFragment
+import com.example.news.NewsDetailFragment
 import com.example.news.R
 import com.example.news.databinding.ActivityMainBinding
 import com.github.terrakok.cicerone.NavigatorHolder
@@ -61,19 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     val viewModel: MainViewModel by viewModel()
 
-    val router: Router by inject()
-    val navigatorHolder: NavigatorHolder by inject()
 
-    val stack = Stack<Int>()
-
-    class ListNode(var `val`: Int) {
-        var next: ListNode? = null
-    }
-
-
-    var checkBoxCount = 0
-
-    val lock = Any()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // merge(intArrayOf(2,0),1, intArrayOf(1),1)
@@ -120,8 +111,6 @@ class MainActivity : AppCompatActivity() {
         replaceFragmentOnTop(MainFragment())
 
         // replaceFragmentOnTop(CustomViewFragment())
-        replaceFragmentOnTop(CustomViewFragment())
-
 
 
 
@@ -139,13 +128,8 @@ class MainActivity : AppCompatActivity() {
                println("replayCache " + viewModel.sharedFlow.replayCache.last())
                println("replayCache all " + viewModel.sharedFlow.replayCache)
            }
-
-
        }
 
-        lifecycleScope.async{
-
-        }
 
 /*       lifecycleScope.launch()
        {

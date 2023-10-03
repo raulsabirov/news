@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.GlobalState
 import com.example.news.data.ArticlesRepository
+import com.example.news.models.Article
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -12,6 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -27,30 +30,32 @@ sealed class LoadingState {
 class MainViewModel(private val articlesRepository: ArticlesRepository) :
     ViewModel() , KoinComponent {
 
-    val router         : Router by inject()
-    val navigatorHolder: NavigatorHolder by inject()
-
-    var currentStateLiveDate =
-        MutableLiveData<GlobalState>().apply { value = GlobalState.REGISTRATION }
+    val articlesFlow = MutableStateFlow<List<Article>>(emptyList())
 
     var loadingStateLiveDate =
         MutableLiveData<LoadingState>().apply { value = LoadingState.Default }
 
-
-     suspend fun articlesFlow() = articlesRepository.getArticles()
 
     val sharedFlow = MutableSharedFlow<Int>(replay = 4)
 
     val handler = CoroutineExceptionHandler { _, exception ->
         println("CoroutineExceptionHandler got $exception")
     }
+
+
     init {
 
     }
 
 
-    private suspend fun test1(){
-        viewModelScope.launch(Dispatchers.IO){
+    fun getArticles(page: Int = 1) {
+        viewModelScope.launch(Dispatchers.Default) {
+            articlesFlow.emitAll(articlesRepository.getArticles(page = page))
+        }
+    }
+
+    private suspend fun test1() {
+        viewModelScope.launch(Dispatchers.IO) {
 
         }
 

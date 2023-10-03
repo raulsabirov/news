@@ -11,7 +11,7 @@ import com.example.news.models.Article
 class HeaderAdapter() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val headerList = mutableListOf<String>()
+    val headerList = mutableListOf("HEADER")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return HeaderViewHolder(
@@ -29,7 +29,7 @@ class HeaderAdapter() :
 
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return headerList.size
     }
 
 
