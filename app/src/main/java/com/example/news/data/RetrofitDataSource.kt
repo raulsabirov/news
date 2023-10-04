@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -77,11 +78,31 @@ class RetrofitDataSource(
         return builder.build()
     }
 
-    override fun getArticles(page: Int): Flow<List<Article>> {
-        return flow {
-            val model = networkApi.query(page = page)
+    override fun getArticles(page: Int) = flow {
 
-            model.articles
+        try {
+            val response = networkApi.query(page = page)
+            if (response.isSuccessful)
+                emit(response.body()?.articles ?: emptyList())
+
+        } catch (e: Exception) {
+            println(e)
+            throw RetryException()
         }
+        emit(emptyList())
+
+    }.retry(5) {
+        if (it is RetryException) return@retry true
+
+
+        return@retry false
     }
+
+
+    class RetryException : Exception()
+
+    override suspend fun getArticles2(page: Int) =
+        networkApi.query(page = page).body()?.articles ?: emptyList()
+
+
 }

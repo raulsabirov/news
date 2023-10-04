@@ -250,11 +250,32 @@ class MainActivity : AppCompatActivity() {
             transaction.addToBackStack(null)
         }
 
-        for(f in fList)
-             transaction.replace(containerViewId, f)
+        for (f in fList)
+            transaction.replace(containerViewId, f)
 
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         transaction.commit()
     }
+
+
+    private fun initBottomNavigationBar(hasSavedState: Boolean) {
+        binding.bottom.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.first -> {
+
+                }
+
+                R.id.second -> {
+
+                }
+
+                R.id.three -> {
+
+                }
+            }
+            return@setOnItemSelectedListener true
+        }
+    }
+
 
 }

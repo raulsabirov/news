@@ -13,6 +13,10 @@ class ArticlesRepositoryImpl(
         return networkDataSource.getArticles(page = page)
     }
 
+    override suspend fun getArticles2(page: Int): List<Article> {
+        return networkDataSource.getArticles2(page = page)
+    }
+
     override suspend fun getArticleByTitle(): Article {
         TODO("Not yet implemented")
     }

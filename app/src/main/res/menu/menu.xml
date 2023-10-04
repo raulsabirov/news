@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/algorithm"
+        android:id="@+id/first"
 
-        android:title="Algorithm" />
-
-    <item
-        android:id="@+id/course"
-
-        android:title="Course" />
+        android:title="FIRST" />
 
     <item
-        android:id="@+id/profile"
+        android:id="@+id/second"
 
-        android:title="Profile" />
+        android:title="SECOND" />
+
+    <item
+        android:id="@+id/three"
+
+        android:title="THREE" />
 </menu>

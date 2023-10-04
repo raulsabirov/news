@@ -49,8 +49,10 @@ class MainViewModel(private val articlesRepository: ArticlesRepository) :
 
 
     fun getArticles(page: Int = 1) {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.IO) {
             articlesFlow.emitAll(articlesRepository.getArticles(page = page))
+
+            //   articlesRepository.getArticles2(page=page)
         }
     }
 

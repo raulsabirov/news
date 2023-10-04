@@ -15,6 +15,11 @@ class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
 
+
+    private val name by lazy {
+        arguments?.getString("NAME") ?: ""
+    }
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -31,6 +36,8 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        _binding?.tvName?.text = name
     }
 
     override fun onDestroyView() {

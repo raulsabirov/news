@@ -1,9 +1,9 @@
 package com.example.news.models
 
 data class ArticleApiModel(
-    val status: String,
-    val totalResults: Int,
-    val articles: List<Article> = listOf()
+    val status: String? = null,
+    val totalResults: Int? = null,
+    val articles: List<Article>
 )
 
 /*

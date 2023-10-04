@@ -2,14 +2,29 @@ package com.example.news.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.databinding.ItemArticleListBinding
 import com.example.news.databinding.ItemHeadListBinding
 import com.example.news.models.Article
 
+private class HeaderDiffCallback : DiffUtil.ItemCallback<String>() {
+
+    override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+        return oldItem == newItem
+    }
+
+    override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        return oldItem == newItem
+    }
+
+}
 
 class HeaderAdapter() :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+// RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    ListAdapter<String, RecyclerView.ViewHolder>(HeaderDiffCallback()) {
+
 
     val headerList = mutableListOf("HEADER")
 

@@ -9,7 +9,8 @@ class Generics {
     var arrayListString = ArrayList<String>()
     var arrayListCharSequence = ArrayList<CharSequence>()
 
-    var listAny = listOf<Any>(1)
+    val listStar: List<*> = listOf(42, "Bob")
+    var listAny = listOf<Any>(1, "1")
     var listCharSequence = listOf<CharSequence>("1")
     var listString = listOf<String>("1")
 

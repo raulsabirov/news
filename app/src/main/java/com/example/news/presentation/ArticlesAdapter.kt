@@ -21,8 +21,6 @@ class ArticlesAdapter() :
 
     val articleList: ArrayList<Article> = arrayListOf()
 
-    var callback: (() -> Unit)? = null
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ArticleViewHolder(
@@ -36,7 +34,9 @@ class ArticlesAdapter() :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ArticleViewHolder).bind(articleList[position])
+
+        if (holder is ArticleViewHolder)
+            holder.bind(articleList[position])
     }
 
     override fun onBindViewHolder(
@@ -53,13 +53,13 @@ class ArticlesAdapter() :
 
             }
 
-            else -> onBindViewHolder(holder, position)
+            else -> if (holder is ArticleViewHolder)
+                holder.bind(articleList[position])
         }
     }
 
 
     fun setItems(items: List<Article>, callback: (() -> Unit)? = null) {
-        this.callback = callback
         articleList.clear()
         articleList.addAll(items)
     }
