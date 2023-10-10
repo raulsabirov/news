@@ -38,7 +38,13 @@ class CouroutineActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+        val job = lifecycleScope.launch() {
 
+
+            delay(100)
+        }
+
+        // job.join()
 
         lifecycleScope.launch(handler + Dispatchers.IO) {
 /*            delay(2000)

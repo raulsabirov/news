@@ -89,7 +89,7 @@ class RetrofitDataSource(
             println(e)
             throw RetryException()
         }
-        emit(emptyList())
+       // emit(emptyList())
 
     }.retry(5) {
         if (it is RetryException) return@retry true
