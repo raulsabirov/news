@@ -24,47 +24,11 @@ import java.util.PriorityQueue
 import java.util.Queue
 import java.util.Stack
 
-object Solution2 {
-
-}
-
-val s: () -> Unit = { print("") }
-
-class TreeNode(var `val`: Int) {
-    var left: TreeNode? = null
-    var right: TreeNode? = null
-}
-
-
-interface UseCase {
-    val list: List<Int>
-}
-
-fun funUseCae(use: UseCase) {
-    use.list.map { println(it) }
-}
-
-class Solution : UseCase {
-    override val list = listOf(1, 2)
-
-    fun isSymmetric(root: TreeNode?): Boolean {
-
-        return equal(root, root)
-
-    }
-
-    fun equal(first: TreeNode?, second: TreeNode?): Boolean {
-        return first?.`val` == second?.`val` &&
-                equal(first?.left, first?.right)
-    }
-}
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     val viewModel: MainViewModel by viewModel()
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // merge(intArrayOf(2,0),1, intArrayOf(1),1)
@@ -107,16 +71,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         replaceFragmentOnTop(MainFragment())
 
         // replaceFragmentOnTop(CustomViewFragment())
-
-
-
-        synchronized(this) {
-
-        }
 
       //  replaceFragments(listOf(MainFragment(), NewsDetailFragment()), true)
 
@@ -131,26 +88,6 @@ class MainActivity : AppCompatActivity() {
        }
 
 
-/*       lifecycleScope.launch()
-       {
-           var result = 0
-
-           val mutex = Mutex()
-           // val ms = measureTimeMillis {
-           for (i in 1..10000) {
-               val job = lifecycleScope.async(Dispatchers.Default) {
-
-
-                   mutex.withLock {
-                       delay(100)
-                       return@async result++
-                   }
-               }
-
-               println(job.await())
-           }
-
-       }*/
 
 
 
@@ -166,13 +103,8 @@ class MainActivity : AppCompatActivity() {
 
         val list = LinkedList<Int>()
 
+        initBottomNavigationBar()
     }
-
-
-    @Synchronized
-    fun testFun( i : Int) =
-         i+1
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -192,6 +124,76 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+
+
+    fun addFragmentOnTop(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.main_container, fragment)
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
+    }
+
+    fun replaceFragmentOnTop(fragment: Fragment, backStackName: String? = null) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_container, fragment)
+            .addToBackStack(backStackName)
+            .commitAllowingStateLoss()
+
+
+    }
+
+    fun replaceFragments(
+        fList: List<Fragment>,
+        addToBackStack: Boolean = false,
+        containerViewId: Int = R.id.main_container
+    ) {
+        val fm = supportFragmentManager
+        val transaction = fm.beginTransaction()
+        if (addToBackStack) {
+            transaction.addToBackStack(null)
+        }
+
+        for (f in fList)
+            transaction.replace(containerViewId, f)
+
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        transaction.commit()
+    }
+
+
+    fun showArticlesFragment() {
+
+    }
+
+    private fun initBottomNavigationBar() {
+        binding.bottom.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.articles -> {
+
+                }
+
+                R.id.first -> {
+
+                    supportFragmentManager.saveBackStack(ARTICLES)
+                    supportFragmentManager.restoreBackStack(FIRST)
+                }
+
+                R.id.second -> {
+
+                }
+            }
+            return@setOnItemSelectedListener true
+        }
+    }
+
+    companion object {
+        const val ARTICLES = "ARTICLES"
+        const val FIRST = "FIRST"
+    }
+
 
     override fun onStart() {
         println("MainActivity onStart")
@@ -222,60 +224,5 @@ class MainActivity : AppCompatActivity() {
         println("MainActivity  onSaveInstanceState")
         super.onSaveInstanceState(outState)
     }
-
-    fun addFragmentOnTop(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.main_container, fragment)
-            .addToBackStack(null)
-            .commitAllowingStateLoss()
-    }
-
-    fun replaceFragmentOnTop(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.main_container, fragment)
-            .addToBackStack(null)
-            .commitAllowingStateLoss()
-    }
-
-    fun replaceFragments(
-        fList: List<Fragment>,
-        addToBackStack: Boolean = false,
-        containerViewId: Int = R.id.main_container
-    ) {
-        val fm = supportFragmentManager
-        val transaction = fm.beginTransaction()
-        if (addToBackStack) {
-            transaction.addToBackStack(null)
-        }
-
-        for (f in fList)
-            transaction.replace(containerViewId, f)
-
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        transaction.commit()
-    }
-
-
-    private fun initBottomNavigationBar(hasSavedState: Boolean) {
-        binding.bottom.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.first -> {
-
-                }
-
-                R.id.second -> {
-
-                }
-
-                R.id.three -> {
-
-                }
-            }
-            return@setOnItemSelectedListener true
-        }
-    }
-
 
 }

@@ -10,41 +10,36 @@
 	Получается, что Continuation является колбэком для suspend функции. Если в корутине есть несколько suspend функций, то Continuation будет колбэком для всех них
 
 
-# suspendCoroutine
+suspendCoroutine
 используется с АПИ с коллбэками например RxJava
-* suspend функция должна результаты своей работы передать в Continuation.invokeSuspend. Для этого используется метод Continuation.resume
-* функция suspendCoroutine предоставляет доступ к continuation
+suspend функция должна результаты своей работы передать в Continuation.invokeSuspend. Для этого используется метод Continuation.resume
+функция suspendCoroutine предоставляет доступ к continuation
 
-
-`
-suspend fun download(url: String): File {
-		return suspendCoroutine { continuation ->
-			networkService.download(url, object: NetworkService.Callback {
-				override fun onSuccess(result: File) {
-					continuation.resume(result)
-				}
-			})
-		}
-}`
-
+	suspend fun download(url: String): File {
+			return suspendCoroutine { continuation ->
+				networkService.download(url, object: NetworkService.Callback {
+					override fun onSuccess(result: File) {
+						continuation.resume(result)
+					}
+				})
+			}
+	}
 
 coroutine
 Корутина это набор объектов Job, Context, Dispatcher и CoroutineScope
 
-
-launch //билдер корутины
-`	val job = scope.launch {  
-		// coroutine code
-	}
-` 
+	launch //билдер корутины
+		val job = scope.launch {  
+			// coroutine code
+		}
 
 корутина может вернуть результат своей работы, возвращает deferred наследник job
-`	async
+
 		val deferred = scope.async() {
 			"async result"
 		}
- 		val result = deferred.await()`
-		
+ 		val result = deferred.await()
+
 С помощью async мы можем вызвать suspend функции параллельно.
 async корутину также можно запускать в режиме Lazy. Метод await стартует ее выполнение.
 
@@ -54,27 +49,27 @@ async корутину также можно запускать в режиме 
 
 * хранит в себе состояние корутины: активна/отменена/завершена или стартовать отложенную корутину
 * Job родитель содержит ссылки на дочерние Job
-* Job наследует интерфейс CoroutineScope и хранит ссылку на Context. Т.к. Context должен содержать Job, то Job просто помещает в Context ссылку на себя.
+* Job наследует интерфейс CoroutineScope и хранит ссылку на Context. Т.к. Context должен содержать Job,
+  то Job просто помещает в Context ссылку на себя.
 * Получается, что Job является scope, и сам же выступает в качестве Job этого scope.
 * job.cancel() не завершает корутины а только ставит флаг isActive=false
 * Job.join() - приостанавливает, а не блокирует выполнение кода. Это suspend функция. А значит ее надо вызывать внутри корутины
 
-	 это управляющий корутиной элемент . Для каждой создаваемой корутины (с помощью launch или async)
- он возвращает экземпляр Job, который однозначно идентифицирует корутину и управляет ее жизненным циклом
-	можете передать Job в CoroutineScope, чтобы сохранить возможность управления на время жизненного цикла CoroutineScope.
-	Жизненный цикл Job
-		isActive, isCancelled и __isCompleted__
+  Job это управляющий корутиной элемент . Для каждой создаваемой корутины (с помощью launch или async)
+  он возвращает экземпляр Job, который однозначно идентифицирует корутину и управляет ее жизненным циклом
+  можете передать Job в CoroutineScope, чтобы сохранить возможность управления на время жизненного цикла CoroutineScope.
+  Жизненный цикл Job
+  isActive, isCancelled и isCompleted
 
 
 # CoroutineScope
 
-``` kotlin
 	val scope = CoroutineScope(Job()).
 	interface CoroutineScope {    
 	// By convention, should contain an instance of a [job][Job] to enforce structured concurrency.
 	public val coroutineContext: CoroutineContext
-}```
 
+}
 
 Содержит в себе родительский job являющийся родителем для Job-ов корутин,
 которые мы создаем, вызывая scope.launch.
@@ -110,17 +105,18 @@ val context = Job() + Dispatchers.Default.
 Dispatcher
 	корутина при запуске ищет в своем контексте диспетчер, чтобы получить поток для выполнения работы
 Default
-	Если при создании контекста отсутствует диспетчер то берется по умолчанию -Dispatchers.Default.
-	Этот диспетчер представляет собой пул потоков. Количество потоков равно количеству ядер процессора.
-	Он не подходит для IO операций, но сгодится для интенсивных вычислений
+Если при создании контекста отсутствует диспетчер то берется по умолчанию -Dispatchers.Default.
+Этот диспетчер представляет собой пул потоков. Количество потоков равно количеству ядер процессора.
+Он не подходит для IO операций, но сгодится для интенсивных вычислений
 IO
-	Использует тот же пул потоков, что и диспетчер по умолчанию. Но его лимит на потоки равен 64.
-	Этот диспетчер подходит для выполнения IO операций (запросы в сеть, чтение с диска и т.п.).
+Использует тот же пул потоков, что и диспетчер по умолчанию. Но его лимит на потоки равен 64.
+Этот диспетчер подходит для выполнения IO операций (запросы в сеть, чтение с диска и т.п.).
 Main
-	Main диспетчер запустит корутину в основном потоке.
+Main диспетчер запустит корутину в основном потоке.
 Unconfined
-	при старте и возобновлении выполнения кода Continuation не происходит смены потока
-	при старте корутина выполняется в том потоке, где был вызван билдер, который эту корутину создал и запустил. А при возобновлении выполнения из suspend функции, корутина выполняется в потоке, который использовался в suspend функции для выполнения фоновой работы
+при старте и возобновлении выполнения кода Continuation не происходит смены потока
+при старте корутина выполняется в том потоке, где был вызван билдер, который эту корутину создал и запустил.
+А при возобновлении выполнения из suspend функции, корутина выполняется в потоке, который использовался в suspend функции для выполнения фоновой работы
 
 Обработка исключений
 scope отменяет своих детей, когда в одном из них происходит ошибка

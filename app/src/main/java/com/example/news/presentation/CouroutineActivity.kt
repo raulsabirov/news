@@ -1,15 +1,11 @@
 package com.example.news.presentation
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.news.R
 import com.example.news.databinding.ActivityCouroutineBinding
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +13,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
-import java.lang.Exception
-import kotlin.coroutines.suspendCoroutine
+
 
 class CouroutineActivity : AppCompatActivity() {
 
@@ -103,9 +97,48 @@ class CouroutineActivity : AppCompatActivity() {
             println("end launch")
 
 
+            /*       lifecycleScope.launch()
+       {
+           var result = 0
+
+           val mutex = Mutex()
+           // val ms = measureTimeMillis {
+           for (i in 1..10000) {
+               val job = lifecycleScope.async(Dispatchers.Default) {
+
+
+                   mutex.withLock {
+                       delay(100)
+                       return@async result++
+                   }
+               }
+
+               println(job.await())
+           }
+
+       }*/
+
+            synchronized(this) {
+
+            }
         }
+    }
 
-
+    // Preparing a Thread for HaMeR
+    internal class LooperThread : Thread() {
+        var mHandler: Handler? = null
+        override fun run() {
+            // adding and preparing the Looper
+            Looper.prepare()
+            // the Handler instance will be associated with Thread’s Looper
+            mHandler = object : Handler() {
+                fun handleMessage(msg: Message?) {
+                    // process incoming messages here
+                }
+            }
+            // Starting the message queue loop using the Looper
+            Looper.loop()
+        }
     }
 
 

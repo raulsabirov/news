@@ -34,10 +34,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         articlesAdapter
     )
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        println("MainFragment onViewCreated")
 
 
 
@@ -52,49 +50,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        println("MainFragment onDestroyView")
-    }
-
-
-    override fun onAttach(activity: Activity) {
-        super.onAttach(activity)
-        println("MainFragment onDestroyView")
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        println("MainFragment onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        println("MainFragment onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {}
 
 
     companion object {

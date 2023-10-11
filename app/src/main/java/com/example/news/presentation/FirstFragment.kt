@@ -6,42 +6,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.news.BaseFragment
+import com.example.news.R
 import com.example.news.databinding.FragmentFirstBinding
+import com.example.news.databinding.FragmentMainBinding
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment() {
+class FirstFragment : BaseFragment(R.id.FirstFragment) {
 
-    private var _binding: FragmentFirstBinding? = null
 
+    private val binding by viewBinding(FragmentFirstBinding::bind)
 
     private val name by lazy {
         arguments?.getString("NAME") ?: ""
     }
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
-        return binding.root
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding?.tvName?.text = name
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        binding.tvName.text = name
     }
 }

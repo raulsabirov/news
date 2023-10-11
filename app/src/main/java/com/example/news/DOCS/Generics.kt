@@ -37,6 +37,11 @@ class Generics {
 
     }
 
+
+    public fun starGeneric(listStars: ArrayList<*>) {
+        listStars.add(TODO())
+    }
+
     public inline fun <LIST_FROM, R, LIST_TO : MutableCollection<in R>> Iterable<LIST_FROM>.mapTo(
         destination: LIST_TO,
         transform: (LIST_FROM) -> R

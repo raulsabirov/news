@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
+        android:id="@+id/articles"
+
+        android:title="Articles" />
+
+    <item
         android:id="@+id/first"
 
         android:title="FIRST" />
@@ -12,9 +17,4 @@
         android:id="@+id/second"
 
         android:title="SECOND" />
-
-    <item
-        android:id="@+id/three"
-
-        android:title="THREE" />
 </menu>
