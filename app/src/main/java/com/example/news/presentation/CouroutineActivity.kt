@@ -33,8 +33,6 @@ class CouroutineActivity : AppCompatActivity() {
 
 
         val job = lifecycleScope.launch() {
-
-
             delay(100)
         }
 
@@ -52,8 +50,6 @@ class CouroutineActivity : AppCompatActivity() {
 
 
             println("begin launch")
-
-
             try {
                 ("aaa").toInt()
             } catch (_: Exception) {
@@ -124,6 +120,12 @@ class CouroutineActivity : AppCompatActivity() {
         }
     }
 
+
+//  Class used to run a message loop for a thread. Threads by default do not have a message loop
+//  associated with them; to create one, call prepare in the thread that is to run the loop,
+//  and then loop to have it process messages until the loop is stopped.
+//   Most interaction with a message loop is through the Handler class.
+
     // Preparing a Thread for HaMeR
     internal class LooperThread : Thread() {
         var mHandler: Handler? = null
@@ -131,8 +133,8 @@ class CouroutineActivity : AppCompatActivity() {
             // adding and preparing the Looper
             Looper.prepare()
             // the Handler instance will be associated with Thread’s Looper
-            mHandler = object : Handler() {
-                fun handleMessage(msg: Message?) {
+            mHandler = object : Handler(Looper.myLooper()!!) {
+                override fun handleMessage(msg: Message) {
                     // process incoming messages here
                 }
             }
@@ -140,6 +142,4 @@ class CouroutineActivity : AppCompatActivity() {
             Looper.loop()
         }
     }
-
-
 }

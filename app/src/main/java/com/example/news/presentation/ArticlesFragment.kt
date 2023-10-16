@@ -1,6 +1,5 @@
 package com.example.news
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -18,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class MainFragment : Fragment(R.layout.fragment_main) {
+class ArticlesFragment : Fragment(R.layout.fragment_articles) {
 
     private val mainViewModel: MainViewModel by viewModel()
     private val binding by viewBinding(FragmentMainBinding::bind)
@@ -53,8 +52,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
 
     companion object {
-        fun getNewInstance(): MainFragment {
-            return MainFragment().apply {
+        fun getNewInstance(): ArticlesFragment {
+            return ArticlesFragment().apply {
                 /*           arguments = Bundle().apply {
                 putInt(EXTRA_NUMBER, number)
                 putLong(EXTRA_TIME, System.currentTimeMillis())

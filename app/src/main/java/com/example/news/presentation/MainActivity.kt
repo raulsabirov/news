@@ -8,21 +8,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.ConcatAdapter
-import com.example.news.MainFragment
+import com.example.news.ArticlesFragment
 import com.example.news.NewsDetailFragment
 import com.example.news.R
 import com.example.news.databinding.ActivityMainBinding
-import com.github.terrakok.cicerone.NavigatorHolder
-import com.github.terrakok.cicerone.Router
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.LinkedList
 import java.util.PriorityQueue
 import java.util.Queue
-import java.util.Stack
 
 class MainActivity : AppCompatActivity() {
 
@@ -71,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        replaceFragmentOnTop(MainFragment())
+        replaceFragmentOnTop(ArticlesFragment())
 
         // replaceFragmentOnTop(CustomViewFragment())
 

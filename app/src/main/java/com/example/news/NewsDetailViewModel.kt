@@ -19,8 +19,6 @@ class NewsDetailViewModel(private val articlesRepository: ArticlesRepository) :
     val router         : Router by inject()
     val navigatorHolder: NavigatorHolder by inject()
 
-    var currentStateLiveDate =
-        MutableLiveData<GlobalState>().apply { value = GlobalState.REGISTRATION }
 
     var loadingStateLiveDate =
         MutableLiveData<LoadingState>().apply { value = LoadingState.Default }

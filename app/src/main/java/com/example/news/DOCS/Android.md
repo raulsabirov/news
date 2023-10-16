@@ -1,27 +1,18 @@
 # Single Responsibility Principle and Context
-
 https://medium.com/android-news/single-responsibility-principle-and-context-60e39a28e5bd
 
-# Многопоточность. Handler. Looper.
-
-https://stackofskills.com/android-interview-7-threads/
 
 # Android с нуля: фоновые операции -- Handler. Looper.
-
 https://coderlessons.com/articles/mobilnaia-razrabotka-articles/ponimanie-parallelizma-na-android-s-pomoshchiu-hamer
 
 # Модульная разработка Android приложений
-
 https://habr.com/ru/companies/kolesa/articles/353942/
 
 # Советы по модуляризации приложений Android
-
 https://medium.com/nuances-of-programming/%D1%81%D0%BE%D0%B2%D0%B5%D1%82%D1%8B-%D0%BF%D0%BE-%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D1%8F%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9-android-14cede8d154f
 
 # Переиспользование модулей в многомодульных Android приложениях
-
 https://habr.com/ru/articles/750720/
 
 # Что внутри APK. App Bundle. Google Play Dynamic Feature
-
 https://habr.com/ru/companies/broadcast/articles/715052/
