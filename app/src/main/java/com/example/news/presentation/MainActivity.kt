@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.example.news.ArticlesFragment
-import com.example.news.NewsDetailFragment
+import com.example.news.ArticleDetailFragment
 import com.example.news.R
 import com.example.news.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
@@ -65,27 +65,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        replaceFragmentOnTop(ArticlesFragment())
+
+        savedInstanceState ?: replaceFragmentOnTop(ArticlesFragment(), ARTICLES)
+
 
         // replaceFragmentOnTop(CustomViewFragment())
 
-      //  replaceFragments(listOf(MainFragment(), NewsDetailFragment()), true)
+        //  replaceFragments(listOf(MainFragment(), NewsDetailFragment()), true)
 
-       lifecycleScope.launch()
-       {
-           viewModel.sharedFlow.collect {
-               println("collect " + it)
+        lifecycleScope.launch()
+        {
+            viewModel.sharedFlow.collect {
+                println("collect " + it)
 
                println("replayCache " + viewModel.sharedFlow.replayCache.last())
                println("replayCache all " + viewModel.sharedFlow.replayCache)
            }
        }
 
-
-
-
-
-       // println("measureTimeMillis" + ms)
 
         val p = PriorityQueue(listOf(5, 3, 6, 1, 2))
 
@@ -112,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
-                replaceFragmentOnTop(NewsDetailFragment())
+                replaceFragmentOnTop(ArticleDetailFragment())
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -132,6 +129,7 @@ class MainActivity : AppCompatActivity() {
     fun replaceFragmentOnTop(fragment: Fragment, backStackName: String? = null) {
         supportFragmentManager
             .beginTransaction()
+            .setReorderingAllowed(true)
             .replace(R.id.main_container, fragment)
             .addToBackStack(backStackName)
             .commitAllowingStateLoss()
@@ -166,26 +164,46 @@ class MainActivity : AppCompatActivity() {
         binding.bottom.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.articles -> {
-
+                    replaceFragmentOnTop(ArticlesFragment(), ARTICLES)
                 }
 
                 R.id.first -> {
 
                     supportFragmentManager.saveBackStack(ARTICLES)
-                    supportFragmentManager.restoreBackStack(FIRST)
+                    //  supportFragmentManager.restoreBackStack(FIRST)
                 }
 
                 R.id.second -> {
-
+                    supportFragmentManager.restoreBackStack(ARTICLES)
                 }
             }
             return@setOnItemSelectedListener true
         }
     }
 
+
+    fun saveBackStack(oldButton: Int) {
+        when (oldButton) {
+            R.id.articles -> {
+                supportFragmentManager.saveBackStack(ARTICLES)
+            }
+
+            R.id.first -> {
+                supportFragmentManager.saveBackStack(FIRST)
+            }
+
+            R.id.second -> {
+                supportFragmentManager.saveBackStack(SECOND)
+            }
+        }
+    }
+
+    var lastBottomButtonClicked = R.id.articles
+
     companion object {
         const val ARTICLES = "ARTICLES"
         const val FIRST = "FIRST"
+        const val SECOND = "SECOND"
     }
 
 

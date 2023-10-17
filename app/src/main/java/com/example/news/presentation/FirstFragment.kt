@@ -10,7 +10,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.news.BaseFragment
 import com.example.news.R
 import com.example.news.databinding.FragmentFirstBinding
-import com.example.news.databinding.FragmentMainBinding
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -28,6 +27,6 @@ class FirstFragment : BaseFragment(R.id.FirstFragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvName.text = name
+        binding.textviewFirst.text = name
     }
 }

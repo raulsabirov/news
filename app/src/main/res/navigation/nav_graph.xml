@@ -19,7 +19,7 @@
         android:id="@+id/SecondFragment"
         android:name="com.example.news.presentation.NewsDetailFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_news_detail">
+        tools:layout="@layout/fragment_article_detail">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"

@@ -17,52 +17,38 @@ import com.example.news.models.Article
 //https://ziginsider.github.io/RecyclerView/#adapter
 
 class ArticlesAdapter() :
-    ListAdapter<Article, RecyclerView.ViewHolder>(ArticleDiffCallback()) {
-
-    val articleList: ArrayList<Article> = arrayListOf()
+    ListAdapter<Article, ArticlesAdapter.ArticleViewHolder>(ArticleDiffCallback()) {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return ArticleViewHolder(
             ItemArticleListBinding
                 .inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun getItemCount(): Int {
-        return articleList.size
+
+    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    /*    override fun onBindViewHolder(
+            holder: ArticleViewHolder,
+            position: Int,
+            payloads: MutableList<Any>
+        ) {
+            when (val latestPayload = payloads.lastOrNull()) {
+                ArticleChangePayload.Title -> {
+                }
 
-        if (holder is ArticleViewHolder)
-            holder.bind(articleList[position])
-    }
+                ArticleChangePayload.Description -> {
 
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int,
-        payloads: MutableList<Any>
-    ) {
-        when (val latestPayload = payloads.lastOrNull()) {
-            ArticleChangePayload.Title -> {
+                }
 
+                else ->
+                    holder.bind(getItem(position))
             }
-
-            ArticleChangePayload.Description -> {
-
-            }
-
-            else -> if (holder is ArticleViewHolder)
-                holder.bind(articleList[position])
-        }
-    }
-
-
-    fun setItems(items: List<Article>, callback: (() -> Unit)? = null) {
-        articleList.clear()
-        articleList.addAll(items)
-    }
+        }*/
 
     inner class ArticleViewHolder(var itemBinding: ItemArticleListBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {

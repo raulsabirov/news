@@ -15,48 +15,48 @@ open class BaseFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        println(this.javaClass.name + "onCreateView")
+        println("________" + this.javaClass.getSimpleName() + " onCreateView")
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        println(this.javaClass.name + "onViewCreated")
+        println("________" + this.javaClass.getSimpleName() + " onViewCreated")
         super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {
-        println(this.javaClass.name + "onDestroyView")
+        println("________" + this.javaClass.getSimpleName() + " onDestroyView")
         super.onDestroyView()
     }
 
 
     override fun onAttach(activity: Activity) {
-        println(this.javaClass.name + "onAttach")
+        println("________" + this.javaClass.getSimpleName() + " onAttach")
         super.onAttach(activity)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        println(this.javaClass.name + "onCreate")
+        println("________" + this.javaClass.getSimpleName() + " onCreate")
         super.onCreate(savedInstanceState)
     }
 
     override fun onStart() {
-        println(this.javaClass.name + "onStart")
+        println("________" + this.javaClass.getSimpleName() + " onStart")
         super.onStart()
     }
 
     override fun onResume() {
-        println(this.javaClass.name + "onResume")
+        println("________" + this.javaClass.getSimpleName() + " onResume")
         super.onResume()
     }
 
     override fun onPause() {
-        println(this.javaClass.name + "onPause")
+        println("________" + this.javaClass.getSimpleName() + " onPause")
         super.onPause()
     }
 
     override fun onStop() {
-        println(this.javaClass.name + "onStop")
+        println("________" + this.javaClass.getSimpleName() + " onStop")
         super.onStop()
     }
 
@@ -65,6 +65,7 @@ open class BaseFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
     }
 
     override fun onDetach() {
+        println("________" + this.javaClass.getSimpleName() + " onDetach")
         super.onDetach()
     }
 
