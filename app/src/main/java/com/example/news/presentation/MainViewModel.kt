@@ -3,6 +3,8 @@ package com.example.news.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.news.FlowEvent
+import com.example.news.Navigation
 import com.example.news.data.ArticlesRepository
 import com.example.news.models.Article
 import com.github.terrakok.cicerone.NavigatorHolder
@@ -13,6 +15,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,6 +33,9 @@ sealed class LoadingState {
 class MainViewModel(private val articlesRepository: ArticlesRepository) :
     ViewModel() , KoinComponent {
 
+    private val _navigationFlow = FlowEvent<Navigation>()
+    val navigationFlow: SharedFlow<Navigation> = _navigationFlow.asSharedFlow()
+
     val articlesFlow = MutableStateFlow<List<Article>>(emptyList())
 
     var loadingStateLiveDate =
@@ -42,8 +49,8 @@ class MainViewModel(private val articlesRepository: ArticlesRepository) :
     }
 
 
-    init {
-
+    fun navigate(navigation: Navigation) {
+        _navigationFlow.tryEmit(navigation)
     }
 
 

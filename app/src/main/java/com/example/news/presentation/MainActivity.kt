@@ -4,16 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.news.ArticlesFragment
 import com.example.news.ArticleDetailFragment
+import com.example.news.Navigation
 import com.example.news.R
 import com.example.news.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.LinkedList
 import java.util.PriorityQueue
 import java.util.Queue
@@ -22,9 +25,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    val viewModel: MainViewModel by viewModel()
+
+    // val viewModel = ViewModelProvider.of(this).get(MainViewModel.class)
+
+    val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         // merge(intArrayOf(2,0),1, intArrayOf(1),1)
         val openBrackets = listOf('(', '{', '[')
         val pair = mutableMapOf(
@@ -75,88 +82,29 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch()
         {
-            viewModel.sharedFlow.collect {
-                println("collect " + it)
 
-               println("replayCache " + viewModel.sharedFlow.replayCache.last())
-               println("replayCache all " + viewModel.sharedFlow.replayCache)
-           }
-       }
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigationFlow.collect {
+                    ::onNavigation
+                }
+            }
 
-
-        val p = PriorityQueue(listOf(5, 3, 6, 1, 2))
-
-        println(p.poll())
-        println(p.poll())
-        println(p.poll())
-        println(p.poll())
-        println(p.poll())
-
-        val list = LinkedList<Int>()
+        }
 
         initBottomNavigationBar()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> {
-                replaceFragmentOnTop(ArticleDetailFragment())
-                true
+    fun onNavigation(navigation: Navigation) {
+
+        when (navigation) {
+            Navigation.Articles -> {
+
             }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
-
-
-    fun addFragmentOnTop(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.main_container, fragment)
-            .addToBackStack(null)
-            .commitAllowingStateLoss()
-    }
-
-    fun replaceFragmentOnTop(fragment: Fragment, backStackName: String? = null) {
-        supportFragmentManager
-            .beginTransaction()
-            .setReorderingAllowed(true)
-            .replace(R.id.main_container, fragment)
-            .addToBackStack(backStackName)
-            .commitAllowingStateLoss()
-
-
-    }
-
-    fun replaceFragments(
-        fList: List<Fragment>,
-        addToBackStack: Boolean = false,
-        containerViewId: Int = R.id.main_container
-    ) {
-        val fm = supportFragmentManager
-        val transaction = fm.beginTransaction()
-        if (addToBackStack) {
-            transaction.addToBackStack(null)
+            else -> {}
         }
 
-        for (f in fList)
-            transaction.replace(containerViewId, f)
-
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        transaction.commit()
-    }
-
-
-    fun showArticlesFragment() {
 
     }
 
@@ -165,6 +113,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.articles -> {
                     replaceFragmentOnTop(ArticlesFragment(), ARTICLES)
+                    viewModel.navigate(Navigation.Articles)
                 }
 
                 R.id.first -> {
@@ -207,6 +156,64 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                replaceFragmentOnTop(ArticleDetailFragment())
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun addFragmentOnTop(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.main_container, fragment)
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
+    }
+
+    fun replaceFragmentOnTop(fragment: Fragment, backStackName: String? = null) {
+        supportFragmentManager
+            .beginTransaction()
+            .setReorderingAllowed(true)
+            .replace(R.id.main_container, fragment)
+            .addToBackStack(backStackName)
+            .commitAllowingStateLoss()
+
+
+    }
+
+    fun replaceFragments(
+        fList: List<Fragment>,
+        addToBackStack: Boolean = false,
+        containerViewId: Int = R.id.main_container
+    ) {
+        val fm = supportFragmentManager
+        val transaction = fm.beginTransaction()
+        if (addToBackStack) {
+            transaction.addToBackStack(null)
+        }
+
+        for (f in fList)
+            transaction.replace(containerViewId, f)
+
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        transaction.commit()
+    }
+
+
     override fun onStart() {
         println("MainActivity onStart")
         super.onStart()
@@ -236,5 +243,6 @@ class MainActivity : AppCompatActivity() {
         println("MainActivity  onSaveInstanceState")
         super.onSaveInstanceState(outState)
     }
+
 
 }
