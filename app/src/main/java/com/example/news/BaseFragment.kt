@@ -11,10 +11,15 @@ import com.example.news.databinding.FragmentFirstBinding
 
 open class BaseFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
 
+    val tag = this.javaClass.getSimpleName()
+
+    var numOfFragments = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         println("________" + this.javaClass.getSimpleName() + " onCreateView")
         return super.onCreateView(inflater, container, savedInstanceState)
     }

@@ -25,13 +25,29 @@ class FirstFragment : BaseFragment(R.id.FirstFragment) {
     private val binding by viewBinding(FragmentFirstBinding::bind)
 
     private val name by lazy {
-        arguments?.getString("NAME") ?: ""
+        arguments?.getString("NAME") ?: " FirstFragment "
     }
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        count++
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        count--
+        super.onDestroy()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.textviewFirst.text = name
+
+        binding.textviewFirst.text = name + "  $count"
     }
+
+    companion object {
+        var count = 0
+    }
+
 }

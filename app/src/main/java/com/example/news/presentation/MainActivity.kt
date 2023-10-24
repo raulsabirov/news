@@ -2,6 +2,7 @@ package com.example.news.presentation
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -13,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.news.ArticlesFragment
 import com.example.news.ArticleDetailFragment
+import com.example.news.BaseFragment
 import com.example.news.Navigation
 import com.example.news.R
 import com.example.news.databinding.ActivityMainBinding
@@ -24,9 +26,6 @@ import java.util.Queue
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-
-    // val viewModel = ViewModelProvider.of(this).get(MainViewModel.class)
 
     val viewModel: MainViewModel by viewModels()
 
@@ -72,64 +71,76 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         savedInstanceState ?: replaceFragmentOnTop(ArticlesFragment(), ARTICLES)
-
-
         // replaceFragmentOnTop(CustomViewFragment())
 
         //  replaceFragments(listOf(MainFragment(), NewsDetailFragment()), true)
 
         lifecycleScope.launch()
         {
-
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigationFlow.collect {
-                    ::onNavigation
+                    onNavigation(it)
                 }
             }
-
         }
 
-        initBottomNavigationBar()
+        initBottomNavigationBar(savedInstanceState?.getInt(SELECTED_BUTTON) ?: R.id.articles)
     }
 
 
-    fun onNavigation(navigation: Navigation) {
+    private fun onNavigation(navigation: Navigation) {
 
         when (navigation) {
-            Navigation.Articles -> {
+            is Navigation.Articles -> {
+                replaceFragmentOnTop(ArticlesFragment(), ARTICLES)
+            }
+
+            is Navigation.First -> {
+
+                replaceFragmentOnTop(FirstFragment(), FIRST)
+            }
+
+            is Navigation.Second -> {
 
             }
 
             else -> {}
+
         }
-
-
     }
 
-    private fun initBottomNavigationBar() {
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        outState.putInt(SELECTED_BUTTON, binding.bottom.selectedItemId)
+        super.onSaveInstanceState(outState, outPersistentState)
+    }
+
+    private fun initBottomNavigationBar(selected: Int = R.id.articles) {
+        binding.bottom.selectedItemId = selected
+
         binding.bottom.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.articles -> {
-                    replaceFragmentOnTop(ArticlesFragment(), ARTICLES)
+
                     viewModel.navigate(Navigation.Articles)
                 }
 
                 R.id.first -> {
+                    viewModel.navigate(Navigation.First)
 
-                    supportFragmentManager.saveBackStack(ARTICLES)
+                    // supportFragmentManager.saveBackStack(ARTICLES)
                     //  supportFragmentManager.restoreBackStack(FIRST)
                 }
 
                 R.id.second -> {
-                    supportFragmentManager.restoreBackStack(ARTICLES)
+                    viewModel.navigate(Navigation.Second)
+                    //     supportFragmentManager.restoreBackStack(ARTICLES)
                 }
             }
             return@setOnItemSelectedListener true
         }
     }
-
 
     fun saveBackStack(oldButton: Int) {
         when (oldButton) {
@@ -147,15 +158,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    var lastBottomButtonClicked = R.id.articles
-
-    companion object {
-        const val ARTICLES = "ARTICLES"
-        const val FIRST = "FIRST"
-        const val SECOND = "SECOND"
-    }
-
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -166,14 +168,15 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> {
-                replaceFragmentOnTop(ArticleDetailFragment())
-                true
-            }
+        /*       return when (item.itemId) {
+                   R.id.action_settings -> {
+                       replaceFragmentOnTop(ArticleDetailFragment())
+                       true
+                   }
 
-            else -> super.onOptionsItemSelected(item)
-        }
+                   else -> super.onOptionsItemSelected(item)
+               }*/
+        return true
     }
 
     fun addFragmentOnTop(fragment: Fragment) {
@@ -184,22 +187,25 @@ class MainActivity : AppCompatActivity() {
             .commitAllowingStateLoss()
     }
 
-    fun replaceFragmentOnTop(fragment: Fragment, backStackName: String? = null) {
+    val stackMap = mutableMapOf<String, Int>()
+
+    fun replaceFragmentOnTop(fragment: BaseFragment, backStackName: String) {
+
+        stackMap[backStackName]?.inc() ?: stackMap.put(backStackName, 0)
+
+        fragment.arguments = Bundle().apply {
+
+        }
+
         supportFragmentManager
             .beginTransaction()
             .setReorderingAllowed(true)
-            .replace(R.id.main_container, fragment)
+            .replace(R.id.main_container, fragment, fragment.tag)
             .addToBackStack(backStackName)
             .commitAllowingStateLoss()
-
-
     }
 
-    fun replaceFragments(
-        fList: List<Fragment>,
-        addToBackStack: Boolean = false,
-        containerViewId: Int = R.id.main_container
-    ) {
+    fun replaceFragments(fList: List<Fragment>, addToBackStack: Boolean = false, containerViewId: Int = R.id.main_container) {
         val fm = supportFragmentManager
         val transaction = fm.beginTransaction()
         if (addToBackStack) {
@@ -212,7 +218,6 @@ class MainActivity : AppCompatActivity() {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         transaction.commit()
     }
-
 
     override fun onStart() {
         println("MainActivity onStart")
@@ -244,5 +249,12 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
     }
 
+    companion object {
+        const val ARTICLES = "ARTICLES"
+        const val FIRST = "FIRST"
+        const val SECOND = "SECOND"
+
+        const val SELECTED_BUTTON = "selected_button"
+    }
 
 }
