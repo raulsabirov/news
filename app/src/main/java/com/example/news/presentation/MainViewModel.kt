@@ -6,9 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.news.FlowEvent
 import com.example.news.Navigation
 import com.example.news.data.ArticlesRepository
+import com.example.news.data.ArticlesRepositoryImpl
+import com.example.news.data.CacheDataSource
+import com.example.news.data.LocalDataSource
+import com.example.news.data.NetworkDataSource
+import com.example.news.data.RetrofitDataSource
 import com.example.news.models.Article
-import com.github.terrakok.cicerone.NavigatorHolder
-import com.github.terrakok.cicerone.Router
+
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -20,8 +24,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 sealed class LoadingState {
     object Default : LoadingState()
@@ -30,8 +32,13 @@ sealed class LoadingState {
 }
 
 
-class MainViewModel(private val articlesRepository: ArticlesRepository) :
-    ViewModel() , KoinComponent {
+class MainViewModel() :
+    ViewModel() {
+
+    private val articlesRepository = ArticlesRepositoryImpl(
+        RetrofitDataSource(),
+        CacheDataSource()
+    )
 
     private val _navigationFlow = FlowEvent<Navigation>()
     val navigationFlow: SharedFlow<Navigation> = _navigationFlow.asSharedFlow()

@@ -11,7 +11,7 @@ import com.example.news.databinding.FragmentFirstBinding
 
 open class BaseFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
 
-    val tag = this.javaClass.getSimpleName()
+    val myTag = this.javaClass.getSimpleName()
 
     var numOfFragments = 0
 

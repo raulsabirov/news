@@ -5,19 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.data.ArticlesRepository
 import com.example.news.presentation.LoadingState
-import com.github.terrakok.cicerone.NavigatorHolder
-import com.github.terrakok.cicerone.Router
+
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+
 
 class NewsDetailViewModel(private val articlesRepository: ArticlesRepository) :
-    ViewModel() , KoinComponent {
-
-    val router         : Router by inject()
-    val navigatorHolder: NavigatorHolder by inject()
+    ViewModel() {
 
 
     var loadingStateLiveDate =

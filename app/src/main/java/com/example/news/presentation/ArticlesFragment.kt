@@ -2,6 +2,8 @@ package com.example.news
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
@@ -11,11 +13,11 @@ import com.example.news.databinding.FragmentArticlesBinding
 import com.example.news.presentation.ArticlesAdapter
 import com.example.news.presentation.HeaderAdapter
 import com.example.news.presentation.MainViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class ArticlesFragment : BaseFragment(R.layout.fragment_articles) {
 
-    private val mainViewModel: MainViewModel by viewModel()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val binding by viewBinding(FragmentArticlesBinding::bind)
 
     private val articlesAdapter = ArticlesAdapter()

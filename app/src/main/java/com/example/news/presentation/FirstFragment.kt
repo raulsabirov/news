@@ -17,9 +17,7 @@ import com.example.news.databinding.FragmentFirstBinding
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : BaseFragment(R.id.FirstFragment) {
-
-
+class FirstFragment : BaseFragment(R.layout.fragment_first) {
     val viewModel: MainViewModel by activityViewModels()
 
     private val binding by viewBinding(FragmentFirstBinding::bind)
@@ -27,7 +25,6 @@ class FirstFragment : BaseFragment(R.id.FirstFragment) {
     private val name by lazy {
         arguments?.getString("NAME") ?: " FirstFragment "
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         count++

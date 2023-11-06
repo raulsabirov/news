@@ -6,9 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.news.BaseFragment
 import com.example.news.R
 
-class CustomViewFragment : Fragment() {
+class CustomViewFragment : BaseFragment(R.layout.fragment_custom_view) {
 
     companion object {
         fun newInstance() = CustomViewFragment()

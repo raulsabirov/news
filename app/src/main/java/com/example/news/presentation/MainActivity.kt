@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         savedInstanceState ?: replaceFragmentOnTop(ArticlesFragment(), ARTICLES)
-        // replaceFragmentOnTop(CustomViewFragment())
+        // replaceFragmentOnTop(CustomViewFragment(),"")
 
         //  replaceFragments(listOf(MainFragment(), NewsDetailFragment()), true)
 
@@ -102,11 +102,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             is Navigation.Second -> {
-
+                replaceFragmentOnTop(SecondFragment(), SECOND)
             }
 
             else -> {}
-
         }
     }
 
@@ -116,10 +115,21 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState, outPersistentState)
     }
 
+
+    var oldButton = R.id.articles
+
     private fun initBottomNavigationBar(selected: Int = R.id.articles) {
         binding.bottom.selectedItemId = selected
+        oldButton = R.id.articles
 
         binding.bottom.setOnItemSelectedListener {
+
+
+            if (oldButton != it.itemId) {
+                restoreBackStack(it.itemId)
+                saveBackStack(oldButton)
+            }
+
             when (it.itemId) {
                 R.id.articles -> {
 
@@ -138,6 +148,8 @@ class MainActivity : AppCompatActivity() {
                     //     supportFragmentManager.restoreBackStack(ARTICLES)
                 }
             }
+
+            oldButton = it.itemId
             return@setOnItemSelectedListener true
         }
     }
@@ -154,6 +166,22 @@ class MainActivity : AppCompatActivity() {
 
             R.id.second -> {
                 supportFragmentManager.saveBackStack(SECOND)
+            }
+        }
+    }
+
+    fun restoreBackStack(button: Int) {
+        when (button) {
+            R.id.articles -> {
+                supportFragmentManager.restoreBackStack(ARTICLES)
+            }
+
+            R.id.first -> {
+                supportFragmentManager.restoreBackStack(FIRST)
+            }
+
+            R.id.second -> {
+                supportFragmentManager.restoreBackStack(SECOND)
             }
         }
     }

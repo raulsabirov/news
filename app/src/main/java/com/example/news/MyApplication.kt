@@ -1,24 +1,11 @@
 package com.example.news
 
 import android.app.Application
-import com.example.news.DI.navigationModule
-import com.example.news.DI.netWorkModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.androidx.fragment.koin.fragmentFactory
-import org.koin.core.context.startKoin
 
 class MyApplication : Application(){
     override fun onCreate() {
         super.onCreate()
 
-        // Initialize Koin
-        startKoin {
-            androidLogger()
-            androidContext(this@MyApplication)
-            fragmentFactory()
-            modules(netWorkModule, navigationModule)
-        }
 
         // Initialize Sync; the system responsible for keeping data in the app up to date.
 //        Sync.initialize(context = this)
