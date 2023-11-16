@@ -26,3 +26,6 @@ https://blog.mindorks.com/implementing-merge-adapter-in-android-tutorial/
 # Как мы сократили время запуска Android-приложения на 77%
 
 https://apptractor.ru/develop/kak-my-sokratili-vremya-zapuska-android-na-77.html
+
+#Fragment Transactions & Activity State Loss
+https://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html
