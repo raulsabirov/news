@@ -5,3 +5,7 @@ https://copyprogramming.com/howto/dagger-and-kotlin-dagger-doesn-t-generate-comp
 # Using Dagger in your Android app - Kotlin
 
 https://developer.android.com/codelabs/android-dagger
+
+# Dagger code generation cheat sheets
+
+https://manuelvivo.dev/dagger-cheat-sheets
