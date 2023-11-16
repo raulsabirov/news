@@ -2,11 +2,12 @@ package com.example.news.data
 
 import com.example.news.models.Article
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 
-class ArticlesRepositoryImpl(
+class ArticlesRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource,
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource? = null
 ) : ArticlesRepository {
 
     override fun getArticles(page: Int): Flow<List<Article>> {

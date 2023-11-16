@@ -14,9 +14,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class RetrofitDataSource(
-    private val ioDispatcher: CoroutineDispatcher? = null
+class RetrofitDataSource @Inject constructor(
 ) : NetworkDataSource {
 
     private val networkApi = Retrofit.Builder()

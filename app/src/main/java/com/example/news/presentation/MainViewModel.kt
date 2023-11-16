@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 sealed class LoadingState {
     object Default : LoadingState()
@@ -32,13 +33,10 @@ sealed class LoadingState {
 }
 
 
-class MainViewModel() :
+class MainViewModel @Inject constructor(
+    val articlesRepository: ArticlesRepository
+) :
     ViewModel() {
-
-    private val articlesRepository = ArticlesRepositoryImpl(
-        RetrofitDataSource(),
-        CacheDataSource()
-    )
 
     private val _navigationFlow = FlowEvent<Navigation>()
     val navigationFlow: SharedFlow<Navigation> = _navigationFlow.asSharedFlow()

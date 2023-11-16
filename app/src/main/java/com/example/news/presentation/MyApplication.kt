@@ -1,17 +1,23 @@
 package com.example.news.presentation
 
 import android.app.Application
+import com.example.news.data.AppComponent
+import com.example.news.data.DaggerAppComponent
 
-class MyApplication : Application(){
+
+class MyApplication : Application() {
+    lateinit var appComponent: AppComponent
+
     override fun onCreate() {
         super.onCreate()
 
-
+        appComponent = DaggerAppComponent.create()
         // Initialize Sync; the system responsible for keeping data in the app up to date.
 //        Sync.initialize(context = this)
     }
-/*
-    *//**
+    /*
+        */
+    /**
      * Since we're displaying SVGs in the app, Coil needs an ImageLoader which supports this
      * format. During Coil's initialization it will call `applicationContext.newImageLoader()` to
      * obtain an ImageLoader.

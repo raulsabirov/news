@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -13,23 +12,26 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.news.ArticlesFragment
-import com.example.news.ArticleDetailFragment
 import com.example.news.BaseFragment
 import com.example.news.Navigation
 import com.example.news.R
 import com.example.news.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import java.util.LinkedList
-import java.util.PriorityQueue
 import java.util.Queue
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    val viewModel: MainViewModel by viewModels()
+
+    @Inject
+    lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.inject(this)
+        super.onCreate(savedInstanceState)
 
         // merge(intArrayOf(2,0),1, intArrayOf(1),1)
         val openBrackets = listOf('(', '{', '[')
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         // println("MainActivity" +buyChoco( listOf(98,54,6,34,66,63,52,39).toIntArray(), 62))
 
-        super.onCreate(savedInstanceState)
+
         println("MainActivity onCreate")
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -79,13 +81,15 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch()
         {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigationFlow.collect {
+                mainViewModel.navigationFlow.collect {
                     onNavigation(it)
                 }
             }
         }
 
         initBottomNavigationBar(savedInstanceState?.getInt(SELECTED_BUTTON) ?: R.id.articles)
+
+
     }
 
 
@@ -133,18 +137,18 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.articles -> {
 
-                    viewModel.navigate(Navigation.Articles)
+                    mainViewModel.navigate(Navigation.Articles)
                 }
 
                 R.id.first -> {
-                    viewModel.navigate(Navigation.First)
+                    mainViewModel.navigate(Navigation.First)
 
                     // supportFragmentManager.saveBackStack(ARTICLES)
                     //  supportFragmentManager.restoreBackStack(FIRST)
                 }
 
                 R.id.second -> {
-                    viewModel.navigate(Navigation.Second)
+                    mainViewModel.navigate(Navigation.Second)
                     //     supportFragmentManager.restoreBackStack(ARTICLES)
                 }
             }
