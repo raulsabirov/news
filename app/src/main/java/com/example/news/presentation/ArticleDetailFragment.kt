@@ -1,4 +1,4 @@
-package com.example.news
+package com.example.news.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

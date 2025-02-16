@@ -7,6 +7,9 @@ plugins {
 }
 
 android {
+
+    namespace = "com.example.news"
+
     compileSdk 34
 
 
@@ -16,8 +19,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.news"
-        minSdk 21
-        targetSdk 32
+        minSdk 24
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -43,11 +46,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
         freeCompilerArgs += [
                 "-Xjvm-default=all",
         ]
@@ -55,6 +58,7 @@ android {
     buildFeatures {
         viewBinding true
         compose true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.4.3'
@@ -64,8 +68,58 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-}
 
+
+}
+/*
+vkompose {
+    //  skippabilityCheck = true
+    // or
+*//*
+    skippabilityCheck {
+        // For more see
+        // https://android-review.googlesource.com/c/platform/frameworks/support/+/2668595
+        // https://issuetracker.google.com/issues/309765121
+        stabilityConfigurationPath = "/path/file.config"
+
+        // since 0.7 if strong skipping feature of Compose Compiler is enabled
+        strongSkippingEnabled = true
+        // or
+        strongSkipping {
+            // Fail compilation if there is any problem with strong skipping mode
+            strongSkippingFailFastEnabled = false // false by default
+        }
+    }
+*//*
+
+    recompose {
+        isHighlighterEnabled = true
+        isLoggerEnabled = true
+        // or
+        logger {
+            // true by default since 0.5
+            // log modifier arguments changes
+            logModifierChanges = true
+            // true by default since 0.5
+            // log when function arguments (like lambdas or function references) of composable function are changed
+            logFunctionChanges = true
+        }
+    }
+
+    testTag {
+        isApplierEnabled = true
+        isDrawerEnabled = false
+        isCleanerEnabled = false
+
+        isApplierEnabled = true
+        // or
+        tagApplier {
+            tagTemplate = "" // how to generate test tag. by default "%filename%-%parent_function_name%(%parent_function_offset%)-%calling_function_name%(%calling_function_offset%)"
+        }
+    }
+
+    sourceInformationClean = true
+}*/
 
 dependencies {
 
@@ -113,4 +167,6 @@ dependencies {
 
     implementation 'com.google.dagger:dagger:2.47'
     kapt 'com.google.dagger:dagger-compiler:2.46.1'
+
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.8.7'
 }

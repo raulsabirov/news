@@ -3,8 +3,6 @@ package com.example.news
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
@@ -12,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.news.databinding.FragmentArticlesBinding
 import com.example.news.presentation.ArticlesAdapter
+import com.example.news.presentation.BaseFragment
 import com.example.news.presentation.HeaderAdapter
 import com.example.news.presentation.MainViewModel
 import com.example.news.presentation.MyApplication

@@ -1,13 +1,11 @@
-package com.example.news
+package com.example.news.presentation
 
 import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import com.example.news.databinding.FragmentFirstBinding
 
 open class BaseFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
 

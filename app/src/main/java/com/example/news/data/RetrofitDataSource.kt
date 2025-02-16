@@ -85,6 +85,13 @@ class RetrofitDataSource @Inject constructor(
             if (response.isSuccessful)
                 emit(response.body()?.articles ?: emptyList())
 
+
+            response.body()?.articles?.forEach{
+
+                return@forEach
+
+            }
+
         } catch (e: Exception) {
             println(e)
             throw RetryException()
@@ -102,7 +109,7 @@ class RetrofitDataSource @Inject constructor(
     class RetryException : Exception()
 
     override suspend fun getArticles2(page: Int) =
-        networkApi.query(page = page).body()?.articles ?: emptyList()
+        networkApi.query(page = page).body()!!.articles ?: emptyList()
 
 
 }

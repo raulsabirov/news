@@ -1,6 +1,4 @@
-package com.example.news
-
-import android.content.Context
+package com.example.news.presentation
 
 /*
 @Database(entities = [DragonBallInfoEntity::class], version = 1, exportSchema = false)

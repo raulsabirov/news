@@ -1,31 +1,76 @@
 package com.example.news.presentation
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.news.ArticlesFragment
-import com.example.news.BaseFragment
-import com.example.news.Navigation
 import com.example.news.R
 import com.example.news.databinding.ActivityMainBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import java.util.LinkedList
 import java.util.Queue
 import javax.inject.Inject
 
+
+
+interface  ааа {
+
+     val ggg   get () = "1"
+
+}
+
+data class Model (val test : String)
+
+fun Model.toString() {
+
+}
+
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-
+    val a = null
+    val  laz  by lazy{ 1}
     @Inject
     lateinit var mainViewModel: MainViewModel
 
@@ -34,6 +79,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // merge(intArrayOf(2,0),1, intArrayOf(1),1)
+        val a : Int?  = 128
+        val b : Int?  = 128
+
+        println("a == b")
+        println(a == b)
+        println(a === b)
+
+
         val openBrackets = listOf('(', '{', '[')
         val pair = mutableMapOf(
             ')' to '(',
@@ -47,50 +100,97 @@ class MainActivity : AppCompatActivity() {
         val hashSet = hashSetOf(1)
 
         // println("MainActivity" +buyChoco( listOf(98,54,6,34,66,63,52,39).toIntArray(), 62))
-
+        val _eventBus = MutableSharedFlow<Unit>(replay = 3)
 
         println("MainActivity onCreate")
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        // binding = ActivityMainBinding.inflate(layoutInflater)
+        //  setContentView(binding.root)
 
 
-        binding.coroutineActivityButton.setOnClickListener {
-            Intent(
-                this,
-                CouroutineActivity::class.java
-            ).apply {
-                startActivity(this)
-            }
-        }
+        /*        binding.coroutineActivityButton.setOnClickListener {
+                    Intent(
+                        this,
+                        CouroutineActivity::class.java
+                    ).apply {
+                        startActivity(this)
+                    }
+                }*/
 
-        binding.composeActivityButton.setOnClickListener {
-            Intent(
-                this,
-                ComposeActivity::class.java
-            ).apply {
-                startActivity(this)
-            }
-        }
+        /*        binding.composeActivityButton.setOnClickListener {
+                    Intent(
+                        this,
+                        ComposeActivity::class.java
+                    ).apply {
+                        startActivity(this)
+                    }
+                }
 
-        savedInstanceState ?: replaceFragmentOnTop(ArticlesFragment(), ARTICLES)
+                savedInstanceState ?: replaceFragmentOnTop(ArticlesFragment(), ARTICLES)*/
         // replaceFragmentOnTop(CustomViewFragment(),"")
 
         //  replaceFragments(listOf(MainFragment(), NewsDetailFragment()), true)
 
-        lifecycleScope.launch()
+
+        lifecycleScope.launch(Dispatchers.Default.limitedParallelism(1))
         {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.navigationFlow.collect {
-                    onNavigation(it)
-                }
+                mainViewModel.navigationFlow
+                    .onStart { }
+
+                    .onEach { }
+                    .collect {
+                        onNavigation(it)
+                    }
+
+
             }
+
+
+            val deffered = async {
+                ""
+            }.await()
+
+
         }
 
-        initBottomNavigationBar(savedInstanceState?.getInt(SELECTED_BUTTON) ?: R.id.articles)
+        val sharedFlow = flowOf(
+            { }, { }, { })//.shareIn(lifecycleScope, SharingStarted.Eagerly)
+        /*
 
+
+                sharedFlow
+                    .collect {
+
+                    }
+                    .launchIn(lifecycleScope)
+
+        */
+
+
+
+        lifecycleScope.launch(Dispatchers.Default.limitedParallelism(1)) {
+            sharedFlow
+                .collect { it ->
+                    it.invoke()
+                }
+        }
+
+        //    initBottomNavigationBar(savedInstanceState?.getInt(SELECTED_BUTTON) ?: R.id.articles)
+
+        //   val a  =  return 1
+
+
+        //  val stateflow = StateFlow()
+
+
+        setContent {
+            ComposeScreen(mainViewModel)
+        }
 
     }
+
+
 
 
     private fun onNavigation(navigation: Navigation) {
@@ -113,6 +213,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun showLoginActivity() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Ошибка ")
+        builder.setMessage("Необходимо авторизоваться Ошибка Ошибка  Ошибка Ошибка")
+        builder.setCancelable(true)
+        builder.setPositiveButton(
+            android.R.string.ok
+        ) { _, _ -> }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         outState.putInt(SELECTED_BUTTON, binding.bottom.selectedItemId)
@@ -148,7 +260,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.second -> {
-                    mainViewModel.navigate(Navigation.Second)
+                    showLoginActivity()
+                    //      mainViewModel.navigate(Navigation.Second)
                     //     supportFragmentManager.restoreBackStack(ARTICLES)
                 }
             }
@@ -237,7 +350,11 @@ class MainActivity : AppCompatActivity() {
             .commitAllowingStateLoss()
     }
 
-    fun replaceFragments(fList: List<Fragment>, addToBackStack: Boolean = false, containerViewId: Int = R.id.main_container) {
+    fun replaceFragments(
+        fList: List<Fragment>,
+        addToBackStack: Boolean = false,
+        containerViewId: Int = R.id.main_container
+    ) {
         val fm = supportFragmentManager
         val transaction = fm.beginTransaction()
         if (addToBackStack) {

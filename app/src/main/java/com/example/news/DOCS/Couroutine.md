@@ -1,3 +1,26 @@
+
+
+# How do Kotlin Flows work?
+# Test your Kotlin Flow knowledge through 8 code examples
+https://proandroiddev.com/are-you-sure-you-know-how-kotlin-flow-works-e070f6d00cbc
+
+# Coroutines: first things first
+# Cancellation and Exceptions in Coroutines (Part 1)
+https://medium.com/androiddevelopers/coroutines-first-things-first-e6187bf3bb21
+https://medium.com/androiddevelopers/cancellation-in-coroutines-aa6b90163629
+
+
+# Kotlin, обрабатываем исключения в корутинах правильно
+https://habr.com/ru/articles/664444/
+
+
+# диаграмы flow
+https://flowmarbles.com/#flatMapConcat
+
+
+# Advanced Kotlin Flow Cheat sheet
+https://medium.com/@galou.minisini/advanced-kotlin-flow-cheat-sheet-for-android-engineer-cb8157d4f848
+
 # structured concurrency
 *   принцип structured concurrency означает что корутины запускаются в CoroutineScope который разграничивает  время жизни корутин
 
