@@ -1,4 +1,4 @@
-package com.example.news.presentation
+package com.example.news.presentation.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

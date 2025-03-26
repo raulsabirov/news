@@ -1,4 +1,4 @@
-package com.example.news.presentation
+package com.example.news.presentation.fragments
 
 sealed interface Navigation {
     object Articles : Navigation

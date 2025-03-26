@@ -38,3 +38,6 @@ https://habr.com/ru/companies/badoo/articles/489434/
 
 # Рефакторинг функций расширения в Kotlin: использование объекта-компаньона
 https://habr.com/ru/companies/badoo/articles/575550/
+
+# Customize Android Studio to run third-party tools (without plugins)
+https://proandroiddev.com/customize-android-studio-to-run-third-party-tools-without-plugins-6f4df870d2f7

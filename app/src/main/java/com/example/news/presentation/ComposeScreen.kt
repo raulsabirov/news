@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -21,23 +22,29 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
@@ -56,17 +63,43 @@ val stateF = MutableStateFlow(1)
 
 @Composable
 fun ComposeScreen(mainViewModel :MainViewModel? = null ) {
-  //    val state =       mutableStateOf(0 )
+    var (count, setCount) = remember { mutableStateOf(0) }
+
+    var count2 by remember { mutableStateOf(0) }
+
+    Column {
+        Button(onClick = {
+            setCount(count + 1)
+            setCount(count + 1)
+        }
+        ) {
+            Text("setCount")
+        }
+
+        Button(onClick = {
+            count2 = count2 + 1
+            count2 = count2 + 1
+        }
+        ) {
+            Text("count2")
+        }
+    }
+
+    val  state0 = mainViewModel?.stateResponse?.collectAsState()
+     val state =      remember { mutableStateOf(0 )}
     val test = remember { 0 }
         // val arratMap =    ArrayMap(1,1)
     val r = rememberSaveable() { 1 }
 
 
+    isSystemInDarkTheme()
     DisposableEffect(null) {
         onDispose {
 
         }
     }
+
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(null) {
 
@@ -80,6 +113,8 @@ fun ComposeScreen(mainViewModel :MainViewModel? = null ) {
 
   //  stateF.collectAsStateWithLifecycle
 
+
+        // Snackbar()
     val nul = null
 
     LocalContext.current
@@ -99,7 +134,14 @@ fun ComposeScreen(mainViewModel :MainViewModel? = null ) {
         }
 */
 
-        MySlider()
+        MainScreen()
+/*
+        MySlider(
+            content2 =
+            { Foo() }
+                //TrackPosition(1.0f)
+
+        )
 
         Box(
             modifier = Modifier
@@ -118,7 +160,9 @@ fun ComposeScreen(mainViewModel :MainViewModel? = null ) {
                     .fillMaxWidth(),
                     text = "1111")
             }
-            Box(  modifier = Modifier.weight(1.0f).padding(bottom = 20.dp))
+            Box(  modifier = Modifier
+                .weight(1.0f)
+                .padding(bottom = 20.dp))
             {
                 Text(  modifier = Modifier
                     .fillMaxWidth(),
@@ -151,7 +195,11 @@ fun ComposeScreen(mainViewModel :MainViewModel? = null ) {
                 Text("33333333")
             }
 
-            Column(Modifier.fillMaxHeight().offset().onSizeChanged {  }) {
+            Column(
+                Modifier
+                    .fillMaxHeight()
+                    .offset()
+                    .onSizeChanged { }) {
                 Text("44444444444444")
                 Text("44444444444444")
             }
@@ -166,7 +214,7 @@ fun ComposeScreen(mainViewModel :MainViewModel? = null ) {
 
         SideEffect {
 
-        }
+        }*/
 
     }
 
@@ -181,6 +229,8 @@ fun ComposeScreen(mainViewModel :MainViewModel? = null ) {
 @Composable
 fun MySlider(
     content: (@Composable ( ) -> Unit)? =null,
+    content2: @Composable ( ) -> Unit ,
+
     callback : ()->String = { ""}
 
 ) {
@@ -274,4 +324,32 @@ fun TitleWidget(title: String) {
 @Composable
 fun MyComposablePreview() {
     ComposeScreen()
+}
+
+@Composable
+fun MainScreen() {
+    SideEffect { println(" clickcounter - 0") }
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .graphicsLayer { },
+        color = MaterialTheme.colorScheme.background
+    ){
+        SideEffect { println(" clickcounter - 1") }
+        var clicks by remember {  mutableStateOf(0) }
+        ClickCounter(
+            clicks= clicks,
+            onCLick = {clicks +=1}
+        )
+
+    }
+}
+
+@Composable
+fun ClickCounter(clicks: Int , onCLick:() -> Unit) {
+    Button(onClick = onCLick) {
+        SideEffect { println(" clickcounter - 1") }
+        Text("i've been clicked $clicks times")
+    }
+
 }

@@ -1,11 +1,10 @@
-package com.example.news.presentation
+package com.example.news.presentation.fragments
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.databinding.ItemFooterListBinding
-import com.example.news.databinding.ItemHeadListBinding
 
 class FooterAdapter() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

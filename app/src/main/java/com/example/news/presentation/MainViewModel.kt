@@ -1,33 +1,30 @@
 package com.example.news.presentation
 
-import android.util.Log
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.Coroutines
-import com.example.news.Flow
 import com.example.news.FlowEvent
 import com.example.news.R
 import com.example.news.data.ArticlesRepository
 import com.example.news.models.Article
+import com.example.news.presentation.fragments.Navigation
 
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.actor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
+import kotlin.properties.Delegates.notNull
 
 sealed class LoadingState {
     object Default : LoadingState()
@@ -41,9 +38,18 @@ class MainViewModel @Inject constructor(
 ) :
     ViewModel() {
 
+    override fun onCleared() {
+        viewModelScope.launch {
+
+            super.onCleared()
+        }
+
+    }
+
+    var nul : String  by notNull()
     fun myFun() = articlesRepository.getArticles(1)
 
-    val coroutine = Coroutines(viewModelScope)
+    //val coroutine = Coroutines(viewModelScope)
 
     var mutableIntList = mutableListOf<Int>(1)
     var mutableNumberList = mutableListOf<Number>(1)
@@ -67,7 +73,12 @@ class MainViewModel @Inject constructor(
             stateRequest.value = "1"
 
             stateRequest
-                .collect()
+                .collect{
+
+
+                }
+
+            stateRequest.update { "" }
 
         }
 
@@ -136,6 +147,9 @@ class MainViewModel @Inject constructor(
     }
 
     private suspend fun test1() {
+       val sus = suspendCoroutine {continuation ->
+           continuation.resume(1)
+        }
 
         runBlocking {
 
@@ -158,9 +172,66 @@ class MainViewModel @Inject constructor(
         println("123")
 
         delay(1)
+
+        data class Person(private val first: String, val second: String,)
+
+        fun Person.full() = second
+
+        val str = "f"
+        when (str){
+            "f" -> print("")
+        }
+
     }
 
     val exceptionHandler = CoroutineExceptionHandler { _, exception ->
        // loadingStateLiveDate.postValue(LoadingState.Stop(exception.toString()))
     }
+
+
+
+
+
+
+
+}
+
+fun guide() {
+    print("guide start")
+    teach {
+        print("teach")
+        return@teach
+    }
+    print("guide end")
+}
+
+inline fun teach(abc: () -> Unit) {
+    abc()
+}
+
+
+
+
+class Student(val name : String){
+
+ //   constructor( val  sectionName : String ,  id :String) : this(sectionName)
+}
+
+
+
+
+data class Student2(val firstName : String,val secondName : String){
+
+}
+fun myFun(){
+    lateinit var  r : String
+
+    val student = Student2("1", "2")
+
+    val newSecondName = "3"
+
+    val applyStudent = student.apply {  Student2("1", newSecondName) }
+
+    val letStudent = student.let {  Student2(it.firstName, newSecondName) }
+
 }

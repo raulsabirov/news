@@ -1,47 +1,46 @@
-package com.example.news
+package com.example.lib
 
-import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import java.lang.System.currentTimeMillis
+
+val coroutineScope = CoroutineScope(Job() + Dispatchers.IO + NonCancellable)
 
 
-public class CoroutineTest{
+fun main() {
 
-    fun main() {
+    val map = mutableMapOf(1 to 1, 1 to 2)
+    println(map)
 
-        synchronized(this) {
+    var i =0
+    repeat(100000){
+        test( {
+           // return@test
+            i
+        })
 
-        }
+        i++
     }
 }
 
-fun main() {
-    println("catch"  )
+fun test(  cl: () ->Int){
+    println(cl())
+    println("free  " + Runtime.getRuntime().freeMemory())
 }
+
 
 class Coroutines(lifecycleScope: CoroutineScope) {
 
@@ -50,13 +49,11 @@ class Coroutines(lifecycleScope: CoroutineScope) {
     }
 
     init {
-     //  lifecycleScope.cancel()
-
-
-        val coroutineScope = CoroutineScope(Job() + Dispatchers.IO)
-
+        //  lifecycleScope.cancel()
+        GlobalScope
         coroutineScope.launch {
             coroutineScope.launch(handler) {
+               this@launch
                 throw  RuntimeException("RuntimeException")
             }
 
@@ -65,7 +62,7 @@ class Coroutines(lifecycleScope: CoroutineScope) {
 
         val job = lifecycleScope.launch(handler + Dispatchers.Default) {
 
-          val scope =  coroutineScope {
+            val scope =  coroutineScope {
                 this
             }
 
@@ -89,17 +86,9 @@ class Coroutines(lifecycleScope: CoroutineScope) {
             val i = "s".toInt()
         }
 
-         job.start()
+        job.start()
 
         lifecycleScope.launch(handler + Dispatchers.IO) {
-            /*            delay(2000)
-                        sharedFlow.emit(1)
-                        delay(2000)
-                        sharedFlow.emit(2)
-                        delay(2000)
-                        sharedFlow.emit(3)
-                        delay(2000)
-                        sharedFlow.emit(4)*/
 
             delay(100)
             println("begin launch")
@@ -148,15 +137,18 @@ class Coroutines(lifecycleScope: CoroutineScope) {
             println("end launch")
 
 
-            val scope = coroutineScope {
-                "scope"
+            val scope = coroutineScope{
+                     val listAsync =listOf(1,2,3).map {
+                    async {   it  }
+                }
+                 val result = listAsync.awaitAll()
             }
 
             val scope2 = supervisorScope {
                 "scope"
             }
 
-            scope.plus(1)
+            scope2.plus(1)
         }
 
         lifecycleScope.launch()
@@ -187,28 +179,28 @@ class Coroutines(lifecycleScope: CoroutineScope) {
 
 
 
-       /*     suspend fun getForecast() : String{
-                delay(1000)
-                return  "Sunny"
-            }
+            /*     suspend fun getForecast() : String{
+                     delay(1000)
+                     return  "Sunny"
+                 }
 
-            suspend fun getTemperature() : String{
-                delay(1000)
-                throw AssertionError("Temp is invalid")
-                return  "30 graduses"
-            }
+                 suspend fun getTemperature() : String{
+                     delay(1000)
+                     throw AssertionError("Temp is invalid")
+                     return  "30 graduses"
+                 }
 
-            suspend fun getWeatherReport() = coroutineScope{
-                val forecast = async {  getForecast() }
-                val temperature = async {  getTemperature() }
-                delay(200)
-                forecast.await()
-            }
+                 suspend fun getWeatherReport() = coroutineScope{
+                     val forecast = async {  getForecast() }
+                     val temperature = async {  getTemperature() }
+                     delay(200)
+                     forecast.await()
+                 }
 
-            runBlocking {
-                println(getWeatherReport())
+                 runBlocking {
+                     println(getWeatherReport())
 
-            }*/
+                 }*/
 
 
         }
@@ -221,7 +213,7 @@ class Coroutines(lifecycleScope: CoroutineScope) {
                 }
                 launch {
                     delay(1000)
-                   println("will not be printed")
+                    println("will not be printed")
                 }
             }
 
@@ -229,9 +221,4 @@ class Coroutines(lifecycleScope: CoroutineScope) {
         }
     }
 
-
-
-
 }
-
-

@@ -22,7 +22,7 @@ data class Article(
         }
     }
 }
-class A (){
+open class A (){
     @Parcelize
     companion object : Parcelable {
 
@@ -36,7 +36,7 @@ class A (){
 data class Source(
     val id: String? = null,
     val name: String? = null
-)
+) : A()
 /*
 {
     "source": {

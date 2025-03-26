@@ -1,4 +1,4 @@
-package com.example.news.presentation
+package com.example.news.presentation.fragments
 
 //https://habr.com/ru/articles/727744/#4.%20%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D1%8B%20View
 

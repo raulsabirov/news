@@ -1,4 +1,4 @@
-package ba.rubicon.widget.battery
+package com.example.news.presentation.fragments
 
 import android.content.Context
 import android.graphics.*
