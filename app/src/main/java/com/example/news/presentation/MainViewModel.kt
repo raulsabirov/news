@@ -1,83 +1,114 @@
 package com.example.news.presentation
 
-import android.util.Log
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.Coroutines
-import com.example.news.Flow
 import com.example.news.FlowEvent
 import com.example.news.R
 import com.example.news.data.ArticlesRepository
+import com.example.news.data.ArticlesRepositoryImpl
+import com.example.news.data.MySharedPreferences.init
 import com.example.news.models.Article
+import com.example.news.presentation.fragments.Navigation
 
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.actor
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.time.format.DateTimeFormatter
-import java.util.Locale
+import kotlinx.coroutines.sync.Semaphore
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
+import kotlin.properties.Delegates.notNull
 
-sealed class LoadingState {
+sealed class LoadingState() {
     object Default : LoadingState()
     object Start : LoadingState()
     data class Stop(val errorMsg: String? = null) : LoadingState()
 }
 
 
-class MainViewModel @Inject constructor(
-    val articlesRepository: ArticlesRepository
+class MainViewModel  constructor(
+  //  val articlesRepository: ArticlesRepositoryImpl
 ) :
     ViewModel() {
+    private val list = List(10) { counter ->
+        Article(
+            title = "Article ${counter}",
+            description = "Description for article ${counter}"
+        )
+    }
 
-    fun myFun() = articlesRepository.getArticles(1)
+    val stateArticleList  = list.toMutableStateList()
 
-    val coroutine = Coroutines(viewModelScope)
+    override fun onCleared() {
+        viewModelScope.launch {
+
+            super.onCleared()
+        }
+    }
+
+    val nul: String by notNull()
+  //  fun myFun() = articlesRepository.getArticles(1)
+
+    //val coroutine = Coroutines(viewModelScope)
 
     var mutableIntList = mutableListOf<Int>(1)
     var mutableNumberList = mutableListOf<Number>(1)
 
-    var intList : List<Int> = mutableListOf<Int>(1)
+    var intList: List<Int> = mutableListOf<Int>(1)
 
     val stateResponse = MutableStateFlow("")
 
     val stateRequest = MutableStateFlow("")
 
-    val laz = lazy { 1 }
+    var laz = lazy { 1 }
+    //lateinit var  latinit : Int
 
     init {
-   //     mutableNumberList = mutableIntList
-  //      DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.getDefault())
+     //   getArticles()
+        val s = Semaphore(2)
+        laz = lazy { 2 }
+        //     mutableNumberList = mutableIntList
+        //      DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.getDefault())
 
-       val ll =  (intList as MutableList)
+        val ll = (intList as MutableList)
 
-        val job =  viewModelScope.launch(Dispatchers.IO) {
+        val job = viewModelScope.launch(Dispatchers.IO) {
 
             stateRequest.value = "1"
 
             stateRequest
-                .collect()
+                .collect {
+
+
+                }
+
+            stateRequest.update { "" }
 
         }
-
+        job.ensureActive()
         runBlocking {
 
         }
     }
 
 
-   // val flow = Flow(viewModelScope)
+    val thred = Thread{
+
+    }
+
+    // val flow = Flow(viewModelScope)
 
     private val _navigationFlow = FlowEvent<Navigation>()
     val navigationFlow: SharedFlow<Navigation> = _navigationFlow.asSharedFlow()
@@ -87,10 +118,10 @@ class MainViewModel @Inject constructor(
     val articlesFlow = MutableStateFlow<List<Article>>(emptyList())
     val v = listOf(1, 1 * 2)
 
-    val lsit  = listOf(1,2,3,"")
+    val lsit = listOf(1, 2, 3, "")
 
-  //  var loadingStateLiveDate =
-   //     MutableLiveData<LoadingState>().apply { value = LoadingState.Default }
+    //  var loadingStateLiveDate =
+    //     MutableLiveData<LoadingState>().apply { value = LoadingState.Default }
 
 
     val sharedFlow = MutableSharedFlow<Int>(replay = 4)
@@ -103,64 +134,105 @@ class MainViewModel @Inject constructor(
 
     val idResource = R.string.app_name
 
-  //  val res = Result(2)
+    //  val res = Result(2)
     fun navigate(navigation: Navigation) {
         _navigationFlow.tryEmit(navigation)
     }
 
 
     @Volatile
-    var volitileList = listOf(1,2,3)
+    var volitileList = listOf(1, 2, 3)
 
+
+    fun removeArticle(article : Article) {
+        stateArticleList.remove(article)
+    }
+
+    fun addArticle() =
+        stateArticleList.add(
+            Article(
+                title = "Article ${stateArticleList.size -1}",
+                description = "Description for article ${stateArticleList.size -1}"
+            )
+        )
+
+/*
     fun getArticles(page: Int = 1) {
-      val job =  viewModelScope.launch(Dispatchers.IO) {
-          val articles =articlesRepository.getArticles(page = page)
+        val job = viewModelScope.launch(Dispatchers.IO) {
+            val articles = articlesRepository.getArticles(page = page)
 
 
-        //  articlesFlow.value  = articles
-          articlesFlow. emitAll(articles)
-        //  articlesFlow. emit(articles)
+            //  articlesFlow.value  = articles
+            articlesFlow.emitAll(articles)
+            //  articlesFlow. emit(articles)
 
-          articlesFlow
-              .onEach {  }
-              .collect{ }
+            articlesFlow
+                .onEach { }
+                .collect { }
             //   articlesRepository.getArticles2(page=page)
 
-          idResource.plus(1)
+            idResource.plus(1)
         }
 
 
-        articlesFlow.apply {  }
+        articlesFlow.apply { }
         job.cancel()
 
     }
+*/
 
-    private suspend fun test1() {
-
-        runBlocking {
-
-        }
-            stateFlow.emit(1)
-
-            stateFlow.emit(2)
-
-
-            stateFlow
-                .onEach {   }
-                .collect{
-                        value ->
-                    delay(1)
-                    println("Collected $value")
-                }
-
-
-
-        println("123")
-
-        delay(1)
-    }
 
     val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-       // loadingStateLiveDate.postValue(LoadingState.Stop(exception.toString()))
+        // loadingStateLiveDate.postValue(LoadingState.Stop(exception.toString()))
+    }
+
+}
+
+fun guide() {
+    print("guide start")
+    teach {
+        print("teach")
+        return@teach
+    }
+    print("guide end")
+
+    val intArray: IntArray
+}
+
+inline fun teach(abc: () -> Unit) {
+    abc()
+}
+
+
+class Student(val name: String) {
+    init {
+
+    }
+
+    constructor(sectionName: String, id: String) : this(sectionName) {
+        /*      init{
+
+              }*/
     }
 }
+
+
+data class Student2(val firstName: String, val secondName: String) {
+
+}
+
+fun myFun() {
+    lateinit var r: String
+
+    val student = Student2("1", "2")
+
+    val newSecondName = "3"
+
+    val applyStudent = student.apply { Student2("1", newSecondName) }
+
+    val letStudent = student.let { Student2(it.firstName, newSecondName) }
+
+}
+
+
+

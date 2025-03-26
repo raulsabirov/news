@@ -94,7 +94,7 @@ class RetrofitDataSource @Inject constructor(
 
         } catch (e: Exception) {
             println(e)
-            throw RetryException()
+       //     throw RetryException()
         }
        // emit(emptyList())
 

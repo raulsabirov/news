@@ -1,42 +1,66 @@
 package com.example.news.models
 
 import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import androidx.compose.runtime.Immutable
+//import kotlinx.parcelize.Parcelize
+import java.util.UUID
 
+
+@JvmInline
+value class Email(val value: String)
+{
+    constructor(): this("")
+
+    init {
+      //  require{  value > 0}
+    }
+
+  fun myFun(): Int{
+      return  1
+  }
+}
+
+data class AA( val s: String){
+    constructor(
+
+    ) : this("")
+
+
+}
+@Immutable
 data class Article(
+    val id: String =  UUID.randomUUID().toString(),
     val source: Source? = Source(),
     val author: String? = null,
-    val title: String? = null,
-    val description: String? = null,
+    val title: String,
+    val description: String,
     val url: String? = null,
     val urlToImage: String? = null,
     val publishedAt: String? = null,
     val content: String? = null
-){
-    @Parcelize
-    companion object : Parcelable {
+)
 
-
-        override fun equals(other: Any?): Boolean {
-            return super.equals(other)
-        }
-    }
-}
-class A (){
-    @Parcelize
-    companion object : Parcelable {
-
-        override fun equals(other: Any?): Boolean {
-            return super.equals(other)
-        }
-    }
-
-}
-
-data class Source(
+@Immutable
+data class Source (
     val id: String? = null,
     val name: String? = null
-)
+) : A() {
+/*    override val a: Nothing
+        get() = super.a*/
+}
+
+open class A ( val aa :String = "String"){
+    open val a = ""
+ //   @Parcelize
+    companion object  {
+
+        override fun equals(other: Any?): Boolean {
+            return super.equals(other)
+        }
+    }
+}
+
+
 /*
 {
     "source": {

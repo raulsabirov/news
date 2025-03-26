@@ -5,6 +5,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
@@ -28,6 +29,20 @@ import kotlinx.coroutines.withContext
 import java.lang.System.currentTimeMillis
 
 
+public class CoroutineTest{
+
+    fun main() {
+
+        synchronized(this) {
+
+        }
+    }
+}
+
+fun main() {
+    println("catch"  )
+}
+
 class Coroutines(lifecycleScope: CoroutineScope) {
 
     val handler = CoroutineExceptionHandler { _, exception ->
@@ -35,7 +50,18 @@ class Coroutines(lifecycleScope: CoroutineScope) {
     }
 
     init {
-        lifecycleScope.cancel()
+     //  lifecycleScope.cancel()
+
+
+        val coroutineScope = CoroutineScope(Job() + Dispatchers.IO)
+
+        coroutineScope.launch {
+            coroutineScope.launch(handler) {
+                throw  RuntimeException("RuntimeException")
+            }
+
+
+        }
 
         val job = lifecycleScope.launch(handler + Dispatchers.Default) {
 
@@ -53,6 +79,7 @@ class Coroutines(lifecycleScope: CoroutineScope) {
             // ...
 
             val result = deferred.await()
+            println("catch" + result)
 
             try {
                 val i = "s".toInt()
@@ -62,7 +89,7 @@ class Coroutines(lifecycleScope: CoroutineScope) {
             val i = "s".toInt()
         }
 
-         job.isActive
+         job.start()
 
         lifecycleScope.launch(handler + Dispatchers.IO) {
             /*            delay(2000)
@@ -157,7 +184,54 @@ class Coroutines(lifecycleScope: CoroutineScope) {
 
             }
 
+
+
+
+       /*     suspend fun getForecast() : String{
+                delay(1000)
+                return  "Sunny"
+            }
+
+            suspend fun getTemperature() : String{
+                delay(1000)
+                throw AssertionError("Temp is invalid")
+                return  "30 graduses"
+            }
+
+            suspend fun getWeatherReport() = coroutineScope{
+                val forecast = async {  getForecast() }
+                val temperature = async {  getTemperature() }
+                delay(200)
+                forecast.await()
+            }
+
+            runBlocking {
+                println(getWeatherReport())
+
+            }*/
+
+
         }
 
+        suspend fun superJobTest() = coroutineScope{
+            val jobS = launch(SupervisorJob()){
+                launch {
+                    delay(1000)
+                    throw RuntimeException()
+                }
+                launch {
+                    delay(1000)
+                   println("will not be printed")
+                }
+            }
+
+            jobS.join()
+        }
     }
+
+
+
+
 }
+
+

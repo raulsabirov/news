@@ -1,10 +1,7 @@
 package com.example.news
 
-import com.example.news.List
 
 
-data class Success(val one: Int) : SealedClass()
-    data class Error(val one: Int) : SealedClass()
 
 val lazy by lazy{
     Generics().open1

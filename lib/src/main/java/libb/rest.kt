@@ -1,0 +1,5 @@
+package libb
+
+class rest {
+}
+

@@ -29,3 +29,7 @@ https://javastudy.ru/interview/concurrent/
 
 # Autoboxing и unboxing в Java
 https://habr.com/ru/articles/329498/
+
+
+# Утечки памяти в Android: что это такое, как обнаружить и предотвратить
+https://tproger.ru/translations/android-memory-leak

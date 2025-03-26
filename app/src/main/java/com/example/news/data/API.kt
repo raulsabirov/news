@@ -18,4 +18,4 @@ interface API {
     ): Response<ArticleApiModel>
 }
 
-//https://newsapi.org/v2/top-headlines?category=science&country=ru&apiKey=9e39934e997343cf8a4b6010d533a801&q=&pageSize=5&page=1
+//https://newsapi.org/v2/everything?q=apple&from=2025-05-14&to=2025-05-14&sortBy=popularity&apiKey=9e39934e997343cf8a4b6010d533a801

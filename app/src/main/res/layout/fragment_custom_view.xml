@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.CustomViewFragment"
+    tools:context=".presentation.fragments.CustomViewFragment"
     android:gravity="center">
 
 
@@ -19,14 +19,14 @@
             android:layout_height="wrap_content"
             android:text="Button" />
 
-        <com.example.news.presentation.CustomView
+        <com.example.news.presentation.fragments.CustomView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
             app:displayShapeName="false"
             app:shapeColor="#7f0000" />
 
-        <com.example.news.presentation.CustomView
+        <com.example.news.presentation.fragments.CustomView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -56,7 +56,7 @@
 
         </LinearLayout>
 
-        <com.example.news.presentation.GoalProgressBar
+        <com.example.news.presentation.fragments.GoalProgressBar
             android:id="@+id/progressBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
