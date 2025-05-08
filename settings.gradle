@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 rootProject.name = "News"
 include ':app'
 include ':lib'
+include ':lib2'
+include ':mylibrary'

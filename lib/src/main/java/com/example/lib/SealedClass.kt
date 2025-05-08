@@ -1,7 +1,7 @@
 package com.example.lib
 
 
-
+import java.util.LinkedList
 import kotlin.collections.List
 
 val String.firstChar
@@ -14,17 +14,17 @@ var StringBuilder.lastChar: Char
     }
 
 
-class ATest(val s: String, i : Int)
+class ATest(val s: String, i: Int)
 
 fun main() {
-    val list1: List<Int> = mutableListOf(1,2,3)
-    val list2: List<Int> = mutableListOf(1,2,3)
+    val list1: List<Int> = mutableListOf(1, 2, 3)
+    val list2: List<Int> = mutableListOf(1, 2, 3)
 
     println(list1.equals(list2))
     println(list1 === list2)
 
-    val a1 = ATest("1",1)
-    val a2 = ATest("1",1)
+    val a1 = ATest("1", 1)
+    val a2 = ATest("1", 1)
 
 
     println(a1.equals(a2))
@@ -41,26 +41,38 @@ class ResourceWrapper(private val context: Context) {
 }
 */
 
-sealed class SealedClass( ) {
-    data class Success(val one: Int) : SealedClass()
-    data class Error(val one: Int) : SealedClass()
+interface MyInt {
+    //     @Volatile
+    public var number: Int
+}
+
+sealed class SealedClass(val one1: Int) {
+    data class Success(val one: Int) : SealedClass(one1 = one) {
+
+    }
+
+    data class Error(val one: Int) : SealedClass(one1 = one)
 
 
     companion object {
         const val con = "companion"
     }
+
 }
 
-sealed class SealedClass2: SealedClass() {
+sealed class SealedClass2 {
     data class Success(val one: Int) : SealedClass2()
     data class Error(val one: Int) : SealedClass2()
 
 
     companion object {
+
         const val con = "companion"
 
+        val sClass = SealedClass.Success(1)
+
         @Synchronized
-        fun myFun2() : Unit {
+        fun myFun2(): Unit {
             println()
 
         }
@@ -69,93 +81,127 @@ sealed class SealedClass2: SealedClass() {
 
 //var SomeClass.b = 1
 
-class SomeClass(){
 
-        ///val l : SealedClass = SealedClass()
+fun main2() {
 
-    val map = mutableMapOf(1 to 1, 1 to 2)
+    SomeClass().test
 
-    @Synchronized
-    fun myFun2() : Unit {
-        println()
+    SomeClass.Name
+}
 
-/*        myFunSealedClass().apply { it ->
+class SomeClass() {
+    val name: String
 
-        }*/
+    init {
+        printName()
+        //   println(name)
+        name = "Murzik"
     }
 
-    fun myFunSealedClass() : SealedClass {
-       return  SealedClass.Success(1)
+    val test = {
+        println("test lambda")
+
     }
 
+    fun test() = { println("test function") }
 
-    val someInterface = object : SomeInterface{
-        override var number: Int
-            get() = TODO("Not yet implemented")
-            set(value) {}
-
-        override fun myFun (){
-            map
-            this.number
-        }
+    private fun printName() {
+        println(name)
     }
 
-    val somelambda : ()->String  = {
+    object Name {
+
+    }
+}
+
+///val l : SealedClass = SealedClass()
+
+val map = mutableMapOf(1 to 1, 1 to 2)
+
+
+@Synchronized
+fun myFun2(): Unit {
+    println()
+
+    /*        myFunSealedClass().apply { it ->
+
+            }*/
+}
+
+fun myFunSealedClass(): SealedClass {
+    return SealedClass.Success(1)
+}
+
+
+val someInterface = object : SomeInterface {
+    override var number: Int
+        get() = TODO("Not yet implemented")
+        set(value) {}
+    override val linkedList: LinkedList<Int>
+        get() = TODO("Not yet implemented")
+
+    override fun myFun() {
         map
-        this
-        ""
+        this.number
     }
+}
 
+val somelambda: () -> String = {
+    map
+
+    ""
 }
 
 
 
- interface SomeInterface{
-
-//     @Volatile
-    public var number : Int
 
 
- //   @Synchronized
-   fun myFun() : Unit {
+interface SomeInterface {
+
+    //     @Volatile
+    public var number: Int
+
+    public val linkedList: LinkedList<Int>
+
+    //   @Synchronized
+    fun myFun(): Unit {
         println()
     }
 
-     companion object{
+    companion object {
 
-         ///Marks the JVM backing field of the annotated var property as volatile,
-         // meaning that reads and writes to this field are atomic and writes are always made visible to other threads.
+        ///Marks the JVM backing field of the annotated var property as volatile,
+        // meaning that reads and writes to this field are atomic and writes are always made visible to other threads.
 
         // @Volatile
-         val list : List<Int> = mutableListOf(1,2,3)
+        val list: List<Int> = mutableListOf(1, 2, 3)
 
-         @Volatile
-         var list2 : List<Int> = mutableListOf(1,2,3)
+        @Volatile
+        var list2: List<Int> = mutableListOf(1, 2, 3)
 
-         @Volatile
-         var list3 : List<Int> = listOf(1,2,3)
+        @Volatile
+        var list3: List<Int> = listOf(1, 2, 3)
 
 
-         fun synchronizedExample() {
-             val inter = SomeInterface.Companion::class.java
-             kotlin.synchronized(inter) {
+        fun synchronizedExample() {
+            val inter = SomeInterface.Companion::class.java
+            kotlin.synchronized(inter) {
 
-             }
-         }
-     }
+            }
+        }
+    }
 }
 
 
+public class CoroutineTest2 {
 
-public class CoroutineTest2{
-
-    fun main( ) {
+    fun main() {
 
         kotlin.synchronized(this) {
 
         }
 
-        CoroutineTest2.main {  }
+        CoroutineTest2.main { }
     }
 
     fun synchronizedExample() {
@@ -164,23 +210,23 @@ public class CoroutineTest2{
         }
     }
 
-   private companion object{
-        fun main( str : SomePrivateClass.()->Unit) {
+    private companion object {
+        fun main(str: SomePrivateClass.() -> Unit) {
         }
     }
 }
 
 class SomePrivateClass private constructor(
-    val param1 : String,
-    val param2 : String,
-){
+    val param1: String,
+    val param2: String,
+) {
 
-    val users : List<String>
+    val users: List<String>
         get() = listOf("")
 
-    companion object{
+    companion object {
         @Volatile
-        private var instance :  SomePrivateClass? =null
+        private var instance: SomePrivateClass? = null
 
         fun synchronizedExample() {
             kotlin.synchronized(this) {
@@ -189,7 +235,7 @@ class SomePrivateClass private constructor(
         }
 
 
-        fun main( str : SomePrivateClass.()->Unit) {
+        fun main(str: SomePrivateClass.() -> Unit) {
         }
     }
 }

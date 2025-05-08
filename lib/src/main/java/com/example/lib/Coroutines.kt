@@ -12,10 +12,13 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.resumeWithException
 
 val coroutineScope = CoroutineScope(Job() + Dispatchers.IO + NonCancellable)
 
@@ -26,13 +29,24 @@ fun main() {
     println(map)
 
     var i =0
-    repeat(100000){
-        test( {
-           // return@test
-            i
-        })
+     runBlocking {
+        var value = 0
+        val jobs = (1..10_000).map {
+            launch {
+                withContext(Dispatchers.Default) {
+                    value++
+                }
+                value++
+            }
+        }
+        jobs.forEach {
+            it.join()
+        }
+        check(value == 20_000)
+    }
 
-        i++
+    runBlocking<Unit> {
+        superJobTest2()
     }
 }
 
@@ -40,6 +54,44 @@ fun test(  cl: () ->Int){
     println(cl())
     println("free  " + Runtime.getRuntime().freeMemory())
 }
+
+
+suspend fun superJobTest2() = coroutineScope{
+      //  val s  = ()
+    val supervisor = SupervisorJob()
+    with(CoroutineScope(Job() + Dispatchers.IO)){
+        val jobS = launch(supervisor){
+            launch {
+                this
+                delay(1000)
+                // throw RuntimeException()
+                println("job 1")
+            }
+            launch {
+                delay(1000)
+                println("job 2")
+            }
+        }
+    }
+    delay(2000)
+    supervisor.cancel()
+}
+
+suspend fun superJobTest() = coroutineScope{
+    val jobS = launch(SupervisorJob()){
+        launch {
+            delay(1000)
+            throw RuntimeException()
+        }
+        launch {
+            delay(1000)
+            println("will not be printed")
+        }
+    }
+
+    jobS.join()
+}
+
 
 
 class Coroutines(lifecycleScope: CoroutineScope) {
@@ -56,14 +108,12 @@ class Coroutines(lifecycleScope: CoroutineScope) {
                this@launch
                 throw  RuntimeException("RuntimeException")
             }
-
-
         }
 
         val job = lifecycleScope.launch(handler + Dispatchers.Default) {
 
             val scope =  coroutineScope {
-                this
+                "this"
             }
 
 
@@ -177,6 +227,11 @@ class Coroutines(lifecycleScope: CoroutineScope) {
             }
 
 
+            suspendCancellableCoroutine {cont->
+              //  cont.resume( 1)
+              // cont.resumeWithException( Throwable())
+
+            }
 
 
             /*     suspend fun getForecast() : String{
@@ -204,21 +259,7 @@ class Coroutines(lifecycleScope: CoroutineScope) {
 
 
         }
-
-        suspend fun superJobTest() = coroutineScope{
-            val jobS = launch(SupervisorJob()){
-                launch {
-                    delay(1000)
-                    throw RuntimeException()
-                }
-                launch {
-                    delay(1000)
-                    println("will not be printed")
-                }
-            }
-
-            jobS.join()
-        }
     }
+
 
 }

@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
@@ -183,6 +184,22 @@ suspend fun combineExample() = coroutineScope {
     // 3C
 }
 
+suspend fun zipExample() = coroutineScope {
+    //  The zip operator combines two flows into one by pairing each emission from one flow with the corresponding
+    //  emission from the other flow. The resulting flow emits values as pairs or as a transformation based on a
+    //  provided lambda function. The combination stops as soon as one of the flows completes.
+    flowOf(1, 2, 3)
+        .zip(flowOf("A", "B", "C", "D"))
+        { number, letter ->
+            "$number   $letter"
+        }.collect { result ->
+            println(result)
+        }
+    // 1A,
+    // 2B,
+    // 3C
+}
+
 suspend fun flatMapLatestExample() = coroutineScope {
     // flatMapLatest: Cancels the previous flow whenever a new flow is emitted,
     // only collecting the latest emitted flow.
@@ -200,15 +217,8 @@ suspend fun flatMapLatestExample() = coroutineScope {
     // 2: A
     // 3: A
     // 3: B
-
-
-    /*
-
-
-
-     */
-
 }
+
 
 
 class Flow(lifecycleScope: CoroutineScope) {
@@ -235,19 +245,7 @@ class Flow(lifecycleScope: CoroutineScope) {
         }
 
         runBlocking<Unit> {
-            //  The zip operator combines two flows into one by pairing each emission from one flow with the corresponding
-            //  emission from the other flow. The resulting flow emits values as pairs or as a transformation based on a
-            //  provided lambda function. The combination stops as soon as one of the flows completes.
-            flowOf(1, 2, 3)
-                .zip(flowOf("A", "B", "C", "D"))
-                { number, letter ->
-                    "$number   $letter"
-                }.collect { result ->
-                    println(result)
-                }
-            // 1A,
-            // 2B,
-            // 3C
+
         }
 
         runBlocking<Unit> {
@@ -294,5 +292,20 @@ class Flow(lifecycleScope: CoroutineScope) {
                     }
                 }
         }
+
+
+
+        flow {
+            emit(1)
+            delay(90)
+            emit(2)
+            delay(90)
+            emit(3)
+            delay(1010)
+            emit(4)
+            delay(1010)
+            emit(5)
+        }.debounce(1000)
     }
+
 }

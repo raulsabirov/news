@@ -32,7 +32,7 @@ class ArticlesAdapter() :
         holder.bind(getItem(position))
     }
 
-    /*    override fun onBindViewHolder(
+        override fun onBindViewHolder(
             holder: ArticleViewHolder,
             position: Int,
             payloads: MutableList<Any>
@@ -48,7 +48,7 @@ class ArticlesAdapter() :
                 else ->
                     holder.bind(getItem(position))
             }
-        }*/
+        }
 
     inner class ArticleViewHolder(var itemBinding: ItemArticleListBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {

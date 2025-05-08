@@ -8,3 +8,7 @@ https://developer.android.com/codelabs/android-dagger
 
 # Dagger code generation cheat sheets
 https://manuelvivo.dev/dagger-cheat-sheets
+
+
+# Dagger 2.11 & Android
+https://habr.com/ru/articles/335940/

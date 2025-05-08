@@ -1,8 +1,17 @@
 package com.example.news.models
 
 import android.os.Parcelable
+import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 
+data class AA( val s: String){
+    constructor(
+
+    ) : this("")
+
+
+}
+@Immutable
 data class Article(
     val source: Source? = Source(),
     val author: String? = null,
@@ -12,16 +21,14 @@ data class Article(
     val urlToImage: String? = null,
     val publishedAt: String? = null,
     val content: String? = null
-){
-    @Parcelize
-    companion object : Parcelable {
+)
 
+@Immutable
+data class Source(
+    val id: String? = null,
+    val name: String? = null
+) : A()
 
-        override fun equals(other: Any?): Boolean {
-            return super.equals(other)
-        }
-    }
-}
 open class A (){
     @Parcelize
     companion object : Parcelable {
@@ -33,10 +40,7 @@ open class A (){
 
 }
 
-data class Source(
-    val id: String? = null,
-    val name: String? = null
-) : A()
+
 /*
 {
     "source": {

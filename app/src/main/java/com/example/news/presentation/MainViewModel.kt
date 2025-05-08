@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Semaphore
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -46,7 +47,7 @@ class MainViewModel @Inject constructor(
 
     }
 
-    var nul : String  by notNull()
+    val nul : String  by notNull()
     fun myFun() = articlesRepository.getArticles(1)
 
     //val coroutine = Coroutines(viewModelScope)
@@ -60,9 +61,12 @@ class MainViewModel @Inject constructor(
 
     val stateRequest = MutableStateFlow("")
 
-    val laz = lazy { 1 }
+    var laz = lazy { 1 }
+    lateinit var   latinit : Int
 
     init {
+        val s  = Semaphore(2)
+        laz = lazy { 2 }
    //     mutableNumberList = mutableIntList
   //      DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.getDefault())
 
@@ -146,43 +150,7 @@ class MainViewModel @Inject constructor(
 
     }
 
-    private suspend fun test1() {
-       val sus = suspendCoroutine {continuation ->
-           continuation.resume(1)
-        }
 
-        runBlocking {
-
-        }
-            stateFlow.emit(1)
-
-            stateFlow.emit(2)
-
-
-            stateFlow
-                .onEach {   }
-                .collect{
-                        value ->
-                    delay(1)
-                    println("Collected $value")
-                }
-
-
-
-        println("123")
-
-        delay(1)
-
-        data class Person(private val first: String, val second: String,)
-
-        fun Person.full() = second
-
-        val str = "f"
-        when (str){
-            "f" -> print("")
-        }
-
-    }
 
     val exceptionHandler = CoroutineExceptionHandler { _, exception ->
        // loadingStateLiveDate.postValue(LoadingState.Stop(exception.toString()))
@@ -203,6 +171,8 @@ fun guide() {
         return@teach
     }
     print("guide end")
+
+    val intArray: IntArray
 }
 
 inline fun teach(abc: () -> Unit) {
@@ -213,8 +183,15 @@ inline fun teach(abc: () -> Unit) {
 
 
 class Student(val name : String){
+    init{
 
- //   constructor( val  sectionName : String ,  id :String) : this(sectionName)
+    }
+   constructor(   sectionName : String ,  id :String) : this(sectionName)
+   {
+       init{
+
+       }
+   }
 }
 
 

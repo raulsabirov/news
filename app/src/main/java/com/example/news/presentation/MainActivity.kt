@@ -1,12 +1,15 @@
 package com.example.news.presentation
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.graphics.fonts.FontStyle
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.compositionLocalOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
@@ -43,7 +46,7 @@ data class Model (val test : String)
 fun Model.toString() {
 
 }
-
+val LocalFontStyle = compositionLocalOf { FontStyle.FONT_WEIGHT_MAX }
 
 class MainActivity : AppCompatActivity() {
 
@@ -250,6 +253,7 @@ class MainActivity : AppCompatActivity() {
             oldButton = it.itemId
             return@setOnItemSelectedListener true
         }
+
     }
 
     fun saveBackStack(oldButton: Int) {
