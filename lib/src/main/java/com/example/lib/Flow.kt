@@ -1,5 +1,6 @@
 package com.example.lib
 
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -98,7 +99,7 @@ suspend fun flatMapConcatExample() = coroutineScope {
     }
 
     flowOf(1, 2, 3).flatMapConcat { number ->
-        val i = 0
+
         flowOf("A", "B", testflatMapConcat()).apply {
             delay(100)
 
@@ -107,6 +108,47 @@ suspend fun flatMapConcatExample() = coroutineScope {
         println(result)
     }
 }
+
+suspend fun flatMapMergeExample() = coroutineScope {
+    // flatMapMerge: Collects from multiple flows concurrently, merging their emissions as they come.
+    flowOf(1, 2, 3).flatMapMerge { number ->
+        flow {
+            emit("$number: A")
+            delay(100)
+            emit("$number: B")
+        }
+    }
+        .collect { result ->
+            println(result)
+        }
+    // Output:
+    // 1: A
+    // 2: A
+    // 3: A
+    // 1: B
+    // 2: B
+    // 3: B
+}
+
+suspend fun flatMapLatestExample() = coroutineScope {
+    // flatMapLatest: Cancels the previous flow whenever a new flow is emitted,
+    // only collecting the latest emitted flow.
+    flowOf(1, 2, 3).flatMapLatest { number ->
+        flow {
+            emit("$number: A")
+            delay(100)
+            emit("$number: B")
+        }
+    }.collect { result ->
+        println(result)
+    }
+    // Output:
+    // 1: A
+    // 2: A
+    // 3: A
+    // 3: B
+}
+
 
 suspend fun flattenMergeExample() = coroutineScope {
     val flow1 = flow {
@@ -130,27 +172,6 @@ suspend fun flattenMergeExample() = coroutineScope {
         println(value)
     }
     // Output: B, A, C
-}
-
-suspend fun flatMapMergeExample() = coroutineScope {
-    // flatMapMerge: Collects from multiple flows concurrently, merging their emissions as they come.
-    flowOf(1, 2, 3).flatMapMerge { number ->
-        flow {
-            emit("$number: A")
-            delay(100)
-            emit("$number: B")
-        }
-    }
-        .collect { result ->
-            println(result)
-        }
-    // Output:
-    // 1: A
-    // 2: A
-    // 3: A
-    // 1: B
-    // 2: B
-    // 3: B
 }
 
 suspend fun combineExample() = coroutineScope {
@@ -200,28 +221,16 @@ suspend fun zipExample() = coroutineScope {
     // 3C
 }
 
-suspend fun flatMapLatestExample() = coroutineScope {
-    // flatMapLatest: Cancels the previous flow whenever a new flow is emitted,
-    // only collecting the latest emitted flow.
-    flowOf(1, 2, 3).flatMapLatest { number ->
-        flow {
-            emit("$number: A")
-            delay(100)
-            emit("$number: B")
-        }
-    }.collect { result ->
-        println(result)
-    }
-    // Output:
-    // 1: A
-    // 2: A
-    // 3: A
-    // 3: B
-}
 
 
 
 class Flow(lifecycleScope: CoroutineScope) {
+    val handler = CoroutineExceptionHandler { _, exception ->
+        println("CoroutineExceptionHandler got $exception")
+    }
+    val coroutineScope = CoroutineScope( Dispatchers.IO   + handler)
+
+
     val numbers = flowOf(1, 2, 3)
 
     val stateFlow = MutableStateFlow(1)

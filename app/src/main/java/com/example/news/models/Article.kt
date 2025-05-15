@@ -3,6 +3,7 @@ package com.example.news.models
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
+import java.util.UUID
 
 data class AA( val s: String){
     constructor(
@@ -13,10 +14,11 @@ data class AA( val s: String){
 }
 @Immutable
 data class Article(
+    val id: String =  UUID.randomUUID().toString(),
     val source: Source? = Source(),
     val author: String? = null,
-    val title: String? = null,
-    val description: String? = null,
+    val title: String,
+    val description: String,
     val url: String? = null,
     val urlToImage: String? = null,
     val publishedAt: String? = null,

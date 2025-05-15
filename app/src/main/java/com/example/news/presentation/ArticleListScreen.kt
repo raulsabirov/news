@@ -30,7 +30,7 @@ import com.example.news.models.Article
 import java.util.UUID
 
 @Composable
-fun ArticleListScreen() {
+fun ArticleListScreen(mainViewModel: MainViewModel? = null) {
     val articles = remember { mutableStateListOf<Article>() }
 
     val counter = remember { mutableStateOf(1) }
@@ -43,13 +43,8 @@ fun ArticleListScreen() {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Button(onClick = {
-                articles.add(
-                    0,
-                    Article(
-                        title = "Article ${counter.value}",
-                        description = "Description for article ${counter.value}"
-                    )
-                )
+                mainViewModel?.addArticle()
+
                 counter.value++
             }) {
                 Text("Add Article")
@@ -74,7 +69,7 @@ fun AnimatedContentList(articles: List<Article>) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(
             items = articles,
-            key = { article -> article.title ?: UUID.randomUUID().toString() }
+            key = { article -> article.id }
         ) { article ->
             AnimatedVisibility(
                 visible = true,
@@ -96,9 +91,9 @@ fun ArticleItem(article: Article) {
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = article.title ?: "No title", style = MaterialTheme.typography.titleMedium)
+            Text(text = article.title , style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = article.description ?: "No description", style = MaterialTheme.typography.bodyMedium)
+            Text(text = article.description, style = MaterialTheme.typography.bodyMedium)
         }
     }
 }

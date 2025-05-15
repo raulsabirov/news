@@ -1,5 +1,6 @@
 package com.example.lib
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,33 +21,29 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.resumeWithException
 
-val coroutineScope = CoroutineScope(Job() + Dispatchers.IO + NonCancellable)
+
+//NonCancellable
+
+
+val handler = CoroutineExceptionHandler { _, exception ->
+    println("CoroutineExceptionHandler got $exception")
+}
+val coroutineScope = CoroutineScope( Dispatchers.IO   + handler)
 
 
 fun main() {
 
-    val map = mutableMapOf(1 to 1, 1 to 2)
-    println(map)
+    runBlocking(handler) {
 
-    var i =0
-     runBlocking {
-        var value = 0
-        val jobs = (1..10_000).map {
-            launch {
-                withContext(Dispatchers.Default) {
-                    value++
-                }
-                value++
+
+        Coroutines(coroutineScope)
+/*
+            launch() {
+              //  this@launch
+                throw  RuntimeException("RuntimeException")
             }
-        }
-        jobs.forEach {
-            it.join()
-        }
-        check(value == 20_000)
-    }
+*/
 
-    runBlocking<Unit> {
-        superJobTest2()
     }
 }
 
@@ -95,18 +92,14 @@ suspend fun superJobTest() = coroutineScope{
 
 
 class Coroutines(lifecycleScope: CoroutineScope) {
-
-    val handler = CoroutineExceptionHandler { _, exception ->
-        println("CoroutineExceptionHandler got $exception")
-    }
-
     init {
         //  lifecycleScope.cancel()
-        GlobalScope
+
         coroutineScope.launch {
             coroutineScope.launch(handler) {
                this@launch
-                throw  RuntimeException("RuntimeException")
+                     throw  RuntimeException("RuntimeException")
+              //  throw  CancellationException("RuntimeException") // не ловится CoroutineExceptionHandler 'ом  юзай invokeoncomplition
             }
         }
 

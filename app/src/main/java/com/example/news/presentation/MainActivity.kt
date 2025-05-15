@@ -87,6 +87,13 @@ class MainActivity : AppCompatActivity() {
 
         println("MainActivity onCreate")
 
+
+        setContent {
+            ComposeScreen(mainViewModel)
+            //    ArticleListScreen(mainViewModel)
+        }
+
+
         // binding = ActivityMainBinding.inflate(layoutInflater)
         //  setContentView(binding.root)
 
@@ -166,10 +173,6 @@ class MainActivity : AppCompatActivity() {
 
         //  val stateflow = StateFlow()
 
-
-        setContent {
-            ComposeScreen(mainViewModel)
-        }
 
     }
 

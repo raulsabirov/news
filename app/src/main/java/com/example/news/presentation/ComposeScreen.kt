@@ -86,7 +86,8 @@ fun ComposeScreen(mainViewModel: MainViewModel? = null) {
                 count2 = count2 + 1
             }
         ) {
-            Text("count2")
+            Text("count2" + count2 )
+
         }
     }
 
@@ -121,6 +122,8 @@ fun ComposeScreen(mainViewModel: MainViewModel? = null) {
 
     // Snackbar()
     val nul = null
+
+    val nu2 = listOf(1,2,"",true)
 
     LocalContext.current
     // центрировать элементы по экрану
