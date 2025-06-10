@@ -2,8 +2,23 @@ package com.example.news.models
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import kotlinx.parcelize.Parcelize
+//import kotlinx.parcelize.Parcelize
 import java.util.UUID
+
+
+@JvmInline
+value class Email(val value: String)
+{
+    constructor(): this("")
+
+    init {
+      //  require{  value > 0}
+    }
+
+  fun myFun(): Int{
+      return  1
+  }
+}
 
 data class AA( val s: String){
     constructor(
@@ -26,20 +41,23 @@ data class Article(
 )
 
 @Immutable
-data class Source(
+data class Source (
     val id: String? = null,
     val name: String? = null
-) : A()
+) : A() {
+/*    override val a: Nothing
+        get() = super.a*/
+}
 
-open class A (){
-    @Parcelize
-    companion object : Parcelable {
+open class A ( val aa :String = "String"){
+    open val a = ""
+ //   @Parcelize
+    companion object  {
 
         override fun equals(other: Any?): Boolean {
             return super.equals(other)
         }
     }
-
 }
 
 

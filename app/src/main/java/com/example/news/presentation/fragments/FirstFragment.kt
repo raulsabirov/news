@@ -1,4 +1,5 @@
 package com.example.news.presentation.fragments
+/*
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,9 +10,11 @@ import com.example.news.R
 import com.example.news.databinding.FragmentFirstBinding
 import com.example.news.presentation.MainViewModel
 
+*/
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
- */
+ *//*
+
 class FirstFragment : BaseFragment(R.layout.fragment_first) {
     val viewModel: MainViewModel by activityViewModels()
 
@@ -42,4 +45,4 @@ class FirstFragment : BaseFragment(R.layout.fragment_first) {
         var count = 0
     }
 
-}
+}*/

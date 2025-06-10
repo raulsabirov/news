@@ -31,7 +31,31 @@ val handler = CoroutineExceptionHandler { _, exception ->
 val coroutineScope = CoroutineScope( Dispatchers.IO   + handler)
 
 
-fun main() {
+val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+var i = 0
+
+fun increase() = scope.launch {
+    synchronized(this) {
+        i++
+    }
+}
+
+fun main() = runBlocking {
+    repeat(100000) {
+        increase()
+    }
+
+    println(i)
+
+ /*   val l = mutableListOf<Job>().addAll{
+        1,2
+    }*/
+}
+
+
+
+
+fun main3() {
 
     runBlocking(handler) {
 
@@ -51,6 +75,7 @@ fun test(  cl: () ->Int){
     println(cl())
     println("free  " + Runtime.getRuntime().freeMemory())
 }
+
 
 
 suspend fun superJobTest2() = coroutineScope{

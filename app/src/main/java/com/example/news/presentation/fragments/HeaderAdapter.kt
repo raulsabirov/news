@@ -1,3 +1,4 @@
+/*
 package com.example.news.presentation.fragments
 
 import android.view.LayoutInflater
@@ -37,4 +38,4 @@ class HeaderAdapter() :
     inner class HeaderViewHolder(var itemBinding: ItemHeadListBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
     }
-}
+}*/

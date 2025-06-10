@@ -15,13 +15,10 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.news.presentation.fragments.ArticlesFragment
 import com.example.news.R
-import com.example.news.databinding.ActivityMainBinding
+//import com.example.news.databinding.ActivityMainBinding
 import com.example.news.presentation.fragments.BaseFragment
-import com.example.news.presentation.fragments.FirstFragment
 import com.example.news.presentation.fragments.Navigation
-import com.example.news.presentation.fragments.SecondFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -50,15 +47,15 @@ val LocalFontStyle = compositionLocalOf { FontStyle.FONT_WEIGHT_MAX }
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+ //   private lateinit var binding: ActivityMainBinding
 
     val a = null
     val  laz  by lazy{ 1}
-    @Inject
-    lateinit var mainViewModel: MainViewModel
+//    @Inject
+     var mainViewModel= MainViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.inject(this)
+     //   (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
 
         // merge(intArrayOf(2,0),1, intArrayOf(1),1)
@@ -89,8 +86,10 @@ class MainActivity : AppCompatActivity() {
 
 
         setContent {
-            ComposeScreen(mainViewModel)
-            //    ArticleListScreen(mainViewModel)
+            //   ComposeScreen(mainViewModel)
+          //    ArticleListScreen(mainViewModel)
+
+            news.ArticleListScreen()
         }
 
 
@@ -130,7 +129,7 @@ class MainActivity : AppCompatActivity() {
 
                     .onEach { }
                     .collect {
-                        onNavigation(it)
+
                     }
 
 
@@ -179,7 +178,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    private fun onNavigation(navigation: Navigation) {
+/*    private fun onNavigation(navigation: Navigation) {
 
         when (navigation) {
             is Navigation.Articles -> {
@@ -197,7 +196,7 @@ class MainActivity : AppCompatActivity() {
 
             else -> {}
         }
-    }
+    }*/
 
     fun showLoginActivity() {
         val builder = AlertDialog.Builder(this)
@@ -213,7 +212,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        outState.putInt(SELECTED_BUTTON, binding.bottom.selectedItemId)
+     //   outState.putInt(SELECTED_BUTTON, binding.bottom.selectedItemId)
         super.onSaveInstanceState(outState, outPersistentState)
     }
 
@@ -221,7 +220,7 @@ class MainActivity : AppCompatActivity() {
     var oldButton = R.id.articles
 
 
-    private fun initBottomNavigationBar(selected: Int = R.id.articles) {
+/*    private fun initBottomNavigationBar(selected: Int = R.id.articles) {
         binding.bottom.selectedItemId = selected
         oldButton = R.id.articles
 
@@ -257,7 +256,7 @@ class MainActivity : AppCompatActivity() {
             return@setOnItemSelectedListener true
         }
 
-    }
+    }*/
 
     fun saveBackStack(oldButton: Int) {
         when (oldButton) {

@@ -4,6 +4,26 @@ package com.example.lib
 import java.util.LinkedList
 import kotlin.collections.List
 
+
+ enum class MYENUM{
+    A,
+    B,
+    C
+}
+
+fun testEnum () {
+    val enu = MYENUM.A
+
+
+    val result = when(enu){
+        MYENUM.A -> 1
+        MYENUM.B -> 2
+        MYENUM.C -> 3
+
+    }
+
+}
+
 val String.firstChar
     get() = this[0]
 
@@ -44,6 +64,9 @@ class ResourceWrapper(private val context: Context) {
 interface MyInt {
     //     @Volatile
     public var number: Int
+    var laz: Lazy<Int>
+        get() = lazy { 1 }
+        set(value) = TODO()
 }
 
 sealed class SealedClass(val one1: Int) {
@@ -60,6 +83,8 @@ sealed class SealedClass(val one1: Int) {
 
 }
 
+data class Error1(val one: Int) : SealedClass(one1 = one)
+
 sealed class SealedClass2 {
     data class Success(val one: Int) : SealedClass2()
     data class Error(val one: Int) : SealedClass2()
@@ -70,6 +95,8 @@ sealed class SealedClass2 {
         const val con = "companion"
 
         val sClass = SealedClass.Success(1)
+
+            // val sClass2 = SealedClass.Error1(1)
 
         @Synchronized
         fun myFun2(): Unit {
@@ -94,7 +121,7 @@ class SomeClass() {
 
     init {
         printName()
-        //   println(name)
+
         name = "Murzik"
     }
 

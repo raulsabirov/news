@@ -7,6 +7,7 @@ import com.example.news.Coroutines
 import com.example.news.FlowEvent
 import com.example.news.R
 import com.example.news.data.ArticlesRepository
+import com.example.news.data.ArticlesRepositoryImpl
 import com.example.news.data.MySharedPreferences.init
 import com.example.news.models.Article
 import com.example.news.presentation.fragments.Navigation
@@ -37,8 +38,8 @@ sealed class LoadingState() {
 }
 
 
-class MainViewModel @Inject constructor(
-    val articlesRepository: ArticlesRepository
+class MainViewModel  constructor(
+  //  val articlesRepository: ArticlesRepositoryImpl
 ) :
     ViewModel() {
     private val list = List(10) { counter ->
@@ -58,7 +59,7 @@ class MainViewModel @Inject constructor(
     }
 
     val nul: String by notNull()
-    fun myFun() = articlesRepository.getArticles(1)
+  //  fun myFun() = articlesRepository.getArticles(1)
 
     //val coroutine = Coroutines(viewModelScope)
 
@@ -75,7 +76,7 @@ class MainViewModel @Inject constructor(
     //lateinit var  latinit : Int
 
     init {
-        getArticles()
+     //   getArticles()
         val s = Semaphore(2)
         laz = lazy { 2 }
         //     mutableNumberList = mutableIntList
@@ -102,6 +103,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+
+    val thred = Thread{
+
+    }
 
     // val flow = Flow(viewModelScope)
 
@@ -151,6 +156,7 @@ class MainViewModel @Inject constructor(
             )
         )
 
+/*
     fun getArticles(page: Int = 1) {
         val job = viewModelScope.launch(Dispatchers.IO) {
             val articles = articlesRepository.getArticles(page = page)
@@ -173,6 +179,7 @@ class MainViewModel @Inject constructor(
         job.cancel()
 
     }
+*/
 
 
     val exceptionHandler = CoroutineExceptionHandler { _, exception ->

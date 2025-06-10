@@ -1,3 +1,4 @@
+/*
 package com.example.news.presentation.fragments
 
 import android.view.LayoutInflater
@@ -42,4 +43,4 @@ class FooterAdapter() :
         RecyclerView.ViewHolder(itemBinding.root) {
     }
 
-}
+}*/

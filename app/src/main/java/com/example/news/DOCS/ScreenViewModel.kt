@@ -100,8 +100,8 @@ interface UserHolder {
 }
 
 interface AnalyticsService {
-    @FormUrlEncoded
-    @POST("v1/analytics")
+ //   @FormUrlEncoded
+ //   @POST("v1/analytics")
     suspend fun sendSuccessfulChecks(checks: Long)
 }
 

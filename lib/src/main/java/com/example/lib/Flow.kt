@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
@@ -107,6 +108,39 @@ suspend fun flatMapConcatExample() = coroutineScope {
     }.collect { result ->
         println(result)
     }
+
+
+
+
+    fun flowFrom(elem: String) = flowOf(1, 2, 3)
+        .onEach { delay(1000) }
+        .map { "${it}_${elem} " }
+
+    suspend fun main() {
+        flowOf("A", "B", "C")
+            .flatMapConcat { flowFrom(it) }
+            .collect { println(it) }
+    }
+/*
+    Output:-
+    (1 sec)
+    1_A
+    (1 sec)
+    2_A
+    (1 sec)
+    3_A
+    (1 sec)
+    1_B
+    (1 sec)
+    2_B
+    (1 sec)
+    3_B
+    (1 sec)
+    1_C
+    (1 sec)
+    2_C
+    (1 sec)
+ */
 }
 
 suspend fun flatMapMergeExample() = coroutineScope {
@@ -244,6 +278,7 @@ class Flow(lifecycleScope: CoroutineScope) {
 
     fun events(): Flow<Int> = (1..3)
         .asFlow()
+        .filter {  it > 2  }
         .onEach { delay(100) }
 
     init {

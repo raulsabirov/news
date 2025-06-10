@@ -25,14 +25,24 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.news.models.Article
 import java.util.UUID
 
+
+val articles =  mutableStateListOf<Article>()
+
+fun addArticle() =
+    articles.add(
+        Article(
+            title = "Article ${articles.size -1}",
+            description = "Description for article ${articles.size -1}"
+        )
+    )
+
 @Composable
 fun ArticleListScreen(mainViewModel: MainViewModel? = null) {
-    val articles = remember { mutableStateListOf<Article>() }
-
     val counter = remember { mutableStateOf(1) }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -43,7 +53,7 @@ fun ArticleListScreen(mainViewModel: MainViewModel? = null) {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Button(onClick = {
-                mainViewModel?.addArticle()
+                addArticle()
 
                 counter.value++
             }) {
@@ -71,23 +81,27 @@ fun AnimatedContentList(articles: List<Article>) {
             items = articles,
             key = { article -> article.id }
         ) { article ->
-            AnimatedVisibility(
+          AnimatedVisibility(
                 visible = true,
                 enter = expandVertically() + fadeIn(),
                 exit = shrinkVertically() + fadeOut()
             ) {
                 ArticleItem(article = article)
             }
+
         }
+
     }
 }
 
 @Composable
 fun ArticleItem(article: Article) {
+    Column{
     Card(
         modifier = Modifier
+            .padding(8.dp)
             .fillMaxWidth()
-            .padding(8.dp),
+            ,
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -96,4 +110,30 @@ fun ArticleItem(article: Article) {
             Text(text = article.description, style = MaterialTheme.typography.bodyMedium)
         }
     }
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+            ,
+            elevation = CardDefaults.cardElevation(4.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(text = article.title , style = MaterialTheme.typography.titleMedium)
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(text = article.description, style = MaterialTheme.typography.bodyMedium)
+            }
+        }
+    }
+}
+
+
+@Composable
+@Preview
+fun ArticleItemPreview(){
+    ArticleItem(
+        Article(
+            title = "Article ${articles.size -1}",
+            description = "Description for article ${articles.size -1}"
+        )
+    )
 }

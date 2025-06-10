@@ -1,17 +1,25 @@
 package com.example.news.presentation
 
 import android.app.Application
-import com.example.news.data.AppComponent
-import com.example.news.data.DaggerAppComponent
+import news.viewmodelModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+
+//import com.example.news.data.DaggerAppComponent
 
 
 class MyApplication : Application() {
-    lateinit var appComponent: AppComponent
+   // lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
-
-        appComponent = DaggerAppComponent.create()
+        startKoin {
+            androidContext(this@MyApplication)
+            modules(
+               viewmodelModule
+            )
+        }
+       // appComponent = DaggerAppComponent.create()
         // Initialize Sync; the system responsible for keeping data in the app up to date.
 //        Sync.initialize(context = this)
     }

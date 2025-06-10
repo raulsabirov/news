@@ -1,13 +1,16 @@
 package com.example.news.presentation.fragments
+/*
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.ConcatAdapter
+*/
+/*import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import by.kirich1409.viewbindingdelegate.viewBinding
+import by.kirich1409.viewbindingdelegate.viewBinding*//*
+
 import com.example.news.R
 import com.example.news.databinding.FragmentArticlesBinding
 import com.example.news.presentation.ArticlesAdapter
@@ -56,11 +59,13 @@ class ArticlesFragment : BaseFragment(R.layout.fragment_articles) {
     companion object {
         fun getNewInstance(): ArticlesFragment {
             return ArticlesFragment().apply {
-                /*           arguments = Bundle().apply {
+                */
+/*           arguments = Bundle().apply {
                 putInt(EXTRA_NUMBER, number)
                 putLong(EXTRA_TIME, System.currentTimeMillis())
-            }*/
+            }*//*
+
             }
         }
     }
-}
+}*/

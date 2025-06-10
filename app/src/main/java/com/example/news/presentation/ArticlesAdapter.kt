@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.news.databinding.ItemArticleListBinding
+//import com.example.news.databinding.ItemArticleListBinding
 import com.example.news.models.Article
 
 
@@ -15,6 +15,7 @@ import com.example.news.models.Article
 //https://russianblogs.com/article/15692380584/
 
 //https://ziginsider.github.io/RecyclerView/#adapter
+/*
 
 class ArticlesAdapter() :
     ListAdapter<Article, ArticlesAdapter.ArticleViewHolder>(ArticleDiffCallback()) {
@@ -84,17 +85,22 @@ class ArticlesAdapter() :
     }
 
 
-    /* fun addData(data: Pair<Boolean, MutableList<DocumentEntity>>) {
+    */
+/* fun addData(data: Pair<Boolean, MutableList<DocumentEntity>>) {
          val margetArray = items + data.second
          val diffCallback = DiffUtilsCallback(items, margetArray)
          val diffResult = DiffUtil.calculateDiff(diffCallback)
          with(data) {
              if (first) {
                  items.clear()
-                 */
-    /**
+                 *//*
+
+    */
+/**
      * Удялем все выбранные элементы если page == 0
      *//*
+*/
+/*
                 selectDeselectAll()
                 items.addAll(second)
             } else {
@@ -103,15 +109,20 @@ class ArticlesAdapter() :
         }
         diffResult.dispatchUpdatesTo(this)
 
-        */
-    /**
+        *//*
+
+    */
+/**
      * Если поставлен чекбокс выбрать все
      * Добавляем к выбранным все элементы пришетшие с бэка
      *//*
+*/
+/*
         if (isCheckedAll) {
             selectDeselectAll(true)
         }
-    }*/
+    }*//*
+
 
 
     enum class ArticleChangePayload {
@@ -119,4 +130,4 @@ class ArticlesAdapter() :
         Description
     }
 
-}
+}*/
