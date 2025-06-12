@@ -30,11 +30,13 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
+/*
 tasks.withType(KotlinCompile::class.java).all {
     compilerOptions {
         jvmTarget = JvmTarget.JVM_21
     }
 }
+*/
 
 /*plugins {
     alias(libs.plugins.kotlin.multiplatform)

@@ -145,6 +145,8 @@ suspend fun flatMapConcatExample() = coroutineScope {
 
 suspend fun flatMapMergeExample() = coroutineScope {
     // flatMapMerge: Collects from multiple flows concurrently, merging their emissions as they come.
+
+
     flowOf(1, 2, 3).flatMapMerge { number ->
         flow {
             emit("$number: A")
@@ -184,29 +186,7 @@ suspend fun flatMapLatestExample() = coroutineScope {
 }
 
 
-suspend fun flattenMergeExample() = coroutineScope {
-    val flow1 = flow {
-        delay(100)
-        emit("A")
-    }
 
-    val flow2 = flow {
-        delay(50)
-        emit("B")
-    }
-
-    val flow3 = flow {
-        delay(150)
-        emit(1)
-    }
-
-    //The flattenMerge operator collects from multiple flows concurrently and merges their emissions into a single flow.
-    // This is useful when you want to start collecting from multiple flows simultaneously without waiting for one to complete before starting the next.
-    listOf(flow1, flow2, flow3).asFlow().flattenMerge().collect { value ->
-        println(value)
-    }
-    // Output: B, A, C
-}
 
 suspend fun combineExample() = coroutineScope {
     // The combine operator takes the latest value from each flow and emits a new value whenever

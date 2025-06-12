@@ -37,7 +37,8 @@ kotlin {
 }
 
 application {
-    mainClass.set("com/example/myapplication/desktop/Main.kt")
+  //  mainClass.set("com/example/myapplication/desktop/Main.kt")
+    mainClass.set("com.example.myapplication.desktop.MainKt")
 }
 
 /*

@@ -79,8 +79,13 @@ class MainViewModel  constructor(
 
             repeat(1000){
 
-                stateInt.update { it }
-                delay(1000)
+                //stateInt. emit(it)
+                stateInt.value = it
+
+                    //   stateInt.update { it }
+
+                delay(100)
+                    //    println(it)
             }
         }
 
