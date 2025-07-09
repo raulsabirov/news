@@ -1,10 +1,7 @@
 package com.example.myapplication.desktop
 
-import com.example.news.MainViewModel
+import com.example.news.ArticlesViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collectLatest
-import org.koin.core.context.startKoin
-import ru.braveowlet.simple_mvi_example.core.network.networkModule
 import java.awt.Color
 import java.awt.Graphics
 import javax.swing.JFrame
@@ -22,7 +19,7 @@ fun main() {
         frame.isVisible = true
 
         val scope = CoroutineScope(Dispatchers.Default)
-        val viewModel = MainViewModel()
+        val viewModel = ArticlesViewModel()
 
         scope.launch {
             viewModel.stateInt.collect { newX ->

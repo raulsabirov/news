@@ -2,15 +2,13 @@ package com.example.news.models
 
 
 import androidx.compose.runtime.Immutable
-
-
-
+import com.example.news.generateUUID
 
 
 @Immutable
 data class Article(
     //val id: String =  UUID.randomUUID().toString(),
-    val id: String =  "rand",
+    val id: String =  generateUUID(),
     val source: Source? = Source(),
     val author: String? = null,
     val title: String,

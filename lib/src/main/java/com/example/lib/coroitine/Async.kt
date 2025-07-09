@@ -1,0 +1,70 @@
+package com.example.lib.coroitine
+
+import com.example.lib.handler
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+
+
+val handler = CoroutineExceptionHandler { _, exception ->
+    println("    CoroutineExceptionHandler got $exception")
+}
+val coroutineScope = CoroutineScope( Dispatchers.IO   + handler)
+
+fun main() = runBlocking {
+
+    myFun()
+
+    val job = coroutineScope.launch() {
+
+        val deferred = async( SupervisorJob()) {
+            val i = "s".toInt()
+        }
+
+
+      ///  val result = deferred.await()
+        println("catch" )
+
+    }
+
+    job.join()
+}
+
+fun myFun() = runBlocking {
+
+     suspend fun getForecast() : String{
+
+         delay(1000)
+         return  "Sunny"
+     }
+
+     suspend fun getTemperature() : String{
+         delay(1000)
+         throw AssertionError("Temp is invalid")
+         return  "30 graduses"
+     }
+
+
+    // async в coroutineScope {} — исключение всплывёт, даже без await(),
+    // потому что coroutineScope ждёт завершения всех корутин и обрабатывает ошибки.
+     suspend fun getWeatherReport() = coroutineScope{
+         val forecast = async {  getForecast() }
+         val temperature = async {  getTemperature() }
+         delay(200)
+         forecast.await()
+     }
+
+
+     println(getWeatherReport())
+
+
+}

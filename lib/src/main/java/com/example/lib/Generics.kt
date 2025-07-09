@@ -2,6 +2,9 @@ package com.example.news
 
 
 
+fun main() {
+    Generics()
+}
 
 val lazy by lazy{
     Generics().open1
@@ -43,23 +46,32 @@ open class Generics {
 
    // val listStar: List<*> = listOf(42, "Bob")
     var listAny = listOf<Any>(1, "1")
-    var listCharSequence = listOf<CharSequence>("1")
     var listString = listOf<String>("1")
+    var listCharSequence = listOf<CharSequence>("1")
+
     var mutableListString = mutableListOf<String>("1")
 
-    var listOrange = listOf(Orange())
-    var listCitrus = listOf(Citrus())
-    var listFruit = listOf(Fruit())
+    var mutableListInt =  mutableListOf<Int>( 1)
+    var mutableListNumber =  mutableListOf<Number>( 1)
 
     init {
+        listAny = listString
+
+      //  mutableListNumber = mutableListInt
+/*
+        The key to understanding why this works is rather simple: if you can only take items from a collection,
+        then using a collection of Strings and reading Objects from it is fine. Conversely,
+        if you can only put items into the collection, it's okay to take a collection of Objects
+        and put Strings into it: in Java there is List<? super String>, which accepts Strings or any of its supertypes.
+        */
         // Covariance
-      //  val dogList: List<Dog> = listOf(Dog(10), Dog(20))
-      //  val animalList: List<Animal> = dogList
+       val dogList: List<Dog?> = listOf(Dog(1))
+       val animalList: List<Animal?> = dogList
 
 
         // Invariance
-     //  val dogList2: List<Dog> = mutableListOf<Dog>(Dog())
-     //  val animalList2: List<Animal> = dogList2 // Compiler error
+      val dogList2: MutableList<Dog> = mutableListOf<Dog>(Dog(2))
+   //   val animalList2: MutableList<Animal> = dogList2 // Compiler error
 
 
         // Contravariance
@@ -75,9 +87,7 @@ open class Generics {
                 return first.size - second.size
             }
         }
-    //    val spiderCompare: Comparator<Spider> = animalCompare2 // Works nicely!
 
-        val orange: Orange
 
         val numbers = listOf(1, 2, 3)
         val expanded = numbers.flatMap { listOf(it, it * 2) }
@@ -151,9 +161,9 @@ class InClass<in T> {
 // The out keyword says that methods in a List can only return type E
 // and they cannot take any E types as an argument.
 // This limitation allows us to make List covariant.
-interface List<out E> {
+/*interface List<out E> {
     fun get(index: Int): E
-}
+}*/
 
 // In this case, there is in keyword next to the parameter.
 // This means that all methods in Compare can have T as an argument but cannot return T type.
@@ -168,13 +178,7 @@ abstract class Animal(val size: Int)
 class Dog(val cuteness: Int): Animal(100)
 class Spider(val terrorFactor: Int): Animal(1)
 
-open class Fruit(var weight: Int = 0)
-open class Citrus(color: Int = 0) : Fruit(2)
-open class Orange() : Citrus() {
-    init { weight = 3  }
-}
 
-open class BigRoundOrange() : Orange()
 
 
 public fun starGeneric(listStars: ArrayList<*>) {

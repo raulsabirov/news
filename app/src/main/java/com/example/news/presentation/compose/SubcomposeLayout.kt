@@ -39,7 +39,7 @@ val profileFull = Profile(
     company = "Some company",
 )
 
-val profile = profileFull
+val profile = profileShort
 
 @Composable
 fun  SubcomposeLayout() {

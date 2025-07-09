@@ -82,4 +82,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
     dependencies { debugImplementation(libs.compose.ui.tooling) }
+
+    buildFeatures {
+
+        compose  = true
+        buildConfig = true
+    }
 }

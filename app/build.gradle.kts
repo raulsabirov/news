@@ -111,7 +111,7 @@ android {
 /*
     compileOptions {
         sourceCompatibility  = JavaVersion.VERSION_17
-        targetCompatibility  = JavaVersion.VERSION_17
+        targetCompFatibility  = JavaVersion.VERSION_17
     }
 */
 
@@ -166,6 +166,12 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.viewmodel)
+
+    val work_version = "2.10.2"
+
+
+    // Kotlin + coroutines
+    implementation("androidx.work:work-runtime-ktx:$work_version")
 }
 
 

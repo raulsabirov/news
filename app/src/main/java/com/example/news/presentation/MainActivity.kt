@@ -1,7 +1,6 @@
 package com.example.news.presentation
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.graphics.fonts.FontStyle
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -16,9 +15,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.news.R
+import com.example.news.presentation.compose.CustomColumn
+import com.example.news.presentation.compose.CustomColumnScreen
+import com.example.news.presentation.compose.LocalFontStyleScreen
+import com.example.news.presentation.compose.RememberUpdatedStateScreen
+import com.example.news.presentation.compose.SubcomposeLayout
 //import com.example.news.databinding.ActivityMainBinding
 import com.example.news.presentation.fragments.BaseFragment
-import com.example.news.presentation.fragments.Navigation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,8 +31,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.util.LinkedList
 import java.util.Queue
-import javax.inject.Inject
-
 
 
 interface  ааа {
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             //   ComposeScreen(mainViewModel)
           //    ArticleListScreen(mainViewModel)
 
-            news.ArticleListScreen()
+            CustomColumnScreen()
         }
 
 

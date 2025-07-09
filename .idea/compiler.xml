@@ -3,20 +3,8 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17">
       <module name="Android.news.News.app" target="21" />
-      <module name="News.app" target="21" />
-      <module name="News.app-desktop" target="21" />
-      <module name="News.app-desktop.main" target="21" />
-      <module name="News.app-desktop.test" target="21" />
-      <module name="News.core.database" target="21" />
-      <module name="News.core.network" target="21" />
-      <module name="News.core.recources" target="21" />
-      <module name="News.features.articles-screens.articles-impl" target="21" />
-      <module name="News.lib" target="21" />
-      <module name="News.lib.main" target="21" />
-      <module name="News.lib.test" target="21" />
       <module name="news.News.app" target="21" />
       <module name="news.News.features.articles-screens.articles-impl" target="21" />
-      <module name="News.shared" target="21" />
     </bytecodeTargetLevel>
   </component>
 </project>

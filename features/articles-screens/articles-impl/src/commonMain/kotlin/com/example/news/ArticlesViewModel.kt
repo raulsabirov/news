@@ -1,6 +1,5 @@
 package com.example.news
 
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.models.Article
@@ -9,14 +8,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Semaphore
 import kotlin.properties.Delegates.notNull
 
@@ -27,18 +20,11 @@ sealed class LoadingState() {
 }
 
 
-class MainViewModel  constructor(
+class ArticlesViewModel  constructor(
   //  val articlesRepository: ArticlesRepositoryImpl
 ) :
     ViewModel() {
-/*    private val list = List(10) { counter ->
-        Article(
-            title = "Article ${counter}",
-            description = "Description for article ${counter}"
-        )
-    }
 
-    val stateArticleList  = list.toMutableStateList()*/
 
     override fun onCleared() {
         viewModelScope.launch {
