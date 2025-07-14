@@ -1,8 +1,9 @@
+package com.example.lib.algo
+
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.random.Random
-import kotlin.system.*
 
 val scope = CoroutineScope(Dispatchers.Default)
 
@@ -32,9 +33,9 @@ suspend fun getGeoInfo(ip: String): String {
 
         // 2. Проверяем, есть ли уже идущий запрос
         val ongoing = ongoingRequests[ip]
-        if (ongoing != null) {
+/*        if (ongoing != null) {
             return ongoing
-        }
+        }*/
 
         // 3. Запускаем новый запрос
         val deferred = scope.async {

@@ -19,3 +19,4 @@ venv
 /mkdocs_material.egg-info
 .vscode
 .kotlin
+.aider*

@@ -1,4 +1,4 @@
-package com.example.news.DOCS
+package com.example.lib.algo
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -6,8 +6,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.util.Date
-import java.util.concurrent.atomic.AtomicLong
 
 /*
 Основная задача: оптимизировать запросы к сервису fakeGeoIpService
