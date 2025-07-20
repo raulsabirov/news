@@ -65,6 +65,12 @@ work = "2.9.0"
 lifecycleViewmodel = "2.8.2"
 
 [libraries]
+# Gradle plugins
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+compose-gradlePlugin = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "compose-plugin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "symbol-processing-gradle-plugin", version.ref = "ksp" }
+
 work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
@@ -147,7 +153,15 @@ touchlab-stately-common = {module = "co.touchlab:stately-common", version.ref = 
 ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 
-[plugins]
+ [plugins]
+
+
+# Convention plugins
+news-android-application = { id = "news.android.application" }
+news-android-library = { id = "news.android.library" }
+news-android-compose = { id = "news.android.compose" }
+news-kotlin-multiplatform = { id = "news.kotlin.multiplatform" }
+
 # Kotlin
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

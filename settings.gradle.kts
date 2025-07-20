@@ -15,6 +15,7 @@ dependencies {
 */
 
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             mavenContent {
@@ -46,7 +47,7 @@ include(":app")
 include(":lib")
 include(":lib2")
 include(":mylibrary")
-include(":shared")
+
 include(":app-desktop")
 
 

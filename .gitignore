@@ -20,3 +20,10 @@ venv
 .vscode
 .kotlin
 .aider*
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+*.xml

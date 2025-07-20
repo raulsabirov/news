@@ -17,6 +17,12 @@ tasks.withType<KotlinCompile>().configureEach {
     }
 }
 
+tasks {
+    validatePlugins {
+        enableStricterValidation = true
+        failOnWarning = true
+    }
+}
 
 dependencies {
     compileOnly(libs.android.gradlePlugin)
@@ -28,7 +34,8 @@ dependencies {
 gradlePlugin {
     plugins {
         register("androidApplication") {
-            id = "news.android.application"
+
+            id = libs.plugins.news.android.application.get().pluginId
             implementationClass = "AndroidApplicationConventionPlugin"
         }
         register("androidLibrary") {
@@ -40,7 +47,8 @@ gradlePlugin {
             implementationClass = "AndroidComposeConventionPlugin"
         }
         register("kotlinMultiplatform") {
-            id = "news.kotlin.multiplatform"
+
+            id = libs.plugins.news.kotlin.multiplatform.get().pluginId
             implementationClass = "KotlinMultiplatformConventionPlugin"
         }
     }

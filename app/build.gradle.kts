@@ -1,15 +1,9 @@
 
 plugins {
-//    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlinAndroid)
-
-    // kotlin("android")
-      //   id(libs.plugins.kotlin.kapt.get().pluginId) // подключение kapt
-   // id("org.jetbrains.kotlin.kapt") // ❗ подключаем как строку
-
+    /// alias(libs.plugins.news.android.application)
+    // alias(libs.plugins.news.android.compose)
+    id("news.android.application")
+    id("news.android.compose")
 }
 
 
@@ -68,71 +62,14 @@ kotlin {
 }*/
 
 android {
-
     namespace = "com.example.news"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
+    
     defaultConfig {
         applicationId = "com.example.news"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
     }
-    defaultConfig {
-
-        multiDexEnabled  = true
-    }
-/*
-    kapt {
-        generateStubs = true
-    }*/
-
-
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-
-            buildConfigField("String", "NEWS_API_KEY", "\"9e39934e997343cf8a4b6010d533a801\"")
-            buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2/\"")
-        }
-
-        getByName("debug") {
-            buildConfigField("String", "NEWS_API_KEY", "\"9e39934e997343cf8a4b6010d533a801\"")
-            buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2/\"")
-        }
-    }
-
-/*
-    compileOptions {
-        sourceCompatibility  = JavaVersion.VERSION_17
-        targetCompFatibility  = JavaVersion.VERSION_17
-    }
-*/
-
-    buildFeatures {
-
-        compose  = true
-        buildConfig = true
-    }
-/*    composeOptions {
-        kotlinCompilerExtensionVersion '1.4.3'
-    }*/
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-
 }
 /*
 
@@ -144,12 +81,7 @@ composeCompiler {
 
 
 dependencies {
-
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.material3)
     implementation(libs.androidx.material)
-    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.koin.android)
     implementation(libs.koin.android.compose)
     implementation(libs.koin.android.navigation)
@@ -162,16 +94,11 @@ dependencies {
     implementation(libs.work.runtime.ktx)
 
     implementation(projects.features.articlesScreens.articlesImpl)
+  //  implementation(projects.shared)
 
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.viewmodel)
-
-    val work_version = "2.10.2"
-
-
-    // Kotlin + coroutines
-    implementation("androidx.work:work-runtime-ktx:$work_version")
 }
 
 
