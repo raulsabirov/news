@@ -37,7 +37,8 @@ data class Article(
     val url: String? = null,
     val urlToImage: String? = null,
     val publishedAt: String? = null,
-    val content: String? = null
+    @Transient
+    val  content: String? = null
 )
 
 @Immutable
@@ -49,8 +50,10 @@ data class Source (
         get() = super.a*/
 }
 
-open class A ( val aa :String = "String"){
-    open val a = ""
+ abstract class A ( val aa :String = "String"){
+     val a = ""
+
+     val list : List<String> = emptyList()
  //   @Parcelize
     companion object  {
 

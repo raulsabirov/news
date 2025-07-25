@@ -9,6 +9,7 @@ import com.example.news.R
 import java.util.LinkedList
 
 
+/*
 object Const {
     val INDEX = 1
 }
@@ -80,3 +81,4 @@ open class ChatSessionController(
     }
 
 }
+*/

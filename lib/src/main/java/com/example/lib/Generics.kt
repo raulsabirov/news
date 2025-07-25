@@ -1,6 +1,7 @@
-package com.example.news
+package com.example.lib
 
 
+data class ss(val s : String) : SealedClass(1)
 
 fun main() {
     Generics()
@@ -24,6 +25,7 @@ interface MyInterface {
 }
 
 open class Generics {
+
     private   val   private1 = ""
     protected val   protected1 = ""
     open val   open1 = ""
@@ -139,7 +141,7 @@ open class Generics {
 
 
     val refOut: OutClass<Any> = OutClass("string")
-    val refIn: InClass<Int>   = InClass<Number>()
+    val refIn: InClass<Int> = InClass<Number>()
 
 
 }

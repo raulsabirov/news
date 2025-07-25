@@ -15,4 +15,15 @@ class CountingSet<T>(
         objectsAdded += c.size
         return innerSet.addAll(c)
     }
+    companion object{
+        init {
+
+        }
+    }
+
+     object name{
+        init {
+
+        }
+    }
 }

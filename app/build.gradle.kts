@@ -99,6 +99,11 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.viewmodel)
+    
+    // Decompose
+    implementation(libs.decompose)
+    implementation(libs.decompose.compose)
+    implementation(libs.essenty.lifecycle)
 }
 
 

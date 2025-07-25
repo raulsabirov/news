@@ -15,6 +15,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.news.R
+import com.arkivanov.decompose.defaultComponentContext
+import com.example.news.navigation.DefaultRootComponent
+import com.example.news.navigation.RootContent
 import com.example.news.presentation.compose.CustomColumn
 import com.example.news.presentation.compose.CustomColumnScreen
 import com.example.news.presentation.compose.LocalFontStyleScreen
@@ -39,7 +42,7 @@ interface  ааа {
 
 }
 
-data class Model (val test : String)
+final data class Model (val test : String)
 
 fun Model.toString() {
 
@@ -90,7 +93,13 @@ class MainActivity : AppCompatActivity() {
             //   ComposeScreen(mainViewModel)
           //    ArticleListScreen(mainViewModel)
 
-            CustomColumnScreen()
+            // Создаем root component с Decompose навигацией
+            val root = DefaultRootComponent(
+                componentContext = defaultComponentContext(),
+                mainViewModel = mainViewModel
+            )
+
+            RootContent(component = root)
         }
 
 
