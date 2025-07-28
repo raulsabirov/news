@@ -4,7 +4,7 @@ import android.accounts.Account
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.example.news.DOCS.Const.INDEX
+
 import com.example.news.R
 import java.util.LinkedList
 

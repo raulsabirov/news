@@ -6,29 +6,20 @@ import androidx.lifecycle.viewModelScope
 
 import com.example.news.FlowEvent
 import com.example.news.R
-import com.example.news.data.ArticlesRepository
-import com.example.news.data.ArticlesRepositoryImpl
-import com.example.news.data.MySharedPreferences.init
 import com.example.news.models.Article
 import com.example.news.presentation.fragments.Navigation
 
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Semaphore
-import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 import kotlin.properties.Delegates.notNull
 
 sealed class LoadingState() {

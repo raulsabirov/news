@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         println("MainActivity onCreate")
 
-
+        //System.exit(1)
         setContent {
             //   ComposeScreen(mainViewModel)
           //    ArticleListScreen(mainViewModel)
@@ -101,6 +101,8 @@ class MainActivity : AppCompatActivity() {
 
             RootContent(component = root)
         }
+
+
 
 
         // binding = ActivityMainBinding.inflate(layoutInflater)

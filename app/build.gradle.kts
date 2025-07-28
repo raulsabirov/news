@@ -4,6 +4,9 @@ plugins {
     // alias(libs.plugins.news.android.compose)
     id("news.android.application")
     id("news.android.compose")
+      //     alias(libs.plugins.kotlin.parcelize)
+
+    id("kotlin-parcelize")
 }
 
 
@@ -93,7 +96,7 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.work.runtime.ktx)
 
-    implementation(projects.features.articlesScreens.articlesImpl)
+  //  implementation(projects.features.articlesScreens.articlesImpl)
   //  implementation(projects.shared)
 
     implementation(libs.koin.core)
@@ -104,6 +107,12 @@ dependencies {
     implementation(libs.decompose)
     implementation(libs.decompose.compose)
     implementation(libs.essenty.lifecycle)
+    
+    // Benchmark dependencies
+/*    androidTestImplementation("androidx.benchmark:benchmark-junit4:1.2.2")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.4")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")*/
 }
 
 

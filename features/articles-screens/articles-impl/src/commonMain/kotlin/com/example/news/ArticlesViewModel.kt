@@ -2,7 +2,7 @@ package com.example.news
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.news.models.Article
+import com.example.news.models.Article2
 
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -81,9 +81,9 @@ class ArticlesViewModel  constructor(
 
 
 
-    val _articlesFlow = MutableStateFlow<List<Article>>(emptyList())
+    val _articlesFlow = MutableStateFlow<List<Article2>>(emptyList())
 
-    val articlesFlow = MutableStateFlow<List<Article>>(emptyList())
+    val articlesFlow = MutableStateFlow<List<Article2>>(emptyList())
 
 
 /*

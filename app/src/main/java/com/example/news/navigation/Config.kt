@@ -1,10 +1,10 @@
 package com.example.news.navigation
 
-//import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 
 sealed class Config : Parcelable {
-/*    @Parcelize
+    @Parcelize
     object ArticleList : Config()
     
     @Parcelize
@@ -12,7 +12,7 @@ sealed class Config : Parcelable {
     
     @Parcelize
     object RememberUpdatedState : Config()
-    
+
     @Parcelize
-    object Home : Config()*/
+    object Home : Config()
 }

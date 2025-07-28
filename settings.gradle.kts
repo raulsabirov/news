@@ -3,6 +3,9 @@
 import org.gradle.internal.impldep.org.bouncycastle.its.asn1.EndEntityType.app
 import java.awt.SystemColor.desktop
 
+include(":MicroBenchmark")
+
+
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 /* для
@@ -59,3 +62,4 @@ include(":core:recources")
 
 
 include(":features:articles-screens:articles-impl")
+include(":MicroBenchmark")

@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -44,8 +45,12 @@ kotlin {
           //  implementation(libs.androidx.lifecycle.viewmodel)
         }
 
-/*        androidMain.dependencies {
-*//*            implementation(projects.core.recources)
+        androidMain.dependencies {
+
+            implementation(libs.compose.ui.tooling) // Changed from debugImplementation
+            implementation(libs.compose.ui.tooling.preview) // Keep preview for debug only
+
+            implementation(projects.core.recources)
             implementation(projects.core.network)
 
             implementation(libs.kotlinx.coroutines.core)
@@ -68,8 +73,8 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network)
 
-            implementation(libs.androidx.lifecycle.viewmodel.ktx)*//*
-        }*/
+            implementation(libs.androidx.lifecycle.viewmodel.ktx)
+        }
     }
 }
 

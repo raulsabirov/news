@@ -29,6 +29,7 @@ plugins {
     alias(libs.plugins.ksp) apply false
  //   alias(libs.plugins.room) apply false
     alias(libs.plugins.detekt)
+    alias(libs.plugins.benchmark) apply false
 }
 
 /*
