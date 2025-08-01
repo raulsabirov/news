@@ -3,14 +3,13 @@ package com.example.news.models
 
 import androidx.compose.runtime.Immutable
 import com.example.news.generateUUID
-import okio.Source
 
 
 @Immutable
-data class Article2(
+data class Article(
     //val id: String =  UUID.randomUUID().toString(),
     val id: String =  generateUUID(),
-    val source: Source2? = Source2(),
+    val source: Source? = Source(),
     val author: String? = null,
     val title: String,
     val description: String,
@@ -21,7 +20,7 @@ data class Article2(
 )
 
 @Immutable
-data class Source2 (
+data class Source (
     val id: String? = null,
     val name: String? = null
 )

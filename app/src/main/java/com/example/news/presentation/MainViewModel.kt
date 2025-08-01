@@ -15,7 +15,9 @@ import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -40,9 +42,11 @@ class MainViewModel  constructor(
         )
     }
 
+
     val stateArticleList  = list.toMutableStateList()
 
     override fun onCleared() {
+        list.asReversed()
         viewModelScope.launch {
 
             super.onCleared()
@@ -59,12 +63,12 @@ class MainViewModel  constructor(
 
     var intList: List<Int> = mutableListOf<Int>(1)
 
-    val stateResponse = MutableStateFlow("")
+    val stateResponse = MutableStateFlow("").shareIn(viewModelScope, SharingStarted.Eagerly)
 
     val stateRequest = MutableStateFlow("")
 
     var laz = lazy { 1 }
-    //lateinit var  latinit : Int
+    lateinit var  latinit : Article
 
     init {
      //   getArticles()
@@ -97,7 +101,7 @@ class MainViewModel  constructor(
 
     val thred = Thread{
 
-    }
+    }.run {  }
 
     // val flow = Flow(viewModelScope)
 

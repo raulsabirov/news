@@ -1,7 +1,8 @@
-package com.example.news.navigation
+package news.navigation
 
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
+
 
 sealed class Config : Parcelable {
     @Parcelize

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    id("kotlin-parcelize")
 }
 
 compose.resources {
@@ -74,6 +75,11 @@ kotlin {
             implementation(libs.coil.network)
 
             implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+            // Decompose
+            implementation(libs.decompose)
+            implementation(libs.decompose.compose)
+            implementation(libs.essenty.lifecycle)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.news.navigation.renderers
+package news.navigation.renderers
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,14 +8,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.news.navigation.CustomColumnRenderDelegate
-import com.example.news.navigation.components.CustomColumnComponent
-import com.example.news.presentation.compose.CustomColumnScreen
+import news.compose.RememberUpdatedStateScreen
+import news.navigation.RememberUpdatedStateRenderDelegate
+import news.navigation.components.RememberUpdatedStateComponent
 
-class CustomColumnRenderer : CustomColumnRenderDelegate {
+
+class RememberUpdatedStateRenderer : RememberUpdatedStateRenderDelegate {
     
     @Composable
-    override fun render(data: CustomColumnComponent) {
+    override fun render(data: RememberUpdatedStateComponent) {
         Column(modifier = Modifier.fillMaxSize()) {
             Button(
                 onClick = { data.onNavigateBack() },
@@ -24,7 +25,7 @@ class CustomColumnRenderer : CustomColumnRenderDelegate {
                 Text("Back")
             }
             
-            CustomColumnScreen()
+            RememberUpdatedStateScreen()
         }
     }
 }

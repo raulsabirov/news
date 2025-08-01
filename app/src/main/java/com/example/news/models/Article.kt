@@ -27,6 +27,7 @@ data class AA( val s: String){
 
 
 }
+/*
 @Immutable
 data class Article(
     val id: String =  UUID.randomUUID().toString(),
@@ -46,8 +47,10 @@ data class Source (
     val id: String? = null,
     val name: String? = null
 ) : A() {
+*/
 /*    override val a: Nothing
-        get() = super.a*/
+        get() = super.a*//*
+
 }
 
  abstract class A ( val aa :String = "String"){
@@ -62,6 +65,7 @@ data class Source (
         }
     }
 }
+*/
 
 
 /*

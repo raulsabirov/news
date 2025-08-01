@@ -11,6 +11,8 @@ We’ll create a ComputerFacade class to provide a simple interface for the clie
 */
 
 /*
+
+
 In this example, the ComputerFacade class serves as a simplified interface for starting the computer system.
 The client interacts with the subsystem (CPU, Memory, and HardDrive) through the ComputerFacade without needing to know the details of each subsystem component.
 
@@ -18,7 +20,9 @@ By using the Facade pattern, the complexity of the subsystem is hidden from the 
 and the client can interact with the system through a more straightforward and unified interface provided by the facade.
 This can be especially useful when dealing with large and complex systems.
 */
-
+/**
+ * @see <img src="https://raw.githubusercontent.com/wiki/ReactiveX/RxJava/images/rx-operators/Completable.png"/>
+ */
 
 // Subsystem classes
 class CPU {

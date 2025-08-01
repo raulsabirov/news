@@ -1,4 +1,4 @@
-package com.example.news.presentation.compose
+package news.compose
 
 import android.util.Log
 import androidx.compose.animation.core.copy

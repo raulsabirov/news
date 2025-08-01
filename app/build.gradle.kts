@@ -96,7 +96,7 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.work.runtime.ktx)
 
-  //  implementation(projects.features.articlesScreens.articlesImpl)
+    implementation(projects.features.articlesScreens.articlesImpl)
   //  implementation(projects.shared)
 
     implementation(libs.koin.core)

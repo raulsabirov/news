@@ -1,16 +1,19 @@
 package com.example.microbenchmark
 
+import androidx.activity.ComponentActivity
 import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.news.models.Article
-import com.example.news.navigation.components.ArticleListComponent
-import com.example.news.navigation.renderers.ArticleListRenderer
-import com.example.news.presentation.MainViewModel
+import com.example.news.presentation.ArticlesViewModel
+import news.navigation.components.ArticleListComponent
+import news.navigation.renderers.ArticleListRenderer
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 
 @RunWith(AndroidJUnit4::class)
 class ArticleListRendererBenchmark {
@@ -18,16 +21,20 @@ class ArticleListRendererBenchmark {
     @get:Rule
     val benchmarkRule = BenchmarkRule()
 
-    @get:Rule
-    val composeTestRule = createComposeRule()
+/*    @get:Rule
+    val composeTestRule = createComposeRule()*/
 
-    private fun createMockArticleListComponent() = object : ArticleListComponent {
+    @get:Rule
+    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
+
+    private fun createMockArticleListComponent() = object :
+        news.navigation.components.ArticleListComponent {
         override fun onNavigateToCustomColumn() = Unit
         override fun onNavigateToRememberUpdatedState() = Unit
     }
 
-    private fun createMockMainViewModel(articleCount: Int): MainViewModel {
-        val viewModel = MainViewModel()
+    private fun createMockMainViewModel(articleCount: Int): ArticlesViewModel {
+        val viewModel = ArticlesViewModel()
         viewModel.stateArticleList.clear()
         repeat(articleCount) { index ->
             viewModel.stateArticleList.add(
@@ -42,7 +49,7 @@ class ArticleListRendererBenchmark {
 
     @Test
     fun benchmarkRenderWithSmallList() {
-        val renderer = ArticleListRenderer(createMockMainViewModel(10))
+        val renderer = news.navigation.renderers.ArticleListRenderer(createMockMainViewModel(10))
         val component = createMockArticleListComponent()
 
         benchmarkRule.measureRepeated {
@@ -54,7 +61,7 @@ class ArticleListRendererBenchmark {
 
     @Test
     fun benchmarkRenderWithMediumList() {
-        val renderer = ArticleListRenderer(createMockMainViewModel(50))
+        val renderer = news.navigation.renderers.ArticleListRenderer(createMockMainViewModel(50))
         val component = createMockArticleListComponent()
 
         benchmarkRule.measureRepeated {
@@ -66,7 +73,7 @@ class ArticleListRendererBenchmark {
 
     @Test
     fun benchmarkRenderWithLargeList() {
-        val renderer = ArticleListRenderer(createMockMainViewModel(100))
+        val renderer = news.navigation.renderers.ArticleListRenderer(createMockMainViewModel(100))
         val component = createMockArticleListComponent()
 
         benchmarkRule.measureRepeated {
@@ -78,7 +85,7 @@ class ArticleListRendererBenchmark {
 
     @Test
     fun benchmarkRenderWithEmptyList() {
-        val renderer = ArticleListRenderer(createMockMainViewModel(0))
+        val renderer = news.navigation.renderers.ArticleListRenderer(createMockMainViewModel(0))
         val component = createMockArticleListComponent()
 
         benchmarkRule.measureRepeated {
@@ -91,7 +98,7 @@ class ArticleListRendererBenchmark {
     @Test
     fun benchmarkAddArticle() {
         val viewModel = createMockMainViewModel(20)
-        val renderer = ArticleListRenderer(viewModel)
+        val renderer = news.navigation.renderers.ArticleListRenderer(viewModel)
         val component = createMockArticleListComponent()
 
         composeTestRule.setContent {
@@ -109,7 +116,7 @@ class ArticleListRendererBenchmark {
     @Test
     fun benchmarkRemoveArticle() {
         val viewModel = createMockMainViewModel(50)
-        val renderer = ArticleListRenderer(viewModel)
+        val renderer = news.navigation.renderers.ArticleListRenderer(viewModel)
         val component = createMockArticleListComponent()
 
         composeTestRule.setContent {

@@ -1,4 +1,4 @@
-package com.example.news.navigation
+package news.navigation
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -6,14 +6,15 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.popTo
 import com.arkivanov.decompose.router.stack.push
-import com.example.news.navigation.components.DefaultArticleListComponent
-import com.example.news.navigation.components.DefaultCustomColumnComponent
-import com.example.news.navigation.components.DefaultRememberUpdatedStateComponent
-import com.example.news.presentation.MainViewModel
+import com.example.news.presentation.ArticlesViewModel
+import news.navigation.components.DefaultArticleListComponent
+import news.navigation.components.DefaultCustomColumnComponent
+import news.navigation.components.DefaultRememberUpdatedStateComponent
+
 
 class DefaultRootComponent(
     componentContext: ComponentContext,
-    private val mainViewModel: MainViewModel? = null
+    private val mainViewModel: ArticlesViewModel? = null
 ) : RootComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Config>()

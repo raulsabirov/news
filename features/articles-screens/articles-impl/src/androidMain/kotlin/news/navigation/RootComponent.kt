@@ -1,10 +1,10 @@
-package com.example.news.navigation
+package news.navigation
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
-import com.example.news.navigation.components.ArticleListComponent
-import com.example.news.navigation.components.CustomColumnComponent
-import com.example.news.navigation.components.RememberUpdatedStateComponent
+import news.navigation.components.ArticleListComponent
+import news.navigation.components.CustomColumnComponent
+import news.navigation.components.RememberUpdatedStateComponent
 
 interface RootComponent {
     val stack: Value<ChildStack<*, Child>>

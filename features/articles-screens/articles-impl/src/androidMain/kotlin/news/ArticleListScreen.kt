@@ -35,15 +35,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.news.ArticlesViewModel
-import com.example.news.models.Article2
+
+import com.example.news.models.Article
+import com.example.news.presentation.ArticlesViewModel
 //import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.viewmodel.koinViewModel
 
-val articles =  mutableStateListOf<Article2>().apply {
+val articles =  mutableStateListOf<Article>().apply {
     repeat(20){
         add(
-            Article2(
+            Article(
                 title = "Article ${it}",
                 description = "Description for article ${it}"
             ))
@@ -52,7 +53,7 @@ val articles =  mutableStateListOf<Article2>().apply {
 
 fun addArticle() =
     articles.add(
-        Article2(
+        Article(
             title = "Article ${articles.size -1}",
             description = "Description for article ${articles.size -1}"
         )
@@ -91,7 +92,7 @@ fun ArticleListScreen(mainViewModel: ArticlesViewModel = koinViewModel()) {
 @OptIn(ExperimentalFoundationApi::class)
 @Suppress("NonSkippableComposable")
 @Composable
-fun AnimatedContentList(articlesList: List<Article2>, listState: LazyListState) {
+fun AnimatedContentList(articlesList: List<Article>, listState: LazyListState) {
 
 
     LazyColumn(
@@ -121,7 +122,7 @@ fun AnimatedContentList(articlesList: List<Article2>, listState: LazyListState) 
 }
 
 @Composable
-fun ArticleItem(article: Article2, closeArticle:() -> Unit = {}) {
+fun ArticleItem(article: Article, closeArticle:() -> Unit = {}) {
 
     Card(
         modifier = Modifier
@@ -153,7 +154,7 @@ fun ArticleItem(article: Article2, closeArticle:() -> Unit = {}) {
 @Preview
 fun ArticleItemPreview(){
     ArticleItem(
-        Article2(
+        Article(
             title = "Article ${articles.size -1}",
             description = "Description for article ${articles.size -1}"
         )

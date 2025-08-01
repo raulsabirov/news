@@ -79,19 +79,7 @@ suspend fun flatMapLatestExample() = coroutineScope {
 
 
 suspend fun zipExample() = coroutineScope {
-    //  The zip operator combines two flows into one by pairing each emission from one flow with the corresponding
-    //  emission from the other flow. The resulting flow emits values as pairs or as a transformation based on a
-    //  provided lambda function. The combination stops as soon as one of the flows completes.
-    flowOf(1, 2, 3)
-        .zip(flowOf("A", "B", "C", "D"))
-        { number, letter ->
-            "$number   $letter"
-        }.collect { result ->
-            println(result)
-        }
-    // 1A,
-    // 2B,
-    // 3C
+
 }
 
 

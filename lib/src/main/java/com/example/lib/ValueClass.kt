@@ -13,9 +13,11 @@ value class ValueClass(val analitics: Analitics) {
     //   var invalid: Int = 1 * 2 // ❌ Нельзя — требует field
 
 
+/*
     override fun equals(other: Any?): Boolean {
         return super.equals(other)
     }
+*/
 
 
     private fun print() {

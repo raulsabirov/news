@@ -26,3 +26,7 @@ https://interviewprep.org/android-sharedpreferences-interview-questions/
 https://interviewprep.org/android-fragments-interview-questions/
 https://interviewprep.org/android-adapter-interview-questions/
 https://interviewprep.org/android-activities-interview-questions/
+
+
+
+

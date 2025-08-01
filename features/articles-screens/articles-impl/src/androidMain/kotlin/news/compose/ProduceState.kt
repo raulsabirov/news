@@ -1,4 +1,4 @@
-package com.example.news.presentation.compose
+package news.compose
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

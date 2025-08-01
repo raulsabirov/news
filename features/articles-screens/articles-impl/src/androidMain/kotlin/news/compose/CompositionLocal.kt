@@ -1,4 +1,4 @@
-package com.example.news.presentation.compose
+package news.compose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

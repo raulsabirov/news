@@ -18,53 +18,70 @@ import kotlinx.coroutines.runBlocking
 val handler = CoroutineExceptionHandler { _, exception ->
     println("    CoroutineExceptionHandler got $exception")
 }
-val coroutineScope = CoroutineScope( Dispatchers.IO   + handler)
+val coroutineScope = CoroutineScope(Dispatchers.IO + handler)
 
 fun main() = runBlocking {
 
-    myFun()
 
-    val job = coroutineScope.launch() {
+    val forecast = async {
+        throw AssertionError("Temp is invalid")
+    }
+    val temperature = async { 1 }
 
-        val deferred = async( SupervisorJob()) {
-            val i = "s".toInt()
+    println(temperature.await())
+
+
+    /*    val job = coroutineScope.launch() {
+
+            val deferred = async( SupervisorJob()) {
+                val i = "s".toInt()
+            }
+
+
+          ///  val result = deferred.await()
+            println("catch" )
+
         }
 
-
-      ///  val result = deferred.await()
-        println("catch" )
-
-    }
-
-    job.join()
+        job.join()*/
 }
 
 fun myFun() = runBlocking {
 
-     suspend fun getForecast() : String{
+    suspend fun getForecast(): String {
 
-         delay(1000)
-         return  "Sunny"
-     }
+        delay(1000)
+        return "Sunny"
+    }
 
-     suspend fun getTemperature() : String{
-         delay(1000)
-         throw AssertionError("Temp is invalid")
-         return  "30 graduses"
-     }
+    suspend fun getTemperature(): String {
+        delay(1000)
+        throw AssertionError("Temp is invalid")
+        return "30 graduses"
+    }
 
 
     // async в coroutineScope {} — исключение всплывёт, даже без await(),
     // потому что coroutineScope ждёт завершения всех корутин и обрабатывает ошибки.
-     suspend fun getWeatherReport() = coroutineScope{
-         val forecast = async {  getForecast() }
-         val temperature = async {  getTemperature() }
-         delay(200)
-         forecast.await()
-     }
+    suspend fun getWeatherReport() = coroutineScope {
+        val forecast = async { getForecast() }
+        val temperature = async { getTemperature() }
+        delay(200)
+        forecast.await()
+    }
 
 
-     println(getWeatherReport())
+    println(getWeatherReport())
+}
 
+
+fun myFunAsync() = coroutineScope.launch {
+
+    val forecast = async {
+        throw AssertionError("Temp is invalid")
+    }
+    val temperature = async { 1 }
+
+    println(temperature.await())
 
 }

@@ -1,4 +1,4 @@
-package com.example.news.presentation.compose
+package news.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

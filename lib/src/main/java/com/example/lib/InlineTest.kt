@@ -13,11 +13,13 @@ fun main() {
 
 
 
+/*
 inline fun <T> my(value : T ) where T : ValueClass {
 
 
     return value
 }
+*/
 
 
 interface Analitics {

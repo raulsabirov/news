@@ -1,4 +1,4 @@
-package com.example.news.navigation
+package news.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

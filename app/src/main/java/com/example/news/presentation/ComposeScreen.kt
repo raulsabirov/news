@@ -91,7 +91,7 @@ fun ComposeScreen(mainViewModel: MainViewModel? = null) {
         }
     }
 
-    val state0 = mainViewModel?.stateResponse?.collectAsState()
+   // val state0 = mainViewModel?.stateResponse?.collectAsState()
     val state = remember { mutableStateOf(0) }
     val test = remember { 0 }
     // val arratMap =    ArrayMap(1,1)

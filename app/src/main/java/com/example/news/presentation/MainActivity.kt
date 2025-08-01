@@ -1,6 +1,7 @@
 package com.example.news.presentation
 
 import android.app.AlertDialog
+import android.content.res.Configuration
 import android.graphics.fonts.FontStyle
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -12,17 +13,19 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.news.R
 import com.arkivanov.decompose.defaultComponentContext
-import com.example.news.navigation.DefaultRootComponent
-import com.example.news.navigation.RootContent
-import com.example.news.presentation.compose.CustomColumn
-import com.example.news.presentation.compose.CustomColumnScreen
-import com.example.news.presentation.compose.LocalFontStyleScreen
-import com.example.news.presentation.compose.RememberUpdatedStateScreen
-import com.example.news.presentation.compose.SubcomposeLayout
+import news.navigation.DefaultRootComponent
+import news.navigation.RootContent
+import news.compose.CustomColumn
+import news.compose.CustomColumnScreen
+import news.compose.LocalFontStyleScreen
+import news.compose.RememberUpdatedStateScreen
+import news.compose.SubcomposeLayout
 //import com.example.news.databinding.ActivityMainBinding
 import com.example.news.presentation.fragments.BaseFragment
 import kotlinx.coroutines.Dispatchers
@@ -56,8 +59,11 @@ class MainActivity : AppCompatActivity() {
     val a = null
     val  laz  by lazy{ 1}
 //    @Inject
-     var mainViewModel= MainViewModel()
+     var mainViewModel= ArticlesViewModel()
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
      //   (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
@@ -86,6 +92,10 @@ class MainActivity : AppCompatActivity() {
         // println("MainActivity" +buyChoco( listOf(98,54,6,34,66,63,52,39).toIntArray(), 62))
         val _eventBus = MutableSharedFlow<Unit>(replay = 3)
 
+
+        viewModelFactory {  }
+        ViewModelProvider(this)
+
         println("MainActivity onCreate")
 
         //System.exit(1)
@@ -94,12 +104,12 @@ class MainActivity : AppCompatActivity() {
           //    ArticleListScreen(mainViewModel)
 
             // Создаем root component с Decompose навигацией
-            val root = DefaultRootComponent(
+            val root = news.navigation.DefaultRootComponent(
                 componentContext = defaultComponentContext(),
                 mainViewModel = mainViewModel
             )
 
-            RootContent(component = root)
+            news.navigation.RootContent(component = root)
         }
 
 
@@ -136,13 +146,13 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.Default.limitedParallelism(1))
         {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.navigationFlow
+ /*               mainViewModel.navigationFlow
                     .onStart { }
 
                     .onEach { }
                     .collect {
 
-                    }
+                    }*/
 
 
             }
