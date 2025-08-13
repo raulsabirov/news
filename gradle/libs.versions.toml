@@ -158,6 +158,7 @@ sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-compose = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decompose" }
 essenty-lifecycle = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" }
+essenty-lifecycle-coroutines = { module = "com.arkivanov.essenty:lifecycle-coroutines", version.ref = "essenty" }
 
 # Fix
 touchlab-stately-common = {module = "co.touchlab:stately-common", version.ref = "stately"}

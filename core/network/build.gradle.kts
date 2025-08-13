@@ -20,6 +20,10 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.logging)
+            implementation("io.ktor:ktor-client-core:2.3.4")
+            implementation("io.ktor:ktor-client-cio:2.3.4") // или Android engine
+            implementation("io.ktor:ktor-client-websockets:2.3.4")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

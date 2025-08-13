@@ -97,6 +97,7 @@ dependencies {
     implementation(libs.work.runtime.ktx)
 
     implementation(projects.features.articlesScreens.articlesImpl)
+    implementation(projects.core.network)
   //  implementation(projects.shared)
 
     implementation(libs.koin.core)
