@@ -24,11 +24,11 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Semaphore
 import kotlin.properties.Delegates.notNull
 
-sealed class LoadingState() {
+/*sealed class LoadingState() {
     object Default : LoadingState()
     object Start : LoadingState()
     data class Stop(val errorMsg: String? = null) : LoadingState()
-}
+}*/
 
 
 class MainViewModel  constructor(

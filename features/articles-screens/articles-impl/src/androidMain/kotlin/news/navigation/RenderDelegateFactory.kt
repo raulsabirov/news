@@ -7,11 +7,11 @@ import news.navigation.renderers.RememberUpdatedStateRenderer
 
 
 class RenderDelegateFactory(
-    private val mainViewModel: ArticlesViewModel? = null
+
 ) {
     
     fun createArticleListDelegate(): ArticleListRenderDelegate =
-        ArticleListRenderer(mainViewModel)
+        ArticleListRenderer()
     
     fun createCustomColumnDelegate(): CustomColumnRenderDelegate =
         CustomColumnRenderer()

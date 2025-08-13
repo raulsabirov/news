@@ -5,4 +5,6 @@ import org.koin.dsl.module
 
 val networkModule get() = module {
     single<HttpClient> { createKtorClient() }
+
+    single<KtorWebSocketClient> { KtorWebSocketClient(get())  }
 }

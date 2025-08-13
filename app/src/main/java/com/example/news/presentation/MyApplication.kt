@@ -1,6 +1,7 @@
 package com.example.news.presentation
 
 import android.app.Application
+import news.viewmodelModule
 //import news.viewmodelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -15,9 +16,9 @@ class MyApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@MyApplication)
-    /*        modules(
+            modules(
                viewmodelModule
-            )*/
+            )
         }
        // appComponent = DaggerAppComponent.create()
         // Initialize Sync; the system responsible for keeping data in the app up to date.
