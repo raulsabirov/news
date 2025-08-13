@@ -34,7 +34,7 @@ class ArticleListRenderer(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Button(onClick = {
-                    mainViewModel?.addArticle()
+                 //   mainViewModel?.addArticle()
                 }) {
                     Text("Add Article")
                 }

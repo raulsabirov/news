@@ -15,7 +15,7 @@ abstract class AbstractClass {
 interface Interface {
     val valueS : String
 
-    fun fun1 (value : String) {  println()
+    fun defoultFun1 (value : String) {  println()
     }
 
     fun fun2 (value : String)
@@ -28,8 +28,7 @@ interface Interface {
     }
 }
 
-
-class MyClass() :AbstractClass(){
+class ClassFromAbstract() :AbstractClass(){
 
     override val valueS : String = " "
 
@@ -40,5 +39,21 @@ class MyClass() :AbstractClass(){
     override fun fun3(value: String) {
         TODO("Not yet implemented")
     }
+}
 
+class ClassFromInterface() :Interface{
+
+    override val valueS : String = " "
+
+    override fun defoultFun1(value: String) {
+
+    }
+
+    override fun fun2(value: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun fun3(value: String) {
+        TODO("Not yet implemented")
+    }
 }

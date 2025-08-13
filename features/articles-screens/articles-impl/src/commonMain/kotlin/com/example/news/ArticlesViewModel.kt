@@ -6,6 +6,10 @@ import androidx.lifecycle.viewModelScope
 
 
 import com.example.news.models.Article
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.websocket.webSocket
+import io.ktor.websocket.Frame
+import io.ktor.websocket.readText
 
 
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -31,9 +35,10 @@ sealed class LoadingState() {
 
 
 class ArticlesViewModel constructor(
+
     //  val articlesRepository: ArticlesRepositoryImpl
-) :
-    ViewModel() {
+) : ViewModel()
+{
     private val list = List(10) { counter ->
         Article(
             title = "Article ${counter}",
@@ -68,6 +73,10 @@ class ArticlesViewModel constructor(
     //lateinit var  latinit : Int
 
     init {
+        viewModelScope.launch {
+
+
+        }
         //   getArticles()
         val s = Semaphore(2)
         laz = lazy { 2 }

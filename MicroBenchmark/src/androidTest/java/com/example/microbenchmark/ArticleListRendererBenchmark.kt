@@ -24,6 +24,7 @@ class ArticleListRendererBenchmark {
 /*    @get:Rule
     val composeTestRule = createComposeRule()*/
 
+
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
