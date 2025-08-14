@@ -1,12 +1,14 @@
 package news.navigation
 
+import androidx.core.app.PendingIntentCompat.send
+import ru.braveowlet.simple_mvi_example.core.network.KtorWebSocketClient
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.popTo
 import com.arkivanov.decompose.router.stack.push
-import com.example.news.presentation.ArticlesViewModel
+import io.ktor.websocket.Frame
 import news.navigation.components.DefaultArticleListComponent
 import news.navigation.components.DefaultCustomColumnComponent
 import news.navigation.components.DefaultRememberUpdatedStateComponent
@@ -14,12 +16,21 @@ import news.navigation.components.DefaultRememberUpdatedStateComponent
 
 class DefaultRootComponent(
     componentContext: ComponentContext,
-    private val mainViewModel: ArticlesViewModel? = null
+    val websocket : KtorWebSocketClient
 ) : RootComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Config>()
-    
-    override val renderDelegateFactory = RenderDelegateFactory(mainViewModel)
+
+
+   //  val websocket = ru.braveowlet.simple_mvi_example.core.network.KtorWebSocketClient( get())
+
+
+    init {
+     //   websocket.connect()
+
+    }
+
+    override val renderDelegateFactory = RenderDelegateFactory()
 
     override val stack = childStack(
         source = navigation,

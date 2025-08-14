@@ -43,32 +43,7 @@ fun main() {
 
 }
 
-suspend fun sharedFlowExample() = coroutineScope {
-    println("sharedFlowExample")
-    val sharedFlow = MutableSharedFlow<Int>(replay = 0)
 
-    launch {
-        sharedFlow.emit(0)
-        sharedFlow.emit(1)
-        sharedFlow.emit(2)
-        sharedFlow.emit(3)
-        sharedFlow.emit(4)
-    }
-
-    delay(250)
-    launch {
-        sharedFlow.collect { value ->
-            println("SharedFlow collector 1 received: $value")
-        }
-    }
-
-    launch {
-        delay(2500)
-        sharedFlow.collect { value ->
-            println("SharedFlow collector 2 received: $value")
-        }
-    }
-}
 
 
 

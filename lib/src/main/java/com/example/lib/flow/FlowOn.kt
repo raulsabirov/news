@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
 
@@ -14,9 +15,15 @@ import kotlinx.coroutines.runBlocking
         emit(1)
     }
         .flowOn(Dispatchers.IO) // Поток A - Dispatchers.IO
+        .map {
+            it+1
+        }
+
         .onEach { value ->
+
             // Обработка данных будет происходить в потоке B
             println("Process data on thread: ${Thread.currentThread().name}")
+            value +1
         }
 
        // .emitOn(Dispatchers.Main) // Поток B - Dispatchers.Main

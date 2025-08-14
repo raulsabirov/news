@@ -63,7 +63,8 @@ class MainViewModel  constructor(
 
     var intList: List<Int> = mutableListOf<Int>(1)
 
-    val stateResponse = MutableStateFlow("").shareIn(viewModelScope, SharingStarted.Eagerly)
+    val stateResponse = MutableStateFlow("")
+        .shareIn(viewModelScope, SharingStarted.Eagerly)
 
     val stateRequest = MutableStateFlow("")
 
