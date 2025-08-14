@@ -69,8 +69,17 @@ class MainViewModel  constructor(
 
     var laz = lazy { 1 }
     lateinit var  latinit : Article
+    val v = listOf(1, 1 * 2)
+
+
+    val lsit = listOf(1, 2, 3, "")
 
     init {
+        mutableNumberList.forEach{
+
+
+            return@forEach
+        }
      //   getArticles()
         val s = Semaphore(2)
         laz = lazy { 2 }
@@ -111,9 +120,7 @@ class MainViewModel  constructor(
     val _articlesFlow = MutableStateFlow<List<Article>>(emptyList())
 
     val articlesFlow = MutableStateFlow<List<Article>>(emptyList())
-    val v = listOf(1, 1 * 2)
 
-    val lsit = listOf(1, 2, 3, "")
 
     //  var loadingStateLiveDate =
     //     MutableLiveData<LoadingState>().apply { value = LoadingState.Default }

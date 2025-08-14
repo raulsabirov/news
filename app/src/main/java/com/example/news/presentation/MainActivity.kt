@@ -35,6 +35,10 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
+import org.koin.compose.getKoin
+import ru.braveowlet.simple_mvi_example.core.network.KtorWebSocketClient
 import java.util.LinkedList
 import java.util.Queue
 
@@ -59,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     val a = null
     val  laz  by lazy{ 1}
 //    @Inject
-     var mainViewModel= ArticlesViewModel()
+   //  var mainViewModel= ArticlesViewModel()
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -97,16 +101,20 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this)
 
         println("MainActivity onCreate")
-
+        val client : KtorWebSocketClient by inject()
+        val clientV : ArticlesViewModel by inject()
+        println(clientV)
         //System.exit(1)
         setContent {
             //   ComposeScreen(mainViewModel)
           //    ArticleListScreen(mainViewModel)
 
+
+
             // Создаем root component с Decompose навигацией
-            val root = news.navigation.DefaultRootComponent(
+            val root = DefaultRootComponent(
                 componentContext = defaultComponentContext(),
-                mainViewModel = mainViewModel
+                client
             )
 
             news.navigation.RootContent(component = root)

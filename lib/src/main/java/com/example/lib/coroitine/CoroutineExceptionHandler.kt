@@ -22,6 +22,8 @@ fun main() = runBlocking {
         launch() {
             throw RuntimeException("RuntimeException in nested coroutine")
         }
+    }.invokeOnCompletion {
+
     }
 
     Thread.sleep(100)
