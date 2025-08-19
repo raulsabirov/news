@@ -18,7 +18,7 @@ interface Interface {
     fun defoultFun1 (value : String) {  println()
     }
 
-    fun fun2 (value : String)
+    fun fun2 (value : String= "1")
     fun fun3 (value : String)
 
 
@@ -49,7 +49,7 @@ class ClassFromInterface() :Interface{
 
     }
 
-    override fun fun2(value: String) {
+    override fun fun2(value: String ) {
         TODO("Not yet implemented")
     }
 

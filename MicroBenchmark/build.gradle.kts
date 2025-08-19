@@ -7,11 +7,10 @@ plugins {
 
 android {
     namespace = "com.example.microbenchmark"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 36
         multiDexEnabled  = true
         testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
     }

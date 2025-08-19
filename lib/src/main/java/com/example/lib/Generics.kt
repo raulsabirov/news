@@ -1,5 +1,7 @@
 package com.example.lib
 
+import javax.swing.text.View
+
 
 data class ss(val s : String) : SealedClass(1)
 
@@ -57,6 +59,8 @@ open class Generics {
     var mutableListNumber =  mutableListOf<Number>( 1)
 
     init {
+
+
         listAny = listString
 
       //  mutableListNumber = mutableListInt
@@ -140,7 +144,7 @@ open class Generics {
 
 
 
-    val refOut: OutClass<Any> = OutClass("string")
+    val refOut: OutClass<Animal> = OutClass(Dog(1))
     val refIn: InClass<Int> = InClass<Number>()
 
 
@@ -194,4 +198,17 @@ public inline fun <LIST_FROM, R, LIST_TO : MutableCollection<in R>> Iterable<LIS
     for (item in this)
         destination.add(transform(item))
     return destination
+}
+
+
+
+
+inline fun <reified T : Animal> findViewById (root :View, id : Int) : T? {
+
+    return Dog(1) as?  T
+}
+
+inline fun <reified T : Animal> findViewById2 (root :View, id : Int) : T? {
+
+    return Dog(1) as  T?
 }

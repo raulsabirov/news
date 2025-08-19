@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ComposeBuildConfig.composeVersion
 
 plugins {
     /// alias(libs.plugins.news.android.application)
@@ -72,6 +73,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         multiDexEnabled = true
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 /*
@@ -108,12 +110,25 @@ dependencies {
     implementation(libs.decompose)
     implementation(libs.decompose.compose)
     implementation(libs.essenty.lifecycle)
-    
+    implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.ui.test.junit4.android)
+
+    // Testing dependencies
+    androidTestImplementation(libs.compose.ui)
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.espresso.core)
+   // androidTestImplementation("androidx.test:runner:1.6.2")
+    androidTestImplementation(libs.androidx.activity.compose)
+
+    androidTestImplementation(libs.androidx.test.core)
+   // androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.androidx.test.rules)
     // Benchmark dependencies
-/*    androidTestImplementation("androidx.benchmark:benchmark-junit4:1.2.2")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.4")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")*/
+    androidTestImplementation(libs.androidx.benchmark.junit4)
+
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
 }
 
 
