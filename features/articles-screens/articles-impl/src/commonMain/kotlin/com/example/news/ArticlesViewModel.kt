@@ -15,6 +15,7 @@ import io.ktor.websocket.readText
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.async
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -73,10 +74,13 @@ class ArticlesViewModel constructor(
     //lateinit var  latinit : Int
 
     init {
-        viewModelScope.launch {
 
 
+        val asyncc = viewModelScope.async {
+            throw RuntimeException("Error 1")
         }
+
+
         //   getArticles()
         val s = Semaphore(2)
         laz = lazy { 2 }
@@ -86,6 +90,12 @@ class ArticlesViewModel constructor(
         val ll = (intList as MutableList)
 
         val job = viewModelScope.launch(Dispatchers.IO) {
+
+            try {
+                asyncc.await()
+            } catch (_: Exception) {
+                println("ArticlesViewModel catched error")
+            }
 
             stateRequest.value = "1"
 
