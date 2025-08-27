@@ -108,7 +108,7 @@ dependencies {
     
     // Decompose
     implementation(libs.decompose)
-    implementation(libs.decompose.compose)
+    implementation(libs.decompose.compose2)
     implementation(libs.essenty.lifecycle)
     implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.ui.test.junit4.android)

@@ -30,7 +30,7 @@ val coroutineScope = CoroutineScope(Dispatchers.IO + handler)
 
 fun main() = runBlocking {
 
-/*    val asyncc = coroutineScope.async {
+    val asyncc = coroutineScope.async {
         throw RuntimeException("Error 1")
     }
 
@@ -38,15 +38,15 @@ fun main() = runBlocking {
            asyncc.await()
     } catch (_: Exception) {
         println( "catched error")
-    }*/
+    }
 
-    supervisorScope {
+    coroutineScope {
         val forecast = async() {
             throw RuntimeException("Error 2")
         }
 
         try {
-            forecast.await()
+         //   forecast.await()
         } catch (_: Exception) {
 
             println( "catched Error 2")

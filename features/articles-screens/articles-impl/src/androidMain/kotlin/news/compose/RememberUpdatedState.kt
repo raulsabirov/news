@@ -12,8 +12,6 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.delay
 
-class RememberUpdatedState {
-}
 
 
 @Composable

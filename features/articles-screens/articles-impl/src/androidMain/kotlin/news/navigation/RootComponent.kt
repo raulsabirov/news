@@ -2,30 +2,28 @@ package news.navigation
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
-import news.navigation.components.ArticleListComponent
-import news.navigation.components.CustomColumnComponent
-import news.navigation.components.RememberUpdatedStateComponent
+import com.arkivanov.essenty.backhandler.BackHandlerOwner
+import news.Tabs.TabsComponent
+import news.Tabs.TabsRenderer
+import news.navigation.components.MainComponent
+import news.navigation.renderers.MainRenderer
 
-interface RootComponent {
+interface RootComponent : BackHandlerOwner {
     val stack: Value<ChildStack<*, Child>>
-    val renderDelegateFactory: RenderDelegateFactory
+
     
+    fun onBackClicked()
     fun onBackClicked(toIndex: Int)
-    
+
     sealed class Child {
-        class ArticleListChild(
-            val component: ArticleListComponent,
-            val renderDelegate: ArticleListRenderDelegate
+        class Main(
+            val component: MainComponent,
+            val renderDelegate: MainRenderer
         ) : Child()
-        
-        class CustomColumnChild(
-            val component: CustomColumnComponent,
-            val renderDelegate: CustomColumnRenderDelegate
-        ) : Child()
-        
-        class RememberUpdatedStateChild(
-            val component: RememberUpdatedStateComponent,
-            val renderDelegate: RememberUpdatedStateRenderDelegate
+
+        class Tabs(
+            val component: TabsComponent,
+            val renderDelegate: TabsRenderer
         ) : Child()
     }
 }

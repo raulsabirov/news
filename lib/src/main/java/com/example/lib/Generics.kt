@@ -46,9 +46,10 @@ open class Generics {
 
     var arrayListAny = ArrayList<Any>()
     var arrayListString = ArrayList<String>()
+    var arrayListInt = ArrayList<Int>()
     var arrayListCharSequence = ArrayList<CharSequence>()
 
-   // val listStar: List<*> = listOf(42, "Bob")
+    val listStar: List<*> = listOf(42, "Bob")
     var listAny = listOf<Any>(1, "1")
     var listString = listOf<String>("1")
     var listCharSequence = listOf<CharSequence>("1")
@@ -62,6 +63,8 @@ open class Generics {
 
 
         listAny = listString
+        arrayListAny.add(1).also { arrayListAny.add("1") }
+
 
       //  mutableListNumber = mutableListInt
 /*

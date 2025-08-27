@@ -1,6 +1,5 @@
-package news.navigation.renderers
+package news.Articles
 
-import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,24 +7,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import news.navigation.ArticleListRenderDelegate
-import news.navigation.components.ArticleListComponent
-import com.example.news.presentation.ArticlesViewModel
-import news.AnimatedContentList
-import news.articles
+import news.navigation.RenderDelegate
 
-class ArticleListRenderer(
-    private val mainViewModel: ArticlesViewModel? = null
-) : ArticleListRenderDelegate {
+class ArticleListRenderer() : RenderDelegate<ArticleListComponent> {
     
     @Composable
-    override fun render(data: ArticleListComponent) {
+    override fun render(component: ArticleListComponent) {
         Column(modifier = Modifier.fillMaxSize()) {
             Row(
                 modifier = Modifier
@@ -39,14 +31,14 @@ class ArticleListRenderer(
                     Text("Add Article")
                 }
                 
-                Button(onClick = { 
-                    data.onNavigateToCustomColumn() 
+                Button(onClick = {
+                    component.onNavigateToCustomColumn()
                 }) {
                     Text("Custom Column")
                 }
                 
-                Button(onClick = { 
-                    data.onNavigateToRememberUpdatedState() 
+                Button(onClick = {
+                    component.onNavigateToRememberUpdatedState()
                 }) {
                     Text("Remember Updated State")
                 }

@@ -16,7 +16,7 @@ androidx-test-junit = "1.1.5"
 androidx-lifecycle = "2.8.0"
 
 # Decompose
-decompose = "2.2.2"
+decompose = "3.3.0"
 essenty = "1.3.0"
 
 # Compose
@@ -171,6 +171,8 @@ sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 # Decompose
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-compose = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decompose" }
+decompose-compose2 = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }
+
 essenty-lifecycle = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" }
 essenty-lifecycle-coroutines = { module = "com.arkivanov.essenty:lifecycle-coroutines", version.ref = "essenty" }
 

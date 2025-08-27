@@ -1,4 +1,4 @@
-package news
+package news.Articles
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically

@@ -1,6 +1,5 @@
 package news.navigation
 
-import androidx.core.app.PendingIntentCompat.send
 import ru.braveowlet.simple_mvi_example.core.network.KtorWebSocketClient
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -8,10 +7,11 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.popTo
 import com.arkivanov.decompose.router.stack.push
-import io.ktor.websocket.Frame
-import news.navigation.components.DefaultArticleListComponent
-import news.navigation.components.DefaultCustomColumnComponent
-import news.navigation.components.DefaultRememberUpdatedStateComponent
+import kotlinx.serialization.Serializable
+import news.Tabs.DefaultTabsComponent
+import news.Tabs.TabsRenderer
+import news.navigation.components.DefaultMainComponent
+import news.navigation.renderers.MainRenderer
 
 
 class DefaultRootComponent(
@@ -19,7 +19,7 @@ class DefaultRootComponent(
     val websocket : KtorWebSocketClient
 ) : RootComponent, ComponentContext by componentContext {
 
-    private val navigation = StackNavigation<Config>()
+    private val navigation = StackNavigation<ConfigRootChild>()
 
 
    //  val websocket = ru.braveowlet.simple_mvi_example.core.network.KtorWebSocketClient( get())
@@ -30,58 +30,39 @@ class DefaultRootComponent(
 
     }
 
-    override val renderDelegateFactory = RenderDelegateFactory()
+
+    override fun onBackClicked() {
+        TODO("Not yet implemented")
+    }
 
     override val stack = childStack(
         source = navigation,
-        initialConfiguration = Config.ArticleList,
+        serializer = ConfigRootChild.serializer(),
+        initialConfiguration = ConfigRootChild.Main,
         handleBackButton = true,
         childFactory = ::child,
     )
 
-    private fun child(config: Config, componentContext: ComponentContext): RootComponent.Child =
+    private fun child(config: ConfigRootChild, componentContext: ComponentContext): RootComponent.Child =
         when (config) {
-            is Config.ArticleList -> {
-                val component = DefaultArticleListComponent(
-                    componentContext, 
-                    ::navigateToCustomColumn,
-                    ::navigateToRememberUpdatedState
-                )
-                val renderDelegate = renderDelegateFactory.createArticleListDelegate()
-                RootComponent.Child.ArticleListChild(component, renderDelegate)
+
+            is ConfigRootChild.Main -> {
+                val component = DefaultMainComponent(componentContext, ::navigateToTabs)
+                RootComponent.Child.Main(component, MainRenderer())
             }
             
-            is Config.CustomColumn -> {
-                val component = DefaultCustomColumnComponent(componentContext, ::navigateBack)
-                val renderDelegate = renderDelegateFactory.createCustomColumnDelegate()
-                RootComponent.Child.CustomColumnChild(component, renderDelegate)
+            is ConfigRootChild.Tabs -> {
+                val component = DefaultTabsComponent(componentContext, ::navigateBack)
+                RootComponent.Child.Tabs(component, TabsRenderer())
             }
-            
-            is Config.RememberUpdatedState -> {
-                val component = DefaultRememberUpdatedStateComponent(componentContext, ::navigateBack)
-                val renderDelegate = renderDelegateFactory.createRememberUpdatedStateDelegate()
-                RootComponent.Child.RememberUpdatedStateChild(component, renderDelegate)
-            }
-            
-            is Config.Home -> {
-                // Для примера используем ArticleList
-                val component = DefaultArticleListComponent(
-                    componentContext, 
-                    ::navigateToCustomColumn,
-                    ::navigateToRememberUpdatedState
-                )
-                val renderDelegate = renderDelegateFactory.createArticleListDelegate()
-                RootComponent.Child.ArticleListChild(component, renderDelegate)
-            }
+
         }
 
-    private fun navigateToCustomColumn() {
-        navigation.push(Config.CustomColumn)
+    private fun navigateToTabs() {
+        navigation.push(ConfigRootChild.Tabs)
     }
     
-    private fun navigateToRememberUpdatedState() {
-        navigation.push(Config.RememberUpdatedState)
-    }
+
 
     private fun navigateBack() {
         navigation.pop()
@@ -90,4 +71,14 @@ class DefaultRootComponent(
     override fun onBackClicked(toIndex: Int) {
         navigation.popTo(index = toIndex)
     }
+}
+@Serializable
+sealed interface ConfigRootChild  {
+    @Serializable
+    data object Main : ConfigRootChild
+
+    @Serializable
+    data object Tabs : ConfigRootChild
+
+
 }

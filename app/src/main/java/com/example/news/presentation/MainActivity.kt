@@ -20,13 +20,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.news.R
 import com.arkivanov.decompose.defaultComponentContext
 import news.navigation.DefaultRootComponent
-import news.navigation.RootContent
-import news.compose.CustomColumn
-import news.compose.CustomColumnScreen
-import news.compose.LocalFontStyleScreen
-import news.compose.RememberUpdatedStateScreen
-import news.compose.SubcomposeLayout
-//import com.example.news.databinding.ActivityMainBinding
+
 import com.example.news.presentation.fragments.BaseFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -35,6 +29,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import news.RootContent
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import org.koin.compose.getKoin
@@ -59,7 +54,7 @@ val LocalFontStyle = compositionLocalOf { FontStyle.FONT_WEIGHT_MAX }
 class MainActivity : AppCompatActivity() {
 
  //   private lateinit var binding: ActivityMainBinding
-
+        val resu : Result<String> = Result.success("1")
     val a = null
     val  laz  by lazy{ 1}
 //    @Inject
@@ -117,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                 client
             )
 
-            news.navigation.RootContent(component = root)
+           RootContent(component = root)
         }
 
 

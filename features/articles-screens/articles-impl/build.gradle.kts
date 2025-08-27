@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     id("kotlin-parcelize")
+  //  kotlin("plugin.serialization") version "2.2.10"
+    alias(libs.plugins.kotlinSerialization)
 }
 
 compose.resources {
@@ -67,6 +69,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
 
@@ -80,7 +83,9 @@ kotlin {
 
             // Decompose
             implementation(libs.decompose)
-            implementation(libs.decompose.compose)
+          //  implementation(libs.decompose.compose)
+            implementation(libs.decompose.compose2)
+
             implementation(libs.essenty.lifecycle)
             implementation(libs.essenty.lifecycle.coroutines)
         }

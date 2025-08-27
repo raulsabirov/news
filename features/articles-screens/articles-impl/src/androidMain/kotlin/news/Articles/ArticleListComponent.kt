@@ -1,4 +1,4 @@
-package news.navigation.components
+package news.Articles
 
 import com.arkivanov.decompose.ComponentContext
 
